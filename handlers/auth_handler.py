@@ -84,3 +84,4 @@ class SignupHandler(BaseHandler):
         self.session.add(User(name=username, hashed_password=hashed_password, email=email))
         self.session.commit()
         #new = self.__register(password, username, email)
+        self.redirect(self.reverse_url('login'))

@@ -25,6 +25,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 {% comment ユーザが認証されていたら %}
+                {% if current_user != None %}
                 <li>
                     <a href="{{ reverse_url('groups', 1) }}">Groups</a>
                 </li>
@@ -34,11 +35,13 @@
                 <li>
                     <a href="{{ reverse_url('search', 1) }}">Search</a>
                 </li>
+                {% end %}
                 {% comment 認証されていたときの処理 %}
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 {% comment ユーザが認証されていたら %}
+                {% if current_user != None %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">test{% comment {{ user.username }} %}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -52,9 +55,12 @@
                         <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
-
-                {% comment ゆーザが認証されていなかったら %}
+                {% else %}
+                <li><a href="{{ reverse_url('signup') }}">Signup</a></li>
                 <li><a href="{{ reverse_url('login') }}">Login</a></li>
+                {% end %}
+                {% comment ゆーザが認証されていなかったら %}
+
                 {% comment %}
             </ul>
 
