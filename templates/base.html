@@ -24,29 +24,28 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                {% comment ユーザが認証されていたら %}
-                {% if current_user != None %}
+                {% if current_user %}
                 <li>
                     <a href="{{ reverse_url('groups') }}">Groups</a>
                 </li>
                 <li>
                     <a href="{{ reverse_url('users') }}">Users</a>
                 </li>
-                <li>
-                    <a href="{{ reverse_url('search') }}">Search</a>
-                </li>
+                {% comment <li><a href="{{ reverse_url('search') }}">Search</a></li> %}
                 {% end %}
-                {% comment 認証されていたときの処理 %}
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                {% comment ユーザが認証されていたら %}
-                {% if current_user != None %}
+                {% if current_user%}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user }}{% comment {{ user.username }} %}<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user['name'] }}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ reverse_url('logout') }}">Logout</a></li>
-                        {% comment <li><a href="{{ reverse_url('logout) }}">Profile</a></li> %}
+                        <li>
+                            <a href="{{ reverse_url('logout') }}">Logout</a>
+                        </li>
+                        <li>
+                            <a href="{{ reverse_url('user', current_user['id']) }}">Profile</a>
+                        </li>
                         <!--<li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li class="divider"></li>
@@ -59,9 +58,6 @@
                 <li><a href="{{ reverse_url('signup') }}">Signup</a></li>
                 <li><a href="{{ reverse_url('login') }}">Login</a></li>
                 {% end %}
-                {% comment ゆーザが認証されていなかったら %}
-
-                {% comment %}
             </ul>
 
         </div>
@@ -71,5 +67,6 @@
 {% block content %}{% end %}
 <script src="{{ static_url('js/jquery.min.js') }}"></script>
 <script src="{{ static_url('js/bootstrap.min.js') }}"></script>
+
 </body>
 </html>

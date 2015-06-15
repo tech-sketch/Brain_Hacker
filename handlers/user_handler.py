@@ -9,6 +9,13 @@ class UsersHandler(BaseHandler):
         users = self.session.query(User).all()
         self.render('users.html', users=users)
 
+    @tornado.web.authenticated
+    def post(self):
+        username = self.get_argument('username', '')
+        #users = self.session.query(User).filter_by(name=username).all()
+        users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).all()
+        self.render('users.html', users=users)
+
 
 class UserHandler(BaseHandler):
 

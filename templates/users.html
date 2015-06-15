@@ -3,6 +3,16 @@
 {% block content %}
 
 <div class="container">
+    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="post" action="{{ reverse_url('users') }}">
+        {% module xsrf_form_html() %}
+        <h2>ユーザ名検索</h2>
+        <div class="form-group">
+            <input type="text" name="username" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button class="btn-primary" type="submit">検索する</button>
+        </div>
+    </form>
     <table class="table table-striped">
         <thead>
         <tr>

@@ -22,24 +22,25 @@ class LoginHandler(BaseHandler):
         try:
             user = self.session.query(User).filter_by(email=email).one()
         except (sqlalchemy.orm.exc.NoResultFound, sqlalchemy.orm.exc.MultipleResultsFound):
-            return False
+            return False, None
         if is_authenticated(password, user.hashed_password):
-            return True
-        return False
+            return True, user
+        return False, None
 
     def post(self):
         email = self.get_argument('email', '')
         password = self.get_argument('password', '')
-        auth = self.check_permission(password, email)
+        auth, user = self.check_permission(password, email)
         if auth:
-            self.set_current_user(email)
+            self.set_current_user(user)
             self.redirect(self.reverse_url(name='index'))
         else:
             self.render('login.html', error_message='Login Incorrect')
 
     def set_current_user(self, user):
         if user:
-            self.set_secure_cookie('user', tornado.escape.json_encode(user))
+            user_dict = {'name': user.name, 'email': user.email, 'id': user.id}
+            self.set_secure_cookie('user', tornado.escape.json_encode(user_dict))
         else:
             self.clear_cookie('user')
 

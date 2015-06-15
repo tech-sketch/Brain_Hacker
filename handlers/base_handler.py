@@ -22,7 +22,10 @@ class BaseHandler(tornado.web.RequestHandler):
 class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
-        return self.get_secure_cookie('user')
+        user_json = self.get_secure_cookie("user")
+        if not user_json:
+            return None
+        return tornado.escape.json_decode(user_json)
 
     def set_current_user(self, username):
         self.set_secure_cookie('user', tornado.escape.utf8(username))
