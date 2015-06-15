@@ -27,13 +27,13 @@
                 {% comment ユーザが認証されていたら %}
                 {% if current_user != None %}
                 <li>
-                    <a href="{{ reverse_url('groups', 1) }}">Groups</a>
+                    <a href="{{ reverse_url('groups') }}">Groups</a>
                 </li>
                 <li>
-                    <a href="{{ reverse_url('users', 1) }}">Users</a>
+                    <a href="{{ reverse_url('users') }}">Users</a>
                 </li>
                 <li>
-                    <a href="{{ reverse_url('search', 1) }}">Search</a>
+                    <a href="{{ reverse_url('search') }}">Search</a>
                 </li>
                 {% end %}
                 {% comment 認証されていたときの処理 %}
