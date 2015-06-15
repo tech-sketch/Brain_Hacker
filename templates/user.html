@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ユーザ名</th>
+            <th>メールアドレス</th>
+        </tr>
+        <tbody>
+        <tr>
+            <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
+            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% end %}

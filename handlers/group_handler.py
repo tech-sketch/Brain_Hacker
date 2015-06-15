@@ -1,8 +1,12 @@
+import tornado.web
 from .base_handler import BaseHandler
 
 
 class GroupsHandler(BaseHandler):
-    pass
+
+    @tornado.web.authenticated
+    def get(self):
+        self.render('groups.html')
 
 
 class GroupHandler(BaseHandler):
