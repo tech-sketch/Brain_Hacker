@@ -7,6 +7,8 @@
     <title>{% block title %}Brain Hacker{% end %}</title>
     <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ static_url('css/site.css') }}">
+    <script src="{{ static_url('js/jquery.min.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap.min.js') }}"></script>
 </head>
 <body id="{% block body-id %}body{% end %}">
 {% block top-nav-wrapper %}
@@ -65,8 +67,7 @@
 </div>
 {% end %}
 {% block content %}{% end %}
-<script src="{{ static_url('js/jquery.min.js') }}"></script>
-<script src="{{ static_url('js/bootstrap.min.js') }}"></script>
+
 
 </body>
 </html>

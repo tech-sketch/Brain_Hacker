@@ -1,6 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
+
+
 <div class="container">
-    猫の子子猫、獅子の子子獅子
+    <button class="btn btn-primary alert" type="submit">コミュニティの作成</button>
+    <!-- bootbox code -->
+    <script src="{{ static_url('js/bootbox.min.js') }}"></script>
+    <script>
+        $(document).on("click", ".alert", function(e) {
+            bootbox.dialog({
+                title: "コミュニティの作成",
+                message: '<div class="row">  ' +
+                    '<div class="col-md-12"> ' +
+                    '<form class="form-horizontal"> ' +
+                    '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="name">グループ名</label> ' +
+                    '<div class="col-md-4"> ' +
+                    '<input id="name" name="name" type="text" placeholder="Your name" class="form-control input-md"> ' +
+                    '<!--<span class="help-block">Here goes your name</span>--> </div> ' +
+                    '</div> ' +
+                    '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="awesomeness">公開条件</label> ' +
+                    '<div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> ' +
+                    '<input type="radio" name="awesomeness" id="awesomeness-0" value="Really awesome" checked="checked"> ' +
+                    '公開 </label> ' +
+                    '</div><div class="radio"> <label for="awesomeness-1"> ' +
+                    '<input type="radio" name="awesomeness" id="awesomeness-1" value="Super awesome"> 非公開 </label> ' +
+                    '</div> ' +
+                    '</div> </div>' +
+                    '</form> </div>  </div>',
+                buttons: {
+                    success: {
+                        label: "Save",
+                        className: "btn-success",
+                        callback: function () {
+                            var name = $('#name').val();
+                            var answer = $("input[name='awesomeness']:checked").val()
+                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                        }
+                    }
+                }
+            }
+        );
+        });
+    </script>
+    
+    <br/>
+    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="post" action="{{ reverse_url('users') }}">
+        {% module xsrf_form_html() %}
+        <h2>グループ名検索</h2>
+        <div class="form-group">
+            <input type="text" name="groupname" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button class="btn-primary" type="submit">検索する</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>グループ名</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+        <tr>
+            <td><a href="{{ reverse_url('group', group.id) }}">{{ group.name }}</a></td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
 </div>
+
 {% end %}

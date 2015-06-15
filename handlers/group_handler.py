@@ -6,7 +6,7 @@ class GroupsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        self.render('groups.html')
+        self.render('groups.html', groups=[])
 
 
 class GroupHandler(BaseHandler):
