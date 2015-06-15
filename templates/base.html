@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{% block title %}Daily Report{% end %}</title>
+    <title>{% block title %}Brain Hacker{% end %}</title>
     <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ static_url('css/site.css') }}">
 </head>
@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ reverse_url('index') }}">Daily Reports</a>
+            <a class="navbar-brand" href="{{ reverse_url('index') }}">Brain Hacker</a>
         </div>
 
         <div class="collapse navbar-collapse">
@@ -43,7 +43,7 @@
                 {% comment ユーザが認証されていたら %}
                 {% if current_user != None %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">test{% comment {{ user.username }} %}<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user }}{% comment {{ user.username }} %}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ reverse_url('logout') }}">Logout</a></li>
                         {% comment <li><a href="{{ reverse_url('logout) }}">Profile</a></li> %}
