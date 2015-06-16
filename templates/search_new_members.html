@@ -3,14 +3,14 @@
 {% block content %}
 
 <div class="container">
-    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="get" action="{{ reverse_url('search_new_members', gid) }}">
+    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('search_new_members', gid) }}">
         {% module xsrf_form_html() %}
         <h2>ユーザ名検索</h2>
-        <div class="form-group">
+        <div class="input-group">
             <input type="text" name="username" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
-        </div>
-        <div class="form-group">
-            <button class="btn-primary" type="submit">検索する</button>
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">検索する</button>
+        </span>
         </div>
     </form>
 
