@@ -8,7 +8,7 @@ Base = declarative_base()
 class Backend(object):
 
     def __init__(self):
-        engine = sqlalchemy.create_engine(url, echo=True)
+        engine = sqlalchemy.create_engine(url, echo=False)
         self._session = sqlalchemy.orm.sessionmaker(bind=engine)()
 
     @classmethod

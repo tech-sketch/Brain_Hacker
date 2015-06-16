@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>グループ名</th>
+        </tr>
+        <tbody>
+        <tr>
+            <td><a href="{{ reverse_url('group', group.id) }}">{{ group.name }}</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="{{ reverse_url('group_user', group.id) }}">メンバー</a><br/>
+    <a href="{{ reverse_url('group_edit', group.id) }}">管理</a>
+</div>
+{% end %}

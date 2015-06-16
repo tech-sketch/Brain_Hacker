@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="get" action="{{ reverse_url('users') }}">
+    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="get" action="{{ reverse_url('search_new_members', gid) }}">
         {% module xsrf_form_html() %}
         <h2>ユーザ名検索</h2>
         <div class="form-group">
@@ -19,6 +19,7 @@
         <tr>
             <th>ユーザ名</th>
             <th>メールアドレス</th>
+            <th>招待</th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,15 @@
         <tr>
             <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
             <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+            <td>
+                <form class="form-signup col-md-6 col-md-offset-3" role="form" method="post" action="{{ reverse_url('search_new_members', gid) }}">
+                    {% module xsrf_form_html() %}
+                    <div class="form-group">
+                        <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">招待する</button>
+                    </div>
+                </form>
+            </td>
         </tr>
         {% end %}
         </tbody>

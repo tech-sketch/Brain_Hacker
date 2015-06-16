@@ -3,9 +3,16 @@
 
 
 <div class="container">
-    <h3>
-    <button class="btn btn-primary alert" type="submit">コミュニティの作成</button>
-        </h3>
+    <div class="well row">
+        <div class="col-md-5">
+            <h3>グループとは？</h3>
+            <p>特定/任意のメンバーで情報共有を行うことができます。</p>
+        </div>
+        <div class="col-md-7">
+            <button class="btn btn-primary alert" type="submit">コミュニティの作成</button>
+        </div>
+    </div>
+
     <!-- bootbox code -->
     <script src="{{ static_url('js/bootbox.min.js') }}"></script>
     <script>
@@ -14,11 +21,12 @@
                 title: "コミュニティの作成",
                 message: '<div class="row">  ' +
                     '<div class="col-md-12"> ' +
-                    '<form class="form-horizontal"> ' +
+                    '<form class="form-horizontal" name="form1" id="form1" method="post" action="{{ reverse_url('groups') }}"> ' +
+                    '{% module xsrf_form_html() %} ' +
                     '<div class="form-group"> ' +
                     '<label class="col-md-4 control-label" for="name">グループ名</label> ' +
                     '<div class="col-md-4"> ' +
-                    '<input id="name" name="name" type="text" placeholder="Your name" class="form-control input-md"> ' +
+                    '<input id="name" name="name" type="text" placeholder="Group name" class="form-control input-md"> ' +
                     '<!--<span class="help-block">Here goes your name</span>--> </div> ' +
                     '</div> ' +
                     '<div class="form-group"> ' +
@@ -36,6 +44,7 @@
                         label: "Save",
                         className: "btn-success",
                         callback: function () {
+                        $('#form1').submit();
                             var name = $('#name').val();
                             var answer = $("input[name='awesomeness']:checked").val()
                             Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
@@ -47,8 +56,8 @@
         });
     </script>
 
-    <br/>
-    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="post" action="{{ reverse_url('users') }}">
+
+    <form class="form-signup col-md-4 col-md-offset-0" role="form" method="get" action="{{ reverse_url('groups') }}">
         {% module xsrf_form_html() %}
         <h2>グループ名検索</h2>
         <div class="form-group">

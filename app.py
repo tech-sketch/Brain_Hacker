@@ -5,7 +5,8 @@ from tornado.options import options
 
 from urls import url_patterns
 from settings import settings
-
+#import signal
+#signal.signal(signal.SIGPIPE, signal.SIG_IGN)
 
 class Application(tornado.web.Application):
 

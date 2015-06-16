@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
-from sqlalchemy.ext.declarative import declarative_base
-from .base_model import DjangoLikeModelMixin
-Base = declarative_base()
+#from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import DjangoLikeModelMixin, Base
+#Base = declarative_base()
 
 
 class Group(Base, DjangoLikeModelMixin):

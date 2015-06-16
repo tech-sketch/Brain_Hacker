@@ -6,7 +6,8 @@ class UsersHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        users = self.session.query(User).all()
+        username = self.get_argument('username', '')
+        users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).all()
         self.render('users.html', users=users)
 
     @tornado.web.authenticated

@@ -1,14 +1,17 @@
 from sqlalchemy import Column, Integer, String, Binary
-from sqlalchemy.ext.declarative import declarative_base
-from .base_model import DjangoLikeModelMixin
-Base = declarative_base()
+#from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from models.base_model import DjangoLikeModelMixin, Base
+from models.relations import association_table
+from models.group import Group
+#Base = declarative_base()
 
 
 class User(Base, DjangoLikeModelMixin):
     name = Column(String)
     email = Column(String)
-    #hashed_password = Column(String)
     hashed_password = Column(Binary)
+    groups = relationship("Group", secondary=association_table, backref='users')
 
 
 if __name__ == '__main__':
