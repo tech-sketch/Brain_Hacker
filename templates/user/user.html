@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% block content %}
 <div class="container">
     <table class="table table-striped">
@@ -7,16 +7,12 @@
             <th>ユーザ名</th>
             <th>メールアドレス</th>
         </tr>
-        </thead>
         <tbody>
-        {% for user in group.users %}
         <tr>
             <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
             <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
         </tr>
-        {% end %}
         </tbody>
     </table>
-    <a href="{{ reverse_url('search_new_members', group.id) }}">新しいメンバーを追加する</a>
 </div>
 {% end %}

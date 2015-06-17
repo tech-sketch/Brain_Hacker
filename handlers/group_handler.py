@@ -9,7 +9,7 @@ class GroupsHandler(BaseHandler):
     def get(self):
         groupname = self.get_argument('groupname', '')
         groups = self.session.query(Group).filter(Group.name.like('%{0}%'.format(groupname))).all()
-        self.render('groups.html', groups=groups)
+        self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
     def post(self):
@@ -28,7 +28,7 @@ class GroupHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
         group = self.session.query(Group).filter_by(id=id).first()
-        self.render('group.html', group=group)
+        self.render('group/group.html', group=group)
 
 
 class GroupEditHandler(BaseHandler):
@@ -36,7 +36,7 @@ class GroupEditHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
         group = self.session.query(Group).filter_by(id=id).first()
-        self.render('group_edit.html', group=group)
+        self.render('group/group_edit.html', group=group)
 
     @tornado.web.authenticated
     def post(self, id):
@@ -65,7 +65,7 @@ class SearchNewMembersHandler(BaseHandler):
         username = self.get_argument('username', '')
         users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).all()
         users = [user for user in users if int(gid) not in [group.id for group in user.groups]]
-        self.render('search_new_members.html', users=users, gid=gid)
+        self.render('group/search_new_members.html', users=users, gid=gid)
 
     def post(self, gid):
         uid = self.get_argument('uid', '')
@@ -81,4 +81,4 @@ class GroupUserHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
         group = self.session.query(Group).filter_by(id=id).first()
-        self.render('group_users.html', group=group)
+        self.render('group/group_users.html', group=group)
