@@ -27,7 +27,9 @@ class RoomsHandler(BaseHandler):
 class RoomHandler(BaseHandler):
 
     def get(self, group_id, room_id):
-        self.render('room/room.html')
+        from tornado.options import options
+        url = str(options.port) + self.reverse_url('room_socket', group_id, room_id)
+        self.render('room/room.html', url=url)
 
 class RoomEditHandler(BaseHandler):
 
@@ -56,5 +58,27 @@ class RoomDeleteHandler(BaseHandler):
         self.session.commit()
         self.redirect(self.reverse_url('rooms', group_id))
 
+from tornado.ioloop import PeriodicCallback
 class RoomSocketHandler(tornado.websocket.WebSocketHandler):
-    pass
+
+    #index.htmlでコネクションが確保されると呼び出される
+    def open(self, *args, **kwargs):
+        self.i = 0
+        self.callback = PeriodicCallback(self._send_message, 400) #遅延用コールバック
+        self.callback.start()
+        print("WebSocket opened")
+
+    #クライアントからメッセージが送られてくると呼び出される
+    def on_message(self, message):
+        print(message)
+        self.i = 0
+
+    #コールバックスタートで呼び出しが始まる
+    def _send_message(self):
+        self.i += 1
+        self.write_message(str(self.i))
+
+    #ページが閉じ、コネクションが切れる事で呼び出し
+    def on_close(self):
+        self.callback.stop()
+        print("WebSocket closed")

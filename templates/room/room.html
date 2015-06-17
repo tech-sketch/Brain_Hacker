@@ -1,6 +1,18 @@
 {% extends "../base.html" %}
 {% block content %}
+<script language="javascript">
+  var ws = new WebSocket("ws://localhost:{{ url }}");
+  ws.onopen = function() {
+   ws.send("Hello, world");
+  };
+  ws.onmessage = function (evt) {
+   document.getElementById("hogehoge").innerHTML = evt.data + "回WebSocketで受信しました。";
+  };
+</script>
+
 <div class="container">
     ここでブレストをします。
+    <h3><div id="hogehoge"></div></h3>
+    <input type="button" value="リセット" onclick="ws.send('');"/>
 </div>
 {% end %}
