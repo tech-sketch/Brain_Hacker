@@ -44,10 +44,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user['name'] }}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{ reverse_url('logout') }}">Logout</a>
+                            <a href="{{ reverse_url('user', current_user['id']) }}">Profile</a>
                         </li>
                         <li>
-                            <a href="{{ reverse_url('user', current_user['id']) }}">Profile</a>
+                            <a href="{{ reverse_url('logout') }}">Logout</a>
                         </li>
                         <!--<li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>

@@ -13,8 +13,9 @@
         </tbody>
     </table>
     <ul>
-    <li><a href="{{ reverse_url('group_user', group.id) }}">メンバー</a></li>
-    <li><a href="{{ reverse_url('group_edit', group.id) }}">管理</a></li>
+        <li><a href="{{ reverse_url('group_user', group.id) }}">メンバー</a></li>
+        <li><a href="{{ reverse_url('rooms', group.id) }}">ルーム</a></li>
+        <li><a href="{{ reverse_url('group_edit', group.id) }}">管理</a></li>
     </ul>
     {% block sub_content %}
     {% end %}

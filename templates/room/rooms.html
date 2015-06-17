@@ -1,0 +1,89 @@
+{% extends "../base.html" %}
+{% block content %}
+<script>
+    $(document).on("click", ".alert", function(e) {
+        bootbox.dialog({
+            title: "部屋の作成",
+            message: '<div class="row">  ' +
+                '<div class="col-md-12"> ' +
+                '<form class="form-horizontal" name="form1" id="form1" method="post" action="{{ reverse_url('rooms', group.id) }}"> ' +
+                '{% module xsrf_form_html() %} ' +
+                '<div class="form-group"> ' +
+                '<label class="col-md-4 control-label" for="name">部屋名</label> ' +
+                '<div class="col-md-4"> ' +
+                '<input id="name" name="name" type="text" placeholder="Group name" class="form-control input-md"> ' +
+                '<!--<span class="help-block">Here goes your name</span>--> </div> ' +
+                '</div> ' +
+                '<div class="form-group"> ' +
+                '<label class="col-md-4 control-label" for="awesomeness">公開条件</label> ' +
+                '<div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> ' +
+                '<input type="radio" name="awesomeness" id="awesomeness-0" value="Really awesome" checked="checked"> ' +
+                '公開 </label> ' +
+                '</div><div class="radio"> <label for="awesomeness-1"> ' +
+                '<input type="radio" name="awesomeness" id="awesomeness-1" value="Super awesome"> 非公開 </label> ' +
+                '</div> ' +
+                '</div> </div>' +
+                '</form> </div>  </div>',
+            buttons: {
+                success: {
+                    label: "Save",
+                    className: "btn-success",
+                    callback: function () {
+                    $('#form1').submit();
+                        var name = $('#name').val();
+                        var answer = $("input[name='awesomeness']:checked").val()
+                        Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                    }
+                }
+            }
+        }
+    );
+    });
+</script>
+
+<div class="container">
+    <div class="well row">
+        <div class="col-md-5">
+            <h3>部屋とは？</h3>
+            <p>特定のメンバーでブレストを行うことができます。</p>
+        </div>
+        <div class="col-md-7">
+            <button class="btn btn-primary alert" type="submit">部屋の作成</button>
+        </div>
+    </div>
+
+
+
+
+    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('rooms', group.id) }}">
+        {% module xsrf_form_html() %}
+        <h2>部屋名検索</h2>
+        <div class="input-group">
+            <input type="text" name="room_name" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">検索</button>
+            </span>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>部屋名</th>
+            <th>編集</th>
+            <th>削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for room in group.rooms %}
+        <tr>
+            <td><a href="{{ reverse_url('room', group.id, room.id) }}">{{ room.name }}</a></td>
+            <td><button class="btn btn-primary" type="submit">編集</button></td>
+            <td><button class="btn btn-danger" type="submit">削除</button></td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
+</div>
+
+{% end %}
