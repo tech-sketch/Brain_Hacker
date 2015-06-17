@@ -14,11 +14,9 @@ class LoginHandler(BaseHandler):
     def authenticate(self, email, password):
         try:
             user = self.session.query(User).filter_by(email=email).one()
+            return user if user.matches_password(password=password) else None
         except sqlalchemy.orm.exc.NoResultFound:
             return None
-        if user.matches_password(password=password):
-            return user
-        return None
 
     def post(self):
         email = self.get_argument('email', '')
