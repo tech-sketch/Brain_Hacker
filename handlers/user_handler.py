@@ -14,6 +14,6 @@ class UsersHandler(BaseHandler):
 class UserHandler(BaseHandler):
 
     @tornado.web.authenticated
-    def get(self, id):
-        user = self.session.query(User).filter_by(id=id).first()
+    def get(self, user_id):
+        user = self.session.query(User).filter_by(id=user_id).first()
         self.render('user/user.html', user=user)
