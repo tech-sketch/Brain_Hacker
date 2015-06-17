@@ -11,7 +11,7 @@
                 '<div class="form-group"> ' +
                 '<label class="col-md-4 control-label" for="name">部屋名</label> ' +
                 '<div class="col-md-4"> ' +
-                '<input id="name" name="name" type="text" placeholder="Group name" class="form-control input-md"> ' +
+                '<input id="name" name="name" type="text" placeholder="Room name" class="form-control input-md"> ' +
                 '<!--<span class="help-block">Here goes your name</span>--> </div> ' +
                 '</div> ' +
                 '<div class="form-group"> ' +
@@ -40,6 +40,7 @@
     );
     });
 </script>
+
 
 <div class="container">
     <div class="well row">
@@ -78,8 +79,35 @@
         {% for room in group.rooms %}
         <tr>
             <td><a href="{{ reverse_url('room', group.id, room.id) }}">{{ room.name }}</a></td>
-            <td><button class="btn btn-primary" type="submit">編集</button></td>
-            <td><button class="btn btn-danger" type="submit">削除</button></td>
+            <td>
+                <a href="{{ reverse_url('room_edit', group.id, room.id) }}"><button class="btn btn-primary" type="submit">編集</button></a>
+            </td>
+            <td>
+                <script>
+                    $(document).on("click", ".alert{{ room.id}}", function(e) {
+                        bootbox.dialog({
+                            title: "削除確認",
+                            message: '<div class="row">  ' +
+                                '<div class="col-md-12"> ' +
+                                '本当に削除しますか？' +
+                                '<form class="form-horizontal" name="form{{room.id}}" id="form{{room.id}}" method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}"> ' +
+                                '{% module xsrf_form_html() %} ' +
+                                '</form></div></div>',
+                            buttons: {
+                                success: {
+                                    label: "削除",
+                                    className: "btn-danger",
+                                    callback: function () {
+                                    $('#form{{room.id}}').submit();
+                                    }
+                                }
+                            }
+                        }
+                    );
+                    });
+                </script>
+                <button class="btn btn-danger alert{{room.id}}" type="submit">削除</button>
+            </td>
         </tr>
         {% end %}
         </tbody>
