@@ -12,7 +12,11 @@
         </tr>
         </tbody>
     </table>
-    <a href="{{ reverse_url('group_user', group.id) }}">メンバー</a><br/>
-    <a href="{{ reverse_url('group_edit', group.id) }}">管理</a>
+    <ul>
+    <li><a href="{{ reverse_url('group_user', group.id) }}">メンバー</a></li>
+    <li><a href="{{ reverse_url('group_edit', group.id) }}">管理</a></li>
+    </ul>
+    {% block sub_content %}
+    {% end %}
 </div>
 {% end %}

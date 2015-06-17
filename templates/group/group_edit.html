@@ -1,6 +1,5 @@
-{% extends "../base.html" %}
-{% block content %}
-<script src="{{ static_url('js/bootbox.min.js') }}"></script>
+{% extends "group.html" %}
+{% block sub_content %}
 
 <script>
     $(document).on("click", ".alert", function(e) {
@@ -27,31 +26,21 @@
     });
 </script>
 
-<div class="container">
 
-     <form class="form-signup col-md-6 col-md-offset-3" role="form" method="post" action="{{ reverse_url('group_edit', group.id) }}">
-         {% module xsrf_form_html() %}
-         <h2 class="form-signin-heading">Group Edit</h2>
-         <div class="form-group">
-             <input type="text" name="name" class="form-control" value="{{ group.name }}" required="" autofocus="" autocomplete="off">
-         </div>
-         <div class="form-inline">
-             <div class="form-group">
-                 <button class="btn btn-primary" type="submit">更新</button>
-             </div>
-             <div class="form-group">
-                 <a class="alert">削除</a>
-             </div>
-         </div>
-     </form>
+<form class="col-md-6" role="form" method="post" action="{{ reverse_url('group_edit', group.id) }}">
+    {% module xsrf_form_html() %}
+    <h2>グループの編集</h2>
+    <div class="form-group">
+        <input type="text" name="name" class="form-control" value="{{ group.name }}" required="" autofocus="" autocomplete="off">
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">更新</button>
+        </div>
+        <div class="form-group">
+            <a class="alert">削除</a>
+        </div>
+    </div>
+</form>
 
-<!--
-     <form class="form-signup col-md-6 col-md-offset-3" role="form" method="POST" action="{{ reverse_url('group_edit', group.id) }}">
-         {% module xsrf_form_html() %}
-         <div class="form-group">
-             <button class="btn btn-danger" type="hidden" name="_method" value="DELETE">削除</button>
-         </div>
-     </form>
--->
-</div>
 {% end %}

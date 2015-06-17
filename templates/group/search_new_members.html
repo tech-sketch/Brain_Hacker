@@ -1,44 +1,40 @@
-{% extends "../base.html" %}
+{% extends "group.html" %}
 
-{% block content %}
+{% block sub_content %}
 
-<div class="container">
-    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('search_new_members', gid) }}">
-        {% module xsrf_form_html() %}
-        <h2>ユーザ名検索</h2>
-        <div class="input-group">
-            <input type="text" name="username" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
-        <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">検索する</button>
-        </span>
-        </div>
-    </form>
+<form class="col-md-6" role="form" method="get" action="{{ reverse_url('search_new_members', group.id) }}">
+    {% module xsrf_form_html() %}
+    <h2>ユーザ名検索</h2>
+    <div class="input-group">
+        <input type="text" name="username" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">検索する</button>
+    </span>
+    </div>
+</form>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ユーザ名</th>
-            <th>メールアドレス</th>
-            <th>招待</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-        <tr>
-            <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
-            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-            <td>
-                <form class="form-signup col-md-6 col-md-offset-3" role="form" method="post" action="{{ reverse_url('search_new_members', gid) }}">
-                    {% module xsrf_form_html() %}
-                    <div class="form-group">
-                        <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">招待する</button>
-                    </div>
-                </form>
-            </td>
-        </tr>
-        {% end %}
-        </tbody>
-    </table>
-</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ユーザ名</th><th>メールアドレス</th><th>招待</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
+        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+        <td>
+            <form class="form-signup col-md-6 col-md-offset-3" role="form" method="post" action="{{ reverse_url('search_new_members', group.id) }}">
+                {% module xsrf_form_html() %}
+                <div class="form-group">
+                    <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">招待する</button>
+                </div>
+            </form>
+        </td>
+    </tr>
+    {% end %}
+    </tbody>
+</table>
 {% end %}
