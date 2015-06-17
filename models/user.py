@@ -1,10 +1,9 @@
+import bcrypt
 from sqlalchemy import Column, Integer, String, Binary
-#from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from models.base_model import DjangoLikeModelMixin, Base
 from models.relations import association_table
 from models.group import Group
-#Base = declarative_base()
 
 
 class User(Base, DjangoLikeModelMixin):
@@ -13,6 +12,19 @@ class User(Base, DjangoLikeModelMixin):
     hashed_password = Column(Binary)
     groups = relationship("Group", secondary=association_table, backref='users')
 
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.hashed_password = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+
+    def json(self):
+        return {'name': self.name, 'email': self.email, 'id': self.id}
+
+    def matches_password(self, password):
+        return bcrypt.hashpw(password=password.encode('utf-8'), salt=self.hashed_password) == self.hashed_password
+
+    def belongs_to_group(self, group_id):
+        return group_id in [group.id for group in self.groups]
 
 if __name__ == '__main__':
     import sqlalchemy

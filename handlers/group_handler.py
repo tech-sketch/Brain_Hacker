@@ -64,7 +64,7 @@ class SearchNewMembersHandler(BaseHandler):
     def get(self, gid):
         username = self.get_argument('username', '')
         users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).all()
-        users = [user for user in users if int(gid) not in [group.id for group in user.groups]]
+        users = [user for user in users if not user.belongs_to_group(int(gid))]
         self.render('group/search_new_members.html', users=users, gid=gid)
 
     def post(self, gid):
@@ -72,7 +72,6 @@ class SearchNewMembersHandler(BaseHandler):
         user = self.session.query(User).filter_by(id=uid).first()
         group = self.session.query(Group).filter_by(id=gid).first()
         user.groups.append(group)
-        #self.session.add(user)
         self.session.commit()
         self.redirect(self.reverse_url('search_new_members', gid))
 

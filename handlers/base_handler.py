@@ -2,23 +2,6 @@ import tornado.web
 from backend import Backend
 
 
-"""
-class BaseHandler(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return self.application.db
-
-    @property
-    def session(self):
-        return self.application.session_engine
-
-    def on_finish(self):
-        if self.session and self.session.is_modified:
-            self.session.save()
-
-        super(BaseHandler, self).on_finish()
-"""
-
 class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
@@ -29,8 +12,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def set_current_user(self, user):
         if user:
-            user_dict = {'name': user.name, 'email': user.email, 'id': user.id}
-            self.set_secure_cookie('user', tornado.escape.json_encode(user_dict))
+            self.set_secure_cookie('user', tornado.escape.json_encode(user.json()))
         else:
             self.clear_cookie('user')
 

@@ -1,6 +1,5 @@
 import sqlalchemy.orm.exc
 from sqlalchemy.sql import exists
-import bcrypt
 import tornado.web
 import tornado.escape
 from handlers.base_handler import BaseHandler
@@ -12,15 +11,12 @@ class LoginHandler(BaseHandler):
     def get(self):
         self.render('auth/login.html', error_message='')
 
-    def matches_password(self, password, hashed_password):
-        return bcrypt.hashpw(password=password.encode('utf-8'), salt=hashed_password) == hashed_password
-
     def authenticate(self, email, password):
         try:
             user = self.session.query(User).filter_by(email=email).one()
-        except (sqlalchemy.orm.exc.NoResultFound, sqlalchemy.orm.exc.MultipleResultsFound):
+        except sqlalchemy.orm.exc.NoResultFound:
             return None
-        if self.matches_password(password=password, hashed_password=user.hashed_password):
+        if user.matches_password(password=password):
             return user
         return None
 
@@ -57,8 +53,7 @@ class SignupHandler(BaseHandler):
         password = self.get_argument('password', '')
         email    = self.get_argument('email', '')
         if not self.exists_email(email):
-            hashed_password = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
-            self.session.add(User(name=username, hashed_password=hashed_password, email=email))
+            self.session.add(User(name=username, password=password, email=email))
             self.session.commit()
             self.redirect(self.reverse_url('login'))
         else:
