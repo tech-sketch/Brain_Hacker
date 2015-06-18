@@ -71,6 +71,16 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     #クライアントからメッセージが送られてくると呼び出される
     def on_message(self, message):
         print(message)
+        import tornado.escape
+        message_dict = tornado.escape.json_decode(message)
+        if message_dict['action'] == 'create':
+            self.write_message(message)
+        elif message_dict['action'] == 'move':
+            self.write_message(message)
+        elif message_dict['action'] == 'delete':
+            self.write_message(message)
+        else:
+            pass
         self.i = 0
 
     #コールバックスタートで呼び出しが始まる
