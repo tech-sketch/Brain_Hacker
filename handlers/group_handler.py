@@ -29,7 +29,7 @@ def check_group_permission(f):
         if user.belongs_to_group(int(args[1])):
             pass
         else:
-            args[0].redirect(args[0].reverse_url('groups'))
+            args[0].redirect(args[0].reverse_url('index'))
             return
         return f(*args)
     return wrapper
