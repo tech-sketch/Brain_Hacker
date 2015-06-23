@@ -26,5 +26,6 @@ url_patterns = (
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/', RoomHandler, name='room'),
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/edit', RoomEditHandler, name='room_edit'),
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/delete', RoomDeleteHandler, name='room_delete'),
-    url(r'/groups/([0-9]+)/rooms/([0-9]+)/socket', RoomSocketHandler, name='room_socket'),
+    #url(r'/groups/([0-9]+)/rooms/([0-9]+)/socket', RoomSocketHandler, name='room_socket'),
+    url(r'/websocket', RoomSocketHandler, name='room_socket'),
 )

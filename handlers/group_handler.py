@@ -76,7 +76,7 @@ class SearchNewMembersHandler(BaseHandler):
         group = self.session.query(Group).filter_by(id=group_id).first()
         user.groups.append(group)
         self.session.commit()
-        self.redirect(self.reverse_url('search_new_members', group=group))
+        self.redirect(self.reverse_url('search_new_members', group_id))
 
 class GroupUserHandler(BaseHandler):
 

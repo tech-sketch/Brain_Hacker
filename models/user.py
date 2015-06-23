@@ -24,7 +24,11 @@ class User(Base, DjangoLikeModelMixin):
         return bcrypt.hashpw(password=password.encode('utf-8'), salt=self.hashed_password) == self.hashed_password
 
     def belongs_to_group(self, group_id):
-        return group_id in [group.id for group in self.groups]
+        for group in self.groups:
+            if group_id == group.id:
+                return True
+        return False
+
 
 if __name__ == '__main__':
     import sqlalchemy
@@ -35,6 +39,6 @@ if __name__ == '__main__':
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
     import bcrypt
-    user = User(name="name", email="neko", hashed_password=bcrypt.hashpw("neko".encode("utf-8"), bcrypt.gensalt()))
+    user = User(name="name", email="neko", password="neko")
     session.add(user)
     session.commit()
