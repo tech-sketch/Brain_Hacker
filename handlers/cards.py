@@ -23,6 +23,11 @@ class Cards(object):
         if i != -1:
             self.cards[room_id][i]['text'] = text
 
+    def update_vote_count(self, room_id, card_id):
+        i = self.index(room_id, card_id)
+        if i != -1:
+            self.cards[room_id][i]['vote_count'] += 1
+
     def delete(self, room_id, card_id):
         i = self.index(room_id, card_id)
         if i != -1:

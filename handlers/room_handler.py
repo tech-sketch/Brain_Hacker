@@ -89,6 +89,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
             self.delete_card(message)
         elif message['action'] == 'changeTheme':
             self.change_theme(message)
+        elif message['action'] == 'voteUp':
+            self.vote_up(message)
 
     def on_close(self):
         print('WebSocket Closed')
@@ -103,6 +105,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
+
         self.write_message(json.dumps({'action': 'initCards', 'data': self.cards.get_all(room_id)}))
         self.write_message(json.dumps({'action': 'initColumns', 'data': ''}))
         self.write_message(json.dumps({'action': 'changeTheme', 'data': 'bigcards'}))
@@ -127,7 +130,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     def create_card(self, message):
         data = message['data']
         clean_data = {'text': data['text'], 'id': data['id'], 'x': data['x'], 'y': data['y'],
-                      'rot': data['rot'], 'colour': data['colour'], 'sticker': None}
+                      'rot': data['rot'], 'colour': data['colour'], 'sticker': None, 'vote_count': 0}
         message_out = {
             'action': 'createCard',
             'data': clean_data
@@ -158,6 +161,18 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     def change_theme(self, message):
         clean_message = {'data': message['data'], 'action': 'changeTheme'}
         self.broadcast_to_room(self, clean_message)
+
+    def vote_up(self, message):
+        print("vote-1up")
+        # notify vote_count
+        # update vote_count
+        clean_message = {
+            'action': 'voteUp',
+            'data': {'id': message['data']['id']}
+        }
+        self.broadcast_to_room(self, clean_message)
+        room_id = self.rooms.get_room_id(self)
+        self.cards.update_vote_count(room_id, card_id=message['data']['id'])
 
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)

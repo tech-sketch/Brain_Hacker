@@ -40,6 +40,7 @@ socket.onclose = function() {
 };
 
 socket.onmessage = function(data) {
+
     getMessage(data);
 };
 
@@ -99,8 +100,7 @@ function getMessage(m) {
 
         case 'createCard':
             //console.log(data);
-            drawNewCard(data.id, data.text, data.x, data.y, data.rot, data.colour,
-                null);
+            drawNewCard(data.id, data.text, data.x, data.y, data.rot, data.colour, null, data.vote_count);
             break;
 
         case 'deleteCard':
@@ -151,6 +151,11 @@ function getMessage(m) {
             resizeBoard(message.data);
             break;
 
+        case 'voteUp':
+            //$('#' + data.id + ' .vote-count').html(data['vote_count']);
+            $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) + 1));
+            break;
+
         default:
             //unknown message
             alert('unknown action: ' + JSON.stringify(message));
@@ -164,18 +169,21 @@ $(document).bind('keyup', function(event) {
     keyTrap = event.which;
 });
 
-function drawNewCard(id, text, x, y, rot, colour, sticker, animationspeed) {
+function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
     //cards[id] = {id: id, text: text, x: x, y: y, rot: rot, colour: colour};
-
+console.log("draw"+vote_count);
     var h = '<div id="' + id + '" class="card ' + colour +
         ' draggable" style="-webkit-transform:rotate(' + rot +
         'deg);\
 	">\
 	<img src="{{ static_url('images/icons/token/')}}Xion.png" class="card-icon delete-card-icon" />\
 	<img class="card-image" src="{{static_url('images/')}}' + colour + '-card.png">\
+
 	<div id="content:' + id +
         '" class="content stickertarget droppable">' +
         text + '</div><span class="filler"></span>\
+    <img src="{{ static_url('images/icons/token/')}}vote-up.png" class="vote-icon vote-up" />\
+    <div class="vote-count">' + vote_count + '</div>\
 	</div>';
 
     var card = $(h);
@@ -279,11 +287,54 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, animationspeed) {
         }
     );
 
+    card.hover(
+        function() {
+            $(this).addClass('hover');
+            $(this).children('.vote-icon').fadeIn(10);
+        },
+        function() {
+            $(this).removeClass('hover');
+            $(this).children('.vote-icon').fadeOut(150);
+        }
+    );
+
+    card.children('.vote-icon').hover(
+        function() {
+            $(this).addClass('vote-icon-hover');
+        },
+        function() {
+            $(this).removeClass('vote-icon-hover');
+        }
+    );
+
+    card.hover(
+        function() {
+            $(this).addClass('hover');
+            $(this).children('.vote-count').fadeIn(10);
+        },
+        function() {
+            $(this).removeClass('hover');
+            $(this).children('.vote-count').fadeOut(150);
+        }
+    );
+
+
     card.children('.delete-card-icon').click(
         function() {
             $("#" + id).remove();
             //notify server of delete
             sendAction('deleteCard', {
+                'id': id
+            });
+        }
+    );
+
+    card.children('.vote-up').click(
+        function() {
+            //$("#" + id).remove();
+            //notify server of delete
+            $('#' + id + ' .vote-count').html('+' + (parseInt($('#' + id + ' .vote-count').html()) + 1));
+            sendAction('voteUp', {
                 'id': id
             });
         }
@@ -349,8 +400,9 @@ function addSticker(cardId, stickerId) {
 //----------------------------------
 // cards
 //----------------------------------
-function createCard(id, text, x, y, rot, colour) {
-    drawNewCard(id, text, x, y, rot, colour, null);
+function createCard(id, text, x, y, rot, colour, vote_count) {
+console.log("create"+vote_count);
+    drawNewCard(id, text, x, y, rot, colour, null, vote_count);
 
     var action = "createCard";
 
@@ -360,7 +412,8 @@ function createCard(id, text, x, y, rot, colour) {
         x: x,
         y: y,
         rot: rot,
-        colour: colour
+        colour: colour,
+        vote_count: vote_count
     };
 
     sendAction(action, data);
@@ -393,6 +446,7 @@ function initCards(cardArray) {
             card.rot,
             card.colour,
             card.sticker,
+            card.vote_count,
             0
         );
     }
@@ -708,7 +762,8 @@ $(function() {
                 '',
                 58, $('div.board-outline').height(), // hack - not a great way to get the new card coordinates, but most consistant ATM
                 rotation,
-                randomCardColour());
+                randomCardColour(),
+                0);
         });
 
 

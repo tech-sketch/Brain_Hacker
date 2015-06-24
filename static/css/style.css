@@ -89,6 +89,29 @@ width: 16px; height: 16px;
 	opacity: .9;
 }
 
+.vote-icon {
+display:none;
+position: absolute;
+top: 60%; left: 15%;
+opacity: .3;
+width: 20px; height: 20px;
+}
+
+.vote-icon-hover {
+	opacity: .9;
+}
+
+.vote-count {
+    position: absolute;
+    top:60%; left:30%;
+    font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	font-size: 18px;
+}
+
+.vote-count-hover {
+    opacity: 1.0;
+}
+
 .card-edit-form, .card-edit-form input, .card-edit-form textarea {
 	border: none;
 	font-size:inherit;
