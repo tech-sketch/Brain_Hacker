@@ -7,4 +7,17 @@
         <p>Brain Hackerでは、匿名で、楽しく、面白くブレストを行うことができます。</p>
     </div>
 </div>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="{{ static_url('js/lobibox.min.js') }}"></script>
+<!--<script src="{{ static_url('js/demo.js') }}"></script>-->
+<script>
+    function bbb(message) {
+        Lobibox.notify('warning', {
+            msg: message
+        });
+    };
+</script>
+{% if error_message %}
+<script>bbb("{{ error_message }}");</script>
+{% end %}
 {% end %}

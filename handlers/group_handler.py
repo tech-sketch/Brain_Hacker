@@ -29,12 +29,14 @@ def check_group_permission(f):
         if user.belongs_to_group(int(args[1])):
             pass
         else:
-            args[0].redirect(args[0].reverse_url('index'))
+            error_message = 'この操作は許可されていません。'
+            args[0].redirect(args[0].reverse_url('index') + '?error_message={0}'.format(error_message))
             return
         return f(*args)
     return wrapper
 
 class GroupHandler(BaseHandler):
+
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
