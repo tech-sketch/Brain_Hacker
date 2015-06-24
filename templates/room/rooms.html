@@ -76,7 +76,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for room in group.rooms %}
+        {% for room in rooms %}
         <tr>
             <td><a href="{{ reverse_url('room', group.id, room.id) }}">{{ room.name }}</a></td>
             <td>
@@ -112,6 +112,16 @@
         {% end %}
         </tbody>
     </table>
+    <div id="lobibox-notification-examples">
+        <div class="bs-example">
+            <button id="basicInfo" class="btn btn-info">Info</button>
+            <button id="basicWarning" class="btn btn-warning">Warning</button>
+            <button id="basicError" class="btn btn-danger">Error</button>
+            <button id="basicSuccess" class="btn btn-success">Success</button>
+        </div>
+    </div>
 </div>
-
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="{{ static_url('js/lobibox.min.js') }}"></script>
+<script src="{{ static_url('js/demo.js') }}"></script>
 {% end %}
