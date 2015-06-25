@@ -61,6 +61,13 @@
 
 <div id="chat_div" class="chat"><!--Here add chat box--></div>
 
+<p><a href="#" class="btn" id="A">chatを隠せるボタン</p>
+<script>
+        $(".btn").on("click", function() {
+           $("#chat_div").chatbox("toggleContent");
+        });
+</script>
+
 <!--div.trash-->
 <!--	i.fa.fa-trash-o.fa-lg.faded-icon-->
 <!--<div style="width: 980px; height: 450px; border: solid 2px; opacity:.1; margin-top: 100px"> this will be the backlog that only appears on drag or perhaps not at all</div>-->
