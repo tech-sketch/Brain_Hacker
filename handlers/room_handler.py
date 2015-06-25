@@ -1,5 +1,6 @@
 import json
 import random
+import uuid
 
 import tornado.web
 import tornado.websocket
@@ -7,6 +8,7 @@ import tornado.websocket
 from .base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
+
 from .util import check_group_permission
 
 
@@ -76,8 +78,10 @@ class RoomDeleteHandler(BaseHandler):
 class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     from .rooms import Rooms
     from .cards import Cards
+    from .chat import Chat
     rooms = Rooms()
     cards = Cards()
+    chat = Chat()
 
     def open(self, *args, **kwargs):
         print('WebSocket Opened')
@@ -102,6 +106,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
             self.change_theme(message)
         elif message['action'] == 'voteUp':
             self.vote_up(message)
+        elif message['action'] == 'chat':
+            self.update_chat(message)
 
     def on_close(self):
         print('WebSocket Closed')
@@ -122,6 +128,9 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.write_message(json.dumps({'action': 'changeTheme', 'data': 'bigcards'}))
         self.write_message(json.dumps({'action': 'setBoardSize', 'data': ''}))
         self.write_message(json.dumps({'action': 'initialUsers', 'data': ''}))
+        self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache,
+                                                                          'name': "user" +
+                                                                                  str(self.chat.get_random_name())}}))
 
     def move_card(self, message):
         message_out = {
@@ -184,6 +193,20 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.broadcast_to_room(self, clean_message)
         room_id = self.rooms.get_room_id(self)
         self.cards.update_vote_count(room_id, card_id=message['data']['id'])
+
+    def update_chat(self, message):
+        print("update_chat")
+
+        chat_data = {'id': str(uuid.uuid4()),
+                     'body': message['data']["body"],
+                     'name': message['data']['name']
+        }
+        self.chat.update_cache(chat_data)
+        print(message['data']['name'])
+        message_out = {
+            'data': chat_data, 'action': 'chat'
+        }
+        self.broadcast_to_room(self, message_out)
 
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)
