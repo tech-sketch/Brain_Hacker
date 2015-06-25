@@ -306,7 +306,9 @@ $(function () {
         (function () {
             $('#basicInfo').click(function () {
                 Lobibox.notify('info', {
-                    msg: 'Lorem ipsum dolor sit amet against apennine any created, spend loveliest, building stripes.'
+                    title: '指令',
+                    delay: 600000,
+                    msg: '感情的な視点でアイディアを出してください。'
                 });
             });
             $('#basicWarning').click(function () {
