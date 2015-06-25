@@ -3,6 +3,9 @@ from models.user import User
 
 
 def check_group_permission(f):
+    """
+    グループに所属していない場合は、リダイレクトする。
+    """
     def wrapper(*args):
         user = args[0].get_current_user()
         user = args[0].session.query(User).filter_by(id=user['id']).first()
