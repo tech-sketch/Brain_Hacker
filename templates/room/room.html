@@ -59,6 +59,14 @@
   <!--<ul id="names-ul"></ul>-->
 <!--</div>-->
 
+<div id="chat_div" class="chat"><!--Here add chat box--></div>
+
+<p><a href="#" class="btn" id="A">chatを隠せるボタン</p>
+<script>
+        $(".btn").on("click", function() {
+           $("#chat_div").chatbox("toggleContent");
+        });
+</script>
 
 <!--div.trash-->
 <!--	i.fa.fa-trash-o.fa-lg.faded-icon-->
