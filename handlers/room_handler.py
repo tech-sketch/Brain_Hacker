@@ -128,7 +128,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.write_message(json.dumps({'action': 'changeTheme', 'data': 'bigcards'}))
         self.write_message(json.dumps({'action': 'setBoardSize', 'data': ''}))
         self.write_message(json.dumps({'action': 'initialUsers', 'data': ''}))
-        self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache,
+        self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache[room_id],
                                                                           'name': "user" +
                                                                                   str(self.chat.get_random_name())}}))
 
@@ -195,13 +195,15 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.cards.update_vote_count(room_id, card_id=message['data']['id'])
 
     def update_chat(self, message):
+        room_id = self.rooms.get_room_id(self)
+
         print("update_chat")
 
         chat_data = {'id': str(uuid.uuid4()),
                      'body': message['data']["body"],
                      'name': message['data']['name']
         }
-        self.chat.update_cache(chat_data)
+        self.chat.update_cache(chat_data, room_id)
         print(message['data']['name'])
         message_out = {
             'data': chat_data, 'action': 'chat'
