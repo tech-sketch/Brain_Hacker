@@ -4,10 +4,20 @@ var columns = [];
 var currentTheme = "bigcards";
 var boardInitialized = false;
 var keyTrap = null;
-
+var nickname = {name : "default"}
 
 //var socket = io.connect();
-
+$(document).ready(function() {
+    // chat box sets
+    $("#chat_div").chatbox({id : "chat_div",
+                                  title : "chat",
+                                  user : nickname,
+                                  offset: 0,
+                                  messageSent: function(id, user, msg){
+                                       newMessage(msg, nickname.name);
+                                       this.boxManager.addMsg(nickname.name, msg);
+                                  }});
+});
 
 var socket = new WebSocket("ws://localhost:{{ port }}/websocket");
 
@@ -80,6 +90,21 @@ function getMessage(m) {
     //console.log('<-- ' + action);
 
     switch (action) {
+        case 'chat':
+            $("#chat_div").chatbox("option", "boxManager").addMsg(data.name, data['body']);
+            console.log("chat get")
+            break;
+
+        case 'chatMessages':
+            nickname.name = data.name;
+            console.log("Chat Messages");
+
+            for (var i = 0; i < data.cache.length; i++){
+                //$("#chat_div").html($("#chat_div").html() + data.cache[i].body + '<br/>')
+                $("#chat_div").chatbox("option", "boxManager").addMsg(data.cache[i].name, data.cache[i].body);
+            }
+            break;
+
         case 'roomAccept':
             //okay we're accepted, then request initialization
             //(this is a bit of unnessary back and forth but that's okay for now)
@@ -358,6 +383,12 @@ console.log("draw"+vote_count);
         addSticker(id, sticker);
 }
 
+// Chat get new message
+function newMessage(msg, name) {
+    var data = {body: msg, name: name}
+    sendAction('chat', data);
+    console.log("sent chatbox");
+}
 
 function onCardChange(id, text) {
     sendAction('editCard', {
