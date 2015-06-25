@@ -3,7 +3,7 @@
 <script>
     $(document).on("click", ".alert", function(e) {
         bootbox.dialog({
-            title: "コミュニティの作成",
+            title: "グループの作成",
             message: '<div class="row">  ' +
                 '<div class="col-md-12"> ' +
                 '<form class="form-horizontal" name="form1" id="form1" method="post" action="{{ reverse_url('groups') }}"> ' +
@@ -48,7 +48,7 @@
             <p>特定/任意のメンバーで情報共有を行うことができます。</p>
         </div>
         <div class="col-md-7">
-            <button class="btn btn-primary alert" type="submit">コミュニティの作成</button>
+            <button class="btn btn-primary alert" type="submit">グループの作成</button>
         </div>
     </div>
 

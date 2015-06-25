@@ -1,20 +1,26 @@
+import json
+import random
+
+import tornado.web
 import tornado.websocket
+
 from .base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
-import json
-import random
-import tornado.web
+from .util import check_group_permission
+
 
 class RoomsHandler(BaseHandler):
 
+    @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
         room_name = self.get_argument('room_name', '')
-        rooms = self.session.query(Room).filter(Room.name.like('%{0}%'.format(room_name))).filter_by(group_id=group_id).all()
+        rooms = self.session.query(Room).filter(Room.name.like('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.render('room/rooms.html', rooms=rooms, group=group)
 
+    @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
         name = self.get_argument('name', '')
@@ -28,6 +34,8 @@ class RoomsHandler(BaseHandler):
 
 class RoomHandler(BaseHandler):
 
+    @check_group_permission
+    @tornado.web.authenticated
     def get(self, group_id, room_id):
         from tornado.options import options
         port = str(options.port)
@@ -36,12 +44,14 @@ class RoomHandler(BaseHandler):
 
 class RoomEditHandler(BaseHandler):
 
+    @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id, room_id):
         group = self.session.query(Group).filter_by(id=group_id).first()
         room = self.session.query(Room).filter_by(id=room_id).first()
         self.render('room/room_edit.html', group=group, room=room)
 
+    @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
         name = self.get_argument('name', '')
@@ -54,6 +64,7 @@ class RoomEditHandler(BaseHandler):
 
 class RoomDeleteHandler(BaseHandler):
 
+    @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
         room = self.session.query(Room).filter_by(id=room_id).first()

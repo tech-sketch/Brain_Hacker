@@ -2,13 +2,15 @@ import tornado.web
 from .base_handler import BaseHandler
 from models.group import Group
 from models.user import User
+from .util import check_group_permission
+
 
 class GroupsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
         groupname = self.get_argument('groupname', '')
-        groups = self.session.query(Group).filter(Group.name.like('%{0}%'.format(groupname))).all()
+        groups = self.session.query(Group).filter(Group.name.like('%{0}%'.format(groupname))).order_by(Group.name).all()
         self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
@@ -22,18 +24,6 @@ class GroupsHandler(BaseHandler):
         self.session.commit()
         self.redirect(self.reverse_url('groups'))
 
-def check_group_permission(f):
-    def wrapper(*args):
-        user = args[0].get_current_user()
-        user = args[0].session.query(User).filter_by(id=user['id']).first()
-        if user.belongs_to_group(int(args[1])):
-            pass
-        else:
-            error_message = 'この操作は許可されていません。'
-            args[0].redirect(args[0].reverse_url('index') + '?error_message={0}'.format(error_message))
-            return
-        return f(*args)
-    return wrapper
 
 class GroupHandler(BaseHandler):
 
@@ -81,7 +71,7 @@ class SearchNewMembersHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id):
         username = self.get_argument('username', '')
-        users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).all()
+        users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).order_by(User.name).all()
         users = [user for user in users if not user.belongs_to_group(int(group_id))]
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.render('group/search_new_members.html', users=users, group=group)
