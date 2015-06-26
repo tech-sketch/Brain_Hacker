@@ -17,7 +17,7 @@ settings['template_path'] = os.path.join(BASE_DIR, 'templates')
 settings['cookie_secret'] = os.environ.get('SECRET_TOKEN', '__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__')
 settings['xsrf_cookies'] = True
 settings['login_url'] = '/auth/login/'
-
+settings['ui_modules'] = {}
 
 DATABASES = {
     'default': {

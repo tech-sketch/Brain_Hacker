@@ -1,16 +1,16 @@
 {% extends "../base.html" %}
 {% block content %}
 
-
-<form class="col-md-6" role="form" method="post" action="{{ reverse_url('room_edit', group.id, room.id) }}">
-    {% module xsrf_form_html() %}
-    <h2>部屋の編集</h2>
-    <div class="form-group">
-        <input type="text" name="name" class="form-control" value="{{ room.name }}" required="" autofocus="" autocomplete="off">
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">更新</button>
-    </div>
-</form>
-
+<div class="container">
+    <form class="col-md-6" role="form" method="post" action="{{ reverse_url('room_edit', group.id, room.id) }}">
+        {% module xsrf_form_html() %}
+        <h2>部屋の編集</h2>
+        <div class="form-group">
+            <input type="text" name="name" class="form-control" value="{{ room.name }}" required="" autofocus="" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">更新</button>
+        </div>
+    </form>
+</div>
 {% end %}

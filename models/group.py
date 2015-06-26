@@ -7,7 +7,7 @@ from models.base_model import DjangoLikeModelMixin, Base
 class Group(Base, DjangoLikeModelMixin):
     from .room import Room
     name = Column(String)
-    rooms = relationship("Room", backref='groups')
+    rooms = relationship("Room", backref='groups', cascade='all, delete-orphan',)
 
 if __name__ == '__main__':
     import sqlalchemy
