@@ -18,7 +18,7 @@ class RoomsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id):
         room_name = self.get_argument('room_name', '')
-        rooms = self.session.query(Room).filter(Room.name.like('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
+        rooms = self.session.query(Room).filter(Room.name.ilike('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.render('room/rooms.html', rooms=rooms, group=group)
 

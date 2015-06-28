@@ -29,10 +29,9 @@
                     label: "Save",
                     className: "btn-success",
                     callback: function () {
-                    $('#form1').submit();
+                        $('#form1').submit();
                         var name = $('#name').val();
                         var answer = $("input[name='awesomeness']:checked").val()
-                        Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
                     }
                 }
             }
@@ -42,7 +41,7 @@
 </script>
 
 <div class="container">
-    <div class="well row">
+    <div class="row well">
         <div class="col-md-5">
             <h3>グループとは？</h3>
             <p>特定/任意のメンバーで情報共有を行うことができます。</p>
