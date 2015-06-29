@@ -1,40 +1,97 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container">
-    <div class="well row">
-        <h3>Brain Hackerとは？</h3>
-        <p>Brain Hackerでは、匿名で、楽しく、面白くブレストを行うことができます。</p>
-    </div>
-</div>
-<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="{{ static_url('js/lobibox.min.js') }}"></script>
-<!--<script src="{{ static_url('js/demo.js') }}"></script>-->
-<script>
-function getCookie(name) {
-    var c = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-    return c ? c[1] : undefined;
-}
 
-function ccc() {
-    data = {};
-    data._xsrf = getCookie("_xsrf");
-    jQuery.ajax({
-        url: "{{ reverse_url('index') }}",
-        data: jQuery.param(data),
-        type: "DELETE",
-    });
-}
-</script>
-<script>
-    function bbb(message) {
-        Lobibox.notify('warning', {
-            msg: message
-        });
-    };
-</script>
-<script>ccc();</script>
-{% if error_message %}
-    <script>bbb("{{ error_message }}");</script>
-{% end %}
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Brain Hacker</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">匿名で楽しく面白くブレストできるサービス</h5>
+        </div>
+        {% if not current_user %}
+        <div class="row center">
+          <a href="{{ reverse_url('signup') }}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Sign up</a>
+        </div>
+        {% end %}
+        <br><br>
+      </div>
+    </div>
+    <div class="parallax"><img src="{{ static_url('images/background1.jpg') }}" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">Speeds up development</h5>
+
+            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">User Experience Focused</h5>
+
+            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Easy to work with</h5>
+
+            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="{{ static_url('images/background2.jpg') }}" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>Contact Us</h4>
+          <p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="{{ static_url('images/background3.jpg') }}" alt="Unsplashed background img 3"></div>
+  </div>
 {% end %}
