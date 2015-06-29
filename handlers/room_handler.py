@@ -18,7 +18,7 @@ class RoomsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id):
         room_name = self.get_argument('room_name', '')
-        rooms = self.session.query(Room).filter(Room.name.like('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
+        rooms = self.session.query(Room).filter(Room.name.ilike('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.render('room/rooms.html', rooms=rooms, group=group)
 
@@ -122,13 +122,14 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
+        # nick_name = self.chat.set_nickname(self, room_id, self.get_current_user())
 
         self.write_message(json.dumps({'action': 'initCards', 'data': self.cards.get_all(room_id)}))
         self.write_message(json.dumps({'action': 'initColumns', 'data': ''}))
         self.write_message(json.dumps({'action': 'changeTheme', 'data': 'bigcards'}))
         self.write_message(json.dumps({'action': 'setBoardSize', 'data': ''}))
         self.write_message(json.dumps({'action': 'initialUsers', 'data': ''}))
-        self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache,
+        self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache[room_id],
                                                                           'name': "user" +
                                                                                   str(self.chat.get_random_name())}}))
 
@@ -195,13 +196,15 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.cards.update_vote_count(room_id, card_id=message['data']['id'])
 
     def update_chat(self, message):
+        room_id = self.rooms.get_room_id(self)
+
         print("update_chat")
 
         chat_data = {'id': str(uuid.uuid4()),
                      'body': message['data']["body"],
                      'name': message['data']['name']
         }
-        self.chat.update_cache(chat_data)
+        self.chat.update_cache(chat_data, room_id)
         print(message['data']['name'])
         message_out = {
             'data': chat_data, 'action': 'chat'

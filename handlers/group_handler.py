@@ -10,7 +10,7 @@ class GroupsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         groupname = self.get_argument('groupname', '')
-        groups = self.session.query(Group).filter(Group.name.like('%{0}%'.format(groupname))).order_by(Group.name).all()
+        groups = self.session.query(Group).filter(Group.name.ilike('%{0}%'.format(groupname))).order_by(Group.name).all()
         self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
@@ -71,7 +71,7 @@ class SearchNewMembersHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id):
         username = self.get_argument('username', '')
-        users = self.session.query(User).filter(User.name.like('%{0}%'.format(username))).order_by(User.name).all()
+        users = self.session.query(User).filter(User.name.ilike('%{0}%'.format(username))).order_by(User.name).all()
         users = [user for user in users if not user.belongs_to_group(int(group_id))]
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.render('group/search_new_members.html', users=users, group=group)

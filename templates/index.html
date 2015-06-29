@@ -11,16 +11,6 @@
 <script src="{{ static_url('js/lobibox.min.js') }}"></script>
 <!--<script src="{{ static_url('js/demo.js') }}"></script>-->
 <script>
-function aaa() {
-    $.ajax({
-        url: "{{ reverse_url('index') }}",
-        type: 'DELETE',
-        success: function(result) {
-            // Do something with the result
-        }
-    });
-}
-
 function getCookie(name) {
     var c = document.cookie.match("\\b" + name + "=([^;]*)\\b");
     return c ? c[1] : undefined;
@@ -45,6 +35,6 @@ function ccc() {
 </script>
 <script>ccc();</script>
 {% if error_message %}
-<script>bbb("{{ error_message }}");</script>
+    <script>bbb("{{ error_message }}");</script>
 {% end %}
 {% end %}
