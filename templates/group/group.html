@@ -1,17 +1,19 @@
 {% extends "../base.html" %}
 {% block content %}
 <div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>グループ名</th>
-        </tr>
-        <tbody>
-        <tr>
-            <td><a href="{{ reverse_url('group', group.id) }}">{{ group.name }}</a></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card white lighten-2 hoverable">
+        <div class="card-content black-text">
+            <p>グループ名: <a href="{{ reverse_url('group', group.id) }}" class="card-title black-text">{{ group.name }}</a></p>
+            <p>グループの一言説明</p>
+            <p>参加者　{{ len(group.users) }}人</p>
+        </div>
+        <div class="card-action">
+            <a href="#">This is a link</a>
+            <a href="#">This is a link</a>
+        </div>
+    </div>
+
+    
     <ul class="list-inline">
         <li><a href="{{ reverse_url('group_user', group.id) }}">メンバー</a></li>
         <li><a href="{{ reverse_url('rooms', group.id) }}">ルーム</a></li>
