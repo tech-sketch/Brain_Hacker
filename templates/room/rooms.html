@@ -28,7 +28,9 @@
     </div>
 
     <script>
-      $('#room_modal1').openModal();
+      $('#room_modal').openModal();
+      $('#room_edit').openModal();
+      $('#room_delete').openModal();
     </script>
 
     <!-- Modal Structure -->
@@ -58,9 +60,55 @@
     </div>
 
 
+
     <div class="row grey lighten-3">
-        <h3>部屋一覧</h3>
+        <div class="col s12">
+            <h3>部屋一覧</h3>
+        </div>
         {% for i, room in enumerate(rooms) %}
+        <!-- Modal Structure -->
+        <div id="room_edit" class="modal">
+            <div class="modal-content">
+                <h4>部屋の編集</h4>
+                <form method="post" action="{{ reverse_url('room_edit', group.id, room.id) }}">
+                    {% module xsrf_form_html() %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="room_name_edit" type="text" name="name" required="" class="validate" value="{{ room.name }}">
+                            <label for="room_name_edit">部屋名</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="room_edit_description" type="text" name="description" required="" class="validate" value="一言説明">
+                            <label for="room_edit_description">一言説明</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-action modal-close waves-effect waves-green btn" type="submit">更新</button>
+                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal Structure -->
+        <div id="room_delete" class="modal">
+            <div class="modal-content">
+                <h4>部屋の削除</h4>
+                <form method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}">
+                    {% module xsrf_form_html() %}
+                    <div class="row">
+                        <p>部屋「{{ room.name }}」を本当に削除しますか？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
+                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         {% if i % 3 == 0 %}<div class="row col s12">{% end %}
             <div class="col s12 m4">
                 <div class="card white lighten-2 hoverable">
@@ -69,8 +117,8 @@
                         <p>部屋の一言説明</p>
                     </div>
                     <div class="card-action">
-                        <a href="{{ reverse_url('room_edit', group.id, room.id) }}">編集</a>
-                        <a href="{{ reverse_url('room_delete', group.id, room.id) }}">削除</a>
+                        <a class="waves-effect waves-light btn modal-trigger white-text" href="#room_edit">編集</a>
+                        <a class="waves-effect waves-light btn modal-trigger white-text red darken-4" href="#room_delete">削除</a>
                     </div>
                 </div>
             </div>
