@@ -7,9 +7,9 @@ from models.group import Group
 
 
 class User(Base, DjangoLikeModelMixin):
-    name = Column(String)
-    email = Column(String)
-    hashed_password = Column(Binary)
+    name = Column(String(30), nullable=False)
+    email = Column(String(100), nullable=False)
+    hashed_password = Column(Binary, nullable=False)
     groups = relationship("Group", secondary=association_table, backref='users')
 
     def __init__(self, name, email, password):
@@ -39,6 +39,6 @@ if __name__ == '__main__':
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
     import bcrypt
-    user = User(name="name", email="neko", password="neko")
+    user = User(name="admin", email="admin@tis.co.jp", password="admin")
     session.add(user)
     session.commit()

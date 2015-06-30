@@ -68,7 +68,7 @@
                     <div class="card-content black-text">
                         <a href="{{ reverse_url('group', group.id) }}" class="card-title blue-text">{{ group.name }}</a>
                         <!--<span class="card-title">{{ group.name }}</span>-->
-                        <p>グループについての一言説明</p>
+                        <p>{{ group.description }}</p>
                         <p>参加者　{{ len(group.users) }}人</p>
                     </div>
                     <!--

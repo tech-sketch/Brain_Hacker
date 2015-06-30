@@ -6,8 +6,13 @@ from models.base_model import DjangoLikeModelMixin, Base
 
 class Group(Base, DjangoLikeModelMixin):
     from .room import Room
-    name = Column(String)
+    name = Column(String(30), nullable=False)
+    description = Column(String(100), nullable=False)
     rooms = relationship("Room", backref='groups', cascade='all, delete-orphan',)
+
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 
 if __name__ == '__main__':
     import sqlalchemy
@@ -17,6 +22,6 @@ if __name__ == '__main__':
     #Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
-    group = Group(name="name")
+    group = Group(name="STC", description="STC Test")
     session.add(group)
     session.commit()

@@ -25,10 +25,8 @@
             <td>
                 <form method="post" action="{{ reverse_url('search_new_members', group.id) }}">
                     {% module xsrf_form_html() %}
-                    <!--<div class="form-group">-->
                     <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
                     <button class="btn btn-primary" type="submit">招待する</button>
-                    <!--</div>-->
                 </form>
             </td>
         </tr>

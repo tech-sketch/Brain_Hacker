@@ -16,7 +16,8 @@ class GroupsHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         name = self.get_argument('group_name', '')
-        group = Group(name=name)
+        description = self.get_argument('description', '')
+        group = Group(name=name, description=description)
         user_dict = self.get_current_user()
         user = self.session.query(User).filter_by(id=user_dict['id']).first()
         self.session.add(group)
@@ -39,9 +40,11 @@ class GroupEditHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        name = self.get_argument('name', '')
+        name = self.get_argument('group_name', '')
+        description = self.get_argument('description', '')
         group = self.session.query(Group).filter_by(id=group_id).first()
         group.name = name
+        group.description = description
         self.session.add(group)
         self.session.commit()
         self.redirect(self.reverse_url('group', group_id))

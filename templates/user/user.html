@@ -1,6 +1,7 @@
 {% extends "../base.html" %}
 {% block content %}
 <div class="container">
+    <div class="section">
     <div class="card white lighten-2 hoverable">
         <div class="card-content black-text">
             <p>ユーザ名: <a href="{{ reverse_url('user', user.id) }}" class="card-title black-text">{{ user.name }}</a></p>
@@ -19,6 +20,7 @@
             <a href="#">This is a link</a>
         </div>
         -->
+    </div>
     </div>
 </div>
 {% end %}

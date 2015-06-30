@@ -25,8 +25,9 @@ class RoomsHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        name = self.get_argument('name', '')
-        room = Room(name=name)
+        room_name = self.get_argument('room_name', '')
+        theme = self.get_argument('theme', '')
+        room = Room(name=room_name, theme=theme)
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.session.add(room)
         group.rooms.append(room)
@@ -49,9 +50,11 @@ class RoomEditHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
-        name = self.get_argument('name', '')
+        room_name = self.get_argument('room_name', '')
+        theme = self.get_argument('theme', '')
         room = self.session.query(Room).filter_by(id=room_id).first()
-        room.name = name
+        room.name = room_name
+        room.theme = theme
         self.session.add(room)
         self.session.commit()
         self.redirect(self.reverse_url('rooms', group_id))
