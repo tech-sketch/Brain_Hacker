@@ -3,24 +3,36 @@
 {% block content %}
 <h1>{{ error_message }}</h1>
 
+
 <div class="container">
-    <div class="row">
-        <form class="form-signup col-md-6 col-md-offset-3" role="form" method="post" action="{{ reverse_url('signup') }}">
-            {% module xsrf_form_html() %}
-            <h2 class="form-signin-heading">Signup for Your Account</h2>
-            <div class="form-group">
-                <input type="text" name="username" class="form-control" placeholder="User Name" required="" autofocus="" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <input type="text" name="email" class="form-control" placeholder="Email address" required="" autofocus="" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password" required="" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-            </div>
-        </form>
+    <div class="section">
+        <div class="row">
+            <form class="col s12" method="post" action="{{ reverse_url('signup') }}">
+                {% module xsrf_form_html() %}
+                <h4>Brain Hacker へ登録</h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="user_name" type="text" name="username" class="validate">
+                        <label for="user_name">User Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" name="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" name="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons">send</i>
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 {% end %}

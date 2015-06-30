@@ -9,13 +9,13 @@ class GroupsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        groupname = self.get_argument('groupname', '')
+        groupname = self.get_argument('group_name', '')
         groups = self.session.query(Group).filter(Group.name.ilike('%{0}%'.format(groupname))).order_by(Group.name).all()
         self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
     def post(self):
-        name = self.get_argument('name', '')
+        name = self.get_argument('group_name', '')
         group = Group(name=name)
         user_dict = self.get_current_user()
         user = self.session.query(User).filter_by(id=user_dict['id']).first()

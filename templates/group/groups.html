@@ -1,84 +1,84 @@
 {% extends "../base.html" %}
-{% block content %}
-<script>
-    $(document).on("click", ".alert", function(e) {
-        bootbox.dialog({
-            title: "グループの作成",
-            message: '<div class="row">  ' +
-                '<div class="col-md-12"> ' +
-                '<form class="form-horizontal" name="form1" id="form1" method="post" action="{{ reverse_url('groups') }}"> ' +
-                '{% module xsrf_form_html() %} ' +
-                '<div class="form-group"> ' +
-                '<label class="col-md-4 control-label" for="name">グループ名</label> ' +
-                '<div class="col-md-4"> ' +
-                '<input id="name" name="name" type="text" placeholder="Group name" class="form-control input-md"> ' +
-                '<!--<span class="help-block">Here goes your name</span>--> </div> ' +
-                '</div> ' +
-                '<div class="form-group"> ' +
-                '<label class="col-md-4 control-label" for="awesomeness">公開条件</label> ' +
-                '<div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> ' +
-                '<input type="radio" name="awesomeness" id="awesomeness-0" value="Really awesome" checked="checked"> ' +
-                '公開 </label> ' +
-                '</div><div class="radio"> <label for="awesomeness-1"> ' +
-                '<input type="radio" name="awesomeness" id="awesomeness-1" value="Super awesome"> 非公開 </label> ' +
-                '</div> ' +
-                '</div> </div>' +
-                '</form> </div>  </div>',
-            buttons: {
-                success: {
-                    label: "Save",
-                    className: "btn-success",
-                    callback: function () {
-                        $('#form1').submit();
-                        var name = $('#name').val();
-                        var answer = $("input[name='awesomeness']:checked").val()
-                    }
-                }
-            }
-        }
-    );
-    });
-</script>
-
-<div class="container">
-    <div class="row well">
-        <div class="col-md-5">
-            <h3>グループとは？</h3>
-            <p>特定/任意のメンバーで情報共有を行うことができます。</p>
+{% block search_bar %}
+<div class="left">
+    <form method="get" action="{{ reverse_url('groups') }}">
+        {% module xsrf_form_html() %}
+        <div class="input-field">
+            <input type="search" id="group_name_search" name="group_name" class="field" required maxlength="" placeholder="グループ名">
+            <label for="group_name_search"><i class="mdi-action-search black-text"></i></label>
+            <i class="mdi-navigation-close close"></i>
         </div>
-        <div class="col-md-7">
-            <button class="btn btn-primary alert" type="submit">グループの作成</button>
+    </form>
+</div>
+{% end %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 grey lighten-3">
+                <h3>グループとは？</h3>
+                <p>特定/任意のメンバーで情報共有を行うことができます。</p>
+                <!-- Modal Trigger -->
+                <a class="right waves-effect waves-light btn modal-trigger" href="#modal1">グループの作成</a>
+            </div>
         </div>
     </div>
 
+    <script>
+      $('#modal1').openModal();
+    </script>
 
-
-
-    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('groups') }}">
-        {% module xsrf_form_html() %}
-        <h2>グループ名検索</h2>
-        <div class="input-group">
-            <input type="text" name="groupname" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">検索</button>
-            </span>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>グループの作成</h4>
+            <form method="post" action="{{ reverse_url('groups') }}">
+                {% module xsrf_form_html() %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="group_name" type="text" name="group_name" required="" class="validate">
+                        <label for="group_name">グループ名</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="description" type="text" name="description" required="" class="validate">
+                        <label for="description">一言説明</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-action modal-close waves-effect waves-green btn" type="submit">作成</button>
+                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>グループ名</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for group in groups %}
-        <tr>
-            <td><a href="{{ reverse_url('group', group.id) }}">{{ group.name }}</a></td>
-        </tr>
+    <div class="row grey lighten-3">
+        <h3>グループ一覧</h3>
+        {% for i, group in enumerate(groups) %}
+        {% if i % 3 == 0 %}
+        <div class="row col s12">
+            {% end %}
+            <div class="col s12 m4">
+                <div class="card white lighten-2 hoverable">
+                    <div class="card-content black-text">
+                        <a href="{{ reverse_url('group', group.id) }}" class="card-title black-text">{{ group.name }}</a>
+                        <!--<span class="card-title">{{ group.name }}</span>-->
+                        <p>グループについての一言説明</p>
+                        <p>参加者　{{ len(group.users) }}人</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+            {% if i % 3 == 2 or i == len(groups) - 1 %}
+            </div>
         {% end %}
-        </tbody>
-    </table>
+        {% end %}
+    </div>
 </div>
-
 {% end %}
