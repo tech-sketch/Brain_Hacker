@@ -128,8 +128,10 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
         user = BaseHandler.get_current_user(self)
 
-        if not self.chat.checks_user_already_in_room_of(room_id, user["name"]):
-            self.chat.add_user(room_id, user["name"])
+        if not self.rooms.checks_user_already_in_room_of(room_id, user["name"]):
+            self.rooms.add_user(room_id, user["name"])
+            self.chat.set_nickname(room_id, user["name"])
+
         nickname = self.chat.get_nickname(room_id, user["name"])
 
         self.write_message(json.dumps({'action': 'initCards', 'data': self.cards.get_all(room_id)}))
