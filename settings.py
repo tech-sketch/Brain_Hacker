@@ -5,7 +5,7 @@ from tornado.options import define, options
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-define('port', default=8891, help="run on the given port", type=int)
+define('port', default=8888, help="run on the given port", type=int)
 define('debug', default=True, help='debug mode')
 tornado.options.parse_command_line()
 
@@ -24,7 +24,7 @@ DATABASES = {
         'ENGINE': 'postgresql+psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'psobbst5',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
