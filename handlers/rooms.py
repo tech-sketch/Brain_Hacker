@@ -36,3 +36,6 @@ class Rooms(object):
         room_id = self.clients[client]
         del self.clients[client]
         self.rooms[room_id] -= set([client])
+
+    def clear_users_in_room(self, room_id):
+        del self.users_in_rooms[room_id]

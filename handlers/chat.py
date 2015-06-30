@@ -9,9 +9,11 @@ class Chat(object):
     random.shuffle(user_num)
 
     def __init__(self):
+        """
+
+        """
         self.cache = defaultdict(list)
         self.nickname_dic = defaultdict(dict)
-        #self.users_in_rooms = defaultdict(set)
 
     def set_nickname(self, room_id, client_name):
         self.nickname_dic[room_id].update({client_name: 'user' + str(self.__get_random_name())})
@@ -30,3 +32,6 @@ class Chat(object):
     def __get_random_name(self):
         return self.user_num.pop()
 
+    def clear_caches(self, room_id):
+        del self.cache[room_id]
+        del self.nickname_dic[room_id]
