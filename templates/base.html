@@ -40,7 +40,15 @@
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Login</a></li>
+        {% if current_user %}
+        {% block search_bar %}{% end %}
+        <li><a href="{{ reverse_url('groups') }}">Groups</a></li>
+        <li><a href="{{ reverse_url('users') }}">Users</a></li>
+        <!-- Dropdown Trigger -->
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ current_user['name'] }}<i class="material-icons right">arrow_drop_down</i></a></li>
+        {% else %}
+        <li><a href="{{ reverse_url('login') }}">Login</a></li>
+        {% end %}
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>

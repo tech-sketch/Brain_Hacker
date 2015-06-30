@@ -66,15 +66,17 @@
             <div class="col s12 m4">
                 <div class="card white lighten-2 hoverable">
                     <div class="card-content black-text">
-                        <a href="{{ reverse_url('group', group.id) }}" class="card-title black-text">{{ group.name }}</a>
+                        <a href="{{ reverse_url('group', group.id) }}" class="card-title blue-text">{{ group.name }}</a>
                         <!--<span class="card-title">{{ group.name }}</span>-->
                         <p>グループについての一言説明</p>
                         <p>参加者　{{ len(group.users) }}人</p>
                     </div>
+                    <!--
                     <div class="card-action">
                         <a href="#">This is a link</a>
                         <a href="#">This is a link</a>
                     </div>
+                    -->
                 </div>
             </div>
             {% if i % 3 == 2 or i == len(groups) - 1 %}
