@@ -1,24 +1,74 @@
 {% extends "../base.html" %}
 {% block content %}
 <div class="container">
-    <div class="card white lighten-2 hoverable">
-        <div class="card-content black-text">
-            <p>グループ名: <a href="{{ reverse_url('group', group.id) }}" class="card-title black-text">{{ group.name }}</a></p>
-            <p>グループの一言説明</p>
-            <p>参加者　{{ len(group.users) }}人</p>
+    <div class="section">
+        <a class="waves-effect waves-light btn modal-trigger white-text" href="{{ reverse_url('group_user', group.id) }}">メンバー</a>
+        <a class="waves-effect waves-light btn modal-trigger white-text" href="{{ reverse_url('rooms', group.id) }}">　部屋　</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <div class="card white lighten-2 hoverable">
+            <div class="card-content black-text">
+                <p>グループ名: <a href="{{ reverse_url('group', group.id) }}" class="card-title black-text">{{ group.name }}</a></p>
+                <p>グループの一言説明</p>
+                <p>参加者　{{ len(group.users) }}人</p>
+            </div>
+            <div class="card-action">
+                <a class="waves-effect waves-light btn modal-trigger white-text" href="#group_edit">編集</a>
+                <a class="waves-effect waves-light btn modal-trigger white-text red darken-4" href="#group_delete">削除</a>
+            </div>
         </div>
-        <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
+    </div>
+    <script>
+      $('#group_edit').openModal();
+      $('#group_delete').openModal();
+    </script>
+
+    <!-- Modal Structure -->
+    <div id="group_edit" class="modal">
+        <div class="modal-content">
+            <h4>グループの編集</h4>
+            <form method="post" action="{{ reverse_url('group_edit', group.id) }}">
+                {% module xsrf_form_html() %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="group_name_edit" type="text" name="name" required="" class="validate" value="{{ group.name }}">
+                        <label for="group_name_edit">グループ名</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="description" type="text" name="description" required="" class="validate" value="一言説明">
+                        <label for="description">一言説明</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-action modal-close waves-effect waves-green btn" type="submit">更新</button>
+                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    
-    <ul class="list-inline">
-        <li><a href="{{ reverse_url('group_user', group.id) }}">メンバー</a></li>
-        <li><a href="{{ reverse_url('rooms', group.id) }}">ルーム</a></li>
-        <li><a href="{{ reverse_url('group_edit', group.id) }}">管理</a></li>
-    </ul>
+
+    <!-- Modal Structure -->
+    <div id="group_delete" class="modal">
+        <div class="modal-content">
+            <h4>グループの削除</h4>
+            <form method="post" action="{{ reverse_url('group_delete', group.id) }}">
+                {% module xsrf_form_html() %}
+                <div class="row">
+                    <p>グループ「{{ group.name }}」を本当に削除しますか？</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
+                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                </div>
+            </form>
+        </div>
+    </div>
     {% block sub_content %}
     {% end %}
 </div>
