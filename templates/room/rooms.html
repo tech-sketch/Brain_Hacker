@@ -1,122 +1,129 @@
 {% extends "../base.html" %}
-{% block content %}
-<script>
-    $(document).on("click", ".alert", function(e) {
-        bootbox.dialog({
-            title: "部屋の作成",
-            message: '<div class="row">  ' +
-                '<div class="col-md-12"> ' +
-                '<form class="form-horizontal" name="form1" id="form1" method="post" action="{{ reverse_url('rooms', group.id) }}"> ' +
-                '{% module xsrf_form_html() %} ' +
-                '<div class="form-group"> ' +
-                '<label class="col-md-4 control-label" for="name">部屋名</label> ' +
-                '<div class="col-md-4"> ' +
-                '<input id="name" name="name" type="text" placeholder="Room name" class="form-control input-md"> ' +
-                '</div> ' +
-                '</div> ' +
-                '</form> </div>  </div>',
-            buttons: {
-                success: {
-                    label: "Save",
-                    className: "btn-success",
-                    callback: function () {
-                    $('#form1').submit();
-                        var name = $('#name').val();
-                        var answer = $("input[name='awesomeness']:checked").val()
-                    }
-                }
-            }
-        }
-    );
-    });
-</script>
-
-
-<div class="container">
-    <div class="well row">
-        <div class="col-md-5">
-            <h3>部屋とは？</h3>
-            <p>特定のメンバーでブレストを行うことができます。</p>
-        </div>
-        <div class="col-md-7">
-            <button class="btn btn-primary alert" type="submit">部屋の作成</button>
-        </div>
-    </div>
-
-
-
-
-    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('rooms', group.id) }}">
+{% block search_bar %}
+<div class="left">
+    <form method="get" action="{{ reverse_url('rooms', group.id) }}">
         {% module xsrf_form_html() %}
-        <h2>部屋名検索</h2>
-        <div class="input-group">
-            <input type="text" name="room_name" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">検索</button>
-            </span>
+        <div class="input-field">
+            <input type="search" id="room_name_search" name="room_name" class="field" required maxlength="" placeholder="部屋名">
+            <label for="room_name_search"><i class="mdi-action-search black-text"></i></label>
+            <i class="mdi-navigation-close close"></i>
         </div>
     </form>
+</div>
+{% end %}
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>部屋名</th>
-            <th>編集</th>
-            <th>削除</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for room in rooms %}
-        <tr>
-            <td><a href="{{ reverse_url('room', group.id, room.id) }}">{{ room.name }}</a></td>
-            <td>
-                <a href="{{ reverse_url('room_edit', group.id, room.id) }}"><button class="btn btn-primary" type="submit">編集</button></a>
-            </td>
-            <td>
-                <script>
-                    $(document).on("click", ".alert{{ room.id}}", function(e) {
-                        bootbox.dialog({
-                            title: "削除確認",
-                            message: '<div class="row">  ' +
-                                '<div class="col-md-12"> ' +
-                                '本当に削除しますか？' +
-                                '<form class="form-horizontal" name="form{{room.id}}" id="form{{room.id}}" method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}"> ' +
-                                '{% module xsrf_form_html() %} ' +
-                                '</form></div></div>',
-                            buttons: {
-                                success: {
-                                    label: "削除",
-                                    className: "btn-danger",
-                                    callback: function () {
-                                    $('#form{{room.id}}').submit();
-                                    }
-                                }
-                            }
-                        }
-                    );
-                    });
-                </script>
-                <button class="btn btn-danger alert{{room.id}}" type="submit">削除</button>
-            </td>
-        </tr>
-        {% end %}
-        </tbody>
-    </table>
 
-    <div id="lobibox-notification-examples">
-        <div class="bs-example">
-            <button id="basicInfo" class="btn btn-info">Info</button>
-            <button id="basicWarning" class="btn btn-warning">Warning</button>
-            <button id="basicError" class="btn btn-danger">Error</button>
-            <button id="basicSuccess" class="btn btn-success">Success</button>
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 grey lighten-3">
+                <h3>部屋とは？</h3>
+                <p>特定のメンバーでブレストを行うことができます。</p>
+                <!-- Modal Trigger -->
+                <a class="right waves-effect waves-light btn modal-trigger" href="#room_modal">部屋の作成</a>
+            </div>
         </div>
     </div>
 
+    <script>
+      $('#room_modal').openModal();
+      $('#room_edit').openModal();
+      $('#room_delete').openModal();
+    </script>
+
+    <!-- Modal Structure -->
+    <div id="room_modal" class="modal">
+        <div class="modal-content">
+            <h4>部屋の作成</h4>
+            <form method="post" action="{{ reverse_url('rooms', group.id) }}">
+                {% module xsrf_form_html() %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="room_name" type="text" name="name" required="" class="validate">
+                        <label for="room_name">部屋名</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="room_description" type="text" name="description" required="" class="validate">
+                        <label for="room_description">一言説明</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-action modal-close waves-effect waves-green btn" type="submit">作成</button>
+                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="row grey lighten-3">
+        <div class="col s12">
+            <h3>部屋一覧</h3>
+        </div>
+        {% for i, room in enumerate(rooms) %}
+        <!-- Modal Structure -->
+        <div id="room_edit" class="modal">
+            <div class="modal-content">
+                <h4>部屋の編集</h4>
+                <form method="post" action="{{ reverse_url('room_edit', group.id, room.id) }}">
+                    {% module xsrf_form_html() %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="room_name_edit" type="text" name="name" required="" class="validate" value="{{ room.name }}">
+                            <label for="room_name_edit">部屋名</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="room_edit_description" type="text" name="description" required="" class="validate" value="一言説明">
+                            <label for="room_edit_description">一言説明</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-action modal-close waves-effect waves-green btn" type="submit">更新</button>
+                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal Structure -->
+        <div id="room_delete" class="modal">
+            <div class="modal-content">
+                <h4>部屋の削除</h4>
+                <form method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}">
+                    {% module xsrf_form_html() %}
+                    <div class="row">
+                        <p>部屋「{{ room.name }}」を本当に削除しますか？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
+                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if i % 3 == 0 %}<div class="row col s12">{% end %}
+            <div class="col s12 m4">
+                <div class="card white lighten-2 hoverable">
+                    <div class="card-content black-text">
+                        <a href="{{ reverse_url('room', group.id, room.id) }}" class="card-title black-text">{{ room.name }}</a>
+                        <p>部屋の一言説明</p>
+                    </div>
+                    <div class="card-action">
+                        <a class="waves-effect waves-light btn modal-trigger white-text" href="#room_edit">編集</a>
+                        <a class="waves-effect waves-light btn modal-trigger white-text red darken-4" href="#room_delete">削除</a>
+                    </div>
+                </div>
+            </div>
+        {% if i % 3 == 2 or i == len(rooms) - 1 %}</div>{% end %}
+        {% end %}
+    </div>
 </div>
-
-
-<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="{{ static_url('js/lobibox.min.js') }}"></script>
-<script src="{{ static_url('js/demo.js') }}"></script>
-
 {% end %}

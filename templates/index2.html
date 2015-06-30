@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="well row">
+        <h3>Brain Hackerとは？</h3>
+        <p>Brain Hackerでは、匿名で、楽しく、面白くブレストを行うことができます。</p>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="{{ static_url('js/lobibox.min.js') }}"></script>
+<!--<script src="{{ static_url('js/demo.js') }}"></script>-->
+<script>
+function getCookie(name) {
+    var c = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return c ? c[1] : undefined;
+}
+
+function ccc() {
+    data = {};
+    data._xsrf = getCookie("_xsrf");
+    jQuery.ajax({
+        url: "{{ reverse_url('index') }}",
+        data: jQuery.param(data),
+        type: "DELETE",
+    });
+}
+</script>
+<script>
+    function bbb(message) {
+        Lobibox.notify('warning', {
+            msg: message
+        });
+    };
+</script>
+<script>ccc();</script>
+{% if error_message %}
+    <script>bbb("{{ error_message }}");</script>
+{% end %}
+{% end %}

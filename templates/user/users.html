@@ -1,35 +1,42 @@
 {% extends "../base.html" %}
-
+{% block search_bar %}
+<div class="left">
+    <form method="get" action="{{ reverse_url('users') }}">
+        {% module xsrf_form_html() %}
+        <div class="input-field">
+            <input type="search" id="user_name_search" name="username" class="field" required maxlength="" placeholder="ユーザ名">
+            <label for="user_name_search"><i class="mdi-action-search black-text"></i></label>
+            <i class="mdi-navigation-close close"></i>
+        </div>
+    </form>
+</div>
+{% end %}
 {% block content %}
 
 <div class="container">
-    <form class="col-md-6" role="form" method="get" action="{{ reverse_url('users') }}">
-        {% module xsrf_form_html() %}
-        <h2>ユーザ名検索</h2>
-        <div class="input-group">
-            <input type="text" name="username" class="form-control" placeholder="検索キーワードを入力" required="" autofocus="" autocomplete="off">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">検索する</button>
-            </span>
+    <div class="section">
+        <div class="row grey lighten-3">
+            <div class="col s12">
+                <h3>ユーザ一覧</h3>
+            </div>
+            {% for i, user in enumerate(users) %}
+            {% if i % 3 == 0 %}<div class="row col s12">{% end %}
+                <div class="col s12 m4">
+                    <div class="card white lighten-2 hoverable">
+                        <div class="card-content black-text">
+                            <a href="{{ reverse_url('user', user.id) }}" class="card-title black-text">{{ user.name }}</a>
+                            <p>ユーザの一言</p>
+                            <p>メールアドレス: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            {% if i % 3 == 2 or i == len(users) - 1 %}</div>{% end %}
+            {% end %}
         </div>
-    </form>
-
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ユーザ名</th>
-            <th>メールアドレス</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-        <tr>
-            <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
-            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-        </tr>
-        {% end %}
-        </tbody>
-    </table>
+    </div>
 </div>
 {% end %}

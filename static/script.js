@@ -39,7 +39,7 @@ socket.onopen = function() {
 
     //let the path be the room name
     var path = location.pathname;
-
+    console.log("path"+path)
     //imediately join the room which will trigger the initializations
     sendAction('joinRoom', path);
 };
@@ -650,7 +650,7 @@ function getCookie(c_name) {
 
 function setName(name) {
     sendAction('setUserName', name);
-
+    console.log("Name:" + name)
     setCookie('scrumscrum-username', name, 365);
 }
 

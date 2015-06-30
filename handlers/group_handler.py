@@ -9,13 +9,13 @@ class GroupsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        groupname = self.get_argument('groupname', '')
+        groupname = self.get_argument('group_name', '')
         groups = self.session.query(Group).filter(Group.name.ilike('%{0}%'.format(groupname))).order_by(Group.name).all()
         self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
     def post(self):
-        name = self.get_argument('name', '')
+        name = self.get_argument('group_name', '')
         group = Group(name=name)
         user_dict = self.get_current_user()
         user = self.session.query(User).filter_by(id=user_dict['id']).first()
@@ -38,27 +38,20 @@ class GroupEditHandler(BaseHandler):
 
     @check_group_permission
     @tornado.web.authenticated
-    def get(self, group_id):
+    def post(self, group_id):
+        name = self.get_argument('name', '')
         group = self.session.query(Group).filter_by(id=group_id).first()
-        self.render('group/group_edit.html', group=group)
+        group.name = name
+        self.session.add(group)
+        self.session.commit()
+        self.redirect(self.reverse_url('group', group_id))
+
+
+class GroupDeleteHandler(BaseHandler):
 
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        method = self.get_argument('delete-confirmation', '')
-        if method == "DELETE":
-            self.delete(group_id)
-        else:
-            name = self.get_argument('name', '')
-            group = self.session.query(Group).filter_by(id=group_id).first()
-            group.name = name
-            self.session.add(group)
-            self.session.commit()
-            self.redirect(self.reverse_url('group', group_id))
-
-    @check_group_permission
-    @tornado.web.authenticated
-    def delete(self, group_id):
         group = self.session.query(Group).filter_by(id=group_id).first()
         self.session.delete(group)
         self.session.commit()

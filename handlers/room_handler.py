@@ -48,13 +48,6 @@ class RoomEditHandler(BaseHandler):
 
     @check_group_permission
     @tornado.web.authenticated
-    def get(self, group_id, room_id):
-        group = self.session.query(Group).filter_by(id=group_id).first()
-        room = self.session.query(Room).filter_by(id=room_id).first()
-        self.render('room/room_edit.html', group=group, room=room)
-
-    @check_group_permission
-    @tornado.web.authenticated
     def post(self, group_id, room_id):
         name = self.get_argument('name', '')
         room = self.session.query(Room).filter_by(id=room_id).first()
@@ -115,6 +108,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def joinRoom(self, message):
         self.rooms.add_to_room(self, message['data'])
+        print("Message")
+        print(message['data'])
         self.write_message(json.dumps({'action': 'roomAccept', 'data': ''}))
 
     def roundRand(self, value):
@@ -122,6 +117,15 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
+        print('user has entered the room {0}'.format(room_id))
+
+        user = BaseHandler.get_current_user(self)
+
+        if not self.rooms.checks_user_already_in_room_of(room_id, user["name"]):
+            self.rooms.add_user(room_id, user["name"])
+            self.chat.set_nickname(room_id, user["name"])
+
+        nickname = self.chat.get_nickname(room_id, user["name"])
 
         self.write_message(json.dumps({'action': 'initCards', 'data': self.cards.get_all(room_id)}))
         self.write_message(json.dumps({'action': 'initColumns', 'data': ''}))
@@ -129,8 +133,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.write_message(json.dumps({'action': 'setBoardSize', 'data': ''}))
         self.write_message(json.dumps({'action': 'initialUsers', 'data': ''}))
         self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache[room_id],
-                                                                          'name': "user" +
-                                                                                  str(self.chat.get_random_name())}}))
+                                                                          'name': nickname}}))
 
     def move_card(self, message):
         message_out = {
@@ -213,6 +216,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)
         for waiter in self.rooms.get_room_clients(room_id):
+            print("waiter")
+            print(waiter)
             if waiter == client:
                 continue
             waiter.write_message(json.dumps(message_out))
