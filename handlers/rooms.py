@@ -23,6 +23,7 @@ class Rooms(object):
         self.users_in_rooms[room_id].add(client_name)
 
     def add_to_room(self, client, room_id):
+        print("add_")
         self.rooms[room_id].add(client)
         self.clients[client] = room_id
 

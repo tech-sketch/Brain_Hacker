@@ -223,6 +223,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)
         for waiter in self.rooms.get_room_clients(room_id):
+            print("waiter")
+            print(waiter)
             if waiter == client:
                 continue
             waiter.write_message(json.dumps(message_out))
