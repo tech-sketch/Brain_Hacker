@@ -115,6 +115,8 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def joinRoom(self, message):
         self.rooms.add_to_room(self, message['data'])
+        print("Message")
+        print(message['data'])
         self.write_message(json.dumps({'action': 'roomAccept', 'data': ''}))
 
     def roundRand(self, value):
@@ -122,7 +124,13 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
-        # nick_name = self.chat.set_nickname(self, room_id, self.get_current_user())
+        print('user has entered the room {0}'.format(room_id))
+
+        user = BaseHandler.get_current_user(self)
+
+        if not self.chat.checks_user_already_in_room_of(room_id, user["name"]):
+            self.chat.add_user(room_id, user["name"])
+        nickname = self.chat.get_nickname(room_id, user["name"])
 
         self.write_message(json.dumps({'action': 'initCards', 'data': self.cards.get_all(room_id)}))
         self.write_message(json.dumps({'action': 'initColumns', 'data': ''}))
@@ -130,8 +138,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.write_message(json.dumps({'action': 'setBoardSize', 'data': ''}))
         self.write_message(json.dumps({'action': 'initialUsers', 'data': ''}))
         self.write_message(json.dumps({'action': 'chatMessages', 'data': {'cache': self.chat.cache[room_id],
-                                                                          'name': "user" +
-                                                                                  str(self.chat.get_random_name())}}))
+                                                                          'name': nickname}}))
 
     def move_card(self, message):
         message_out = {
