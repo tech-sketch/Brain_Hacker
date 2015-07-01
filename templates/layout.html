@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
+<head>
     <!-- STYLES -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ static_url('css/style.css') }}" />
@@ -26,7 +26,10 @@
       {% include '../static/script.js' %}
     </script>
     <link rel="stylesheet" href="{{ static_url('css/LobiBox.min.css') }}">
-  </head>
+</head>
+<body>
 {% block body %}{% end %}
 
+<script src="{{ static_url('js/lobibox.min.js') }}"></script>
+</body>
 </html>

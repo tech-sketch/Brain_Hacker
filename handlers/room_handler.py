@@ -4,11 +4,13 @@ import uuid
 
 import tornado.web
 import tornado.websocket
+from tornado import gen
+from tornado.web import asynchronous
 
 from .base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
-
+from .rooms import Rooms
 from .util import check_group_permission
 
 
@@ -42,7 +44,8 @@ class RoomHandler(BaseHandler):
     def get(self, group_id, room_id):
         from tornado.options import options
         port = str(options.port)
-        self.render('room/room.html', room_id=room_id, port=port)
+        room = self.session.query(Room).filter_by(id=room_id).first()
+        self.render('room/room.html', room_id=room_id, port=port, theme=room.theme)
 
 
 class RoomEditHandler(BaseHandler):
@@ -165,15 +168,26 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         room_id = self.rooms.get_room_id(self)
         self.cards.add(room_id, clean_data)
 
+    @asynchronous
+    @gen.engine
     def edit_card(self, message):
-        clean_data = {'value': message['data']['value'], 'id': message['data']['id']}
+        id = message['data']['id']
+        text = message['data']['value']
+        clean_data = {'value': text, 'id': id}
         message_out = {
             'action': 'editCard',
             'data': clean_data
         }
         self.broadcast_to_room(self, message_out)
         room_id = self.rooms.get_room_id(self)
-        self.cards.update_text(room_id, card_id=message['data']['id'], text=message['data']['value'])
+        self.cards.update_text(room_id, card_id=id, text=text)
+        from handlers.agent.sentence_generator import SentenceGenerator
+        sentence_generator = SentenceGenerator()
+        res = sentence_generator.generate_sentence(text)
+        for sent in res:
+            message_out = {'action': 'advice', 'data': {'sent': sent}}
+            self.write_message(json.dumps(message_out))
+            yield gen.sleep(2.5)
 
     def delete_card(self, message):
         clean_message = {

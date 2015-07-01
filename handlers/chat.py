@@ -17,8 +17,6 @@ class Chat(object):
 
     def set_nickname(self, room_id, client_name):
         self.nickname_dic[room_id].update({client_name: 'user' + str(self.__get_random_name())})
-        print("Set nickname")
-        print(self.nickname_dic)
 
     def get_nickname(self, room_id, client_name):
         return self.nickname_dic[room_id][client_name]
