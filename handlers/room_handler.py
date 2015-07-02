@@ -12,6 +12,7 @@ from models.room import Room
 from models.group import Group
 from .rooms import Rooms
 from .util import check_group_permission
+from forms.forms import RoomForm
 
 
 class RoomsHandler(BaseHandler):
@@ -27,14 +28,16 @@ class RoomsHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        room_name = self.get_argument('room_name', '')
-        theme = self.get_argument('theme', '')
-        room = Room(name=room_name, theme=theme)
-        group = self.session.query(Group).filter_by(id=group_id).first()
-        self.session.add(room)
-        group.rooms.append(room)
-        self.session.commit()
-        self.redirect(self.reverse_url('rooms', group_id))
+        form = RoomForm(self.request.arguments)
+        if form.validate():
+            room = Room(**form.data)
+            group = self.session.query(Group).filter_by(id=group_id).first()
+            self.session.add(room)
+            group.rooms.append(room)
+            self.session.commit()
+            self.redirect(self.reverse_url('room', group_id, room.id))
+        else:
+            self.redirect(self.reverse_url('rooms', group_id))
 
 
 class RoomHandler(BaseHandler):

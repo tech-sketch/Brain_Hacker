@@ -13,7 +13,7 @@
                 <h3>部屋とは？</h3>
                 <p>特定のメンバーでブレストを行うことができます。</p>
                 <!-- Modal Trigger -->
-                <a class="right waves-effect waves-light btn modal-trigger" href="#room_modal">部屋の作成</a>
+                <a class="right waves-effect waves-light btn modal-trigger" href="#room_create">部屋の作成</a>
             </div>
         </div>
     </div>
@@ -25,6 +25,7 @@
     </script>
 
     <!-- Modal Structure -->
+    <!--
     <div id="room_modal" class="modal">
         <div class="modal-content">
             <h4>部屋の作成</h4>
@@ -49,7 +50,9 @@
             </form>
         </div>
     </div>
-
+    -->
+    {% from forms.forms import RoomForm %}
+    {% module CreateModal(id='room_create', name='room', title='部屋', url=reverse_url('rooms', group.id), Form=RoomForm) %}
 
 
     <div class="row grey lighten-3">

@@ -14,6 +14,10 @@ class Group(Base, DjangoLikeModelMixin):
         self.name = name
         self.description = description
 
+    def update(self, *args, **kwargs):
+        self.name = kwargs.get('name', self.name)
+        self.description = kwargs.get('description', self.description)
+
 if __name__ == '__main__':
     import sqlalchemy
     from settings import url

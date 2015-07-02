@@ -28,6 +28,7 @@
     </script>-->
 
     <!-- Modal Structure -->
+    <!--
     <div id="group_edit" class="modal">
         <div class="modal-content">
             <h4>グループの編集</h4>
@@ -52,7 +53,10 @@
             </form>
         </div>
     </div>
+    -->
 
+    {% from forms.forms import GroupForm %}
+    {% module EditModal(id='group_edit', name='group', title='グループ', url=reverse_url('group_edit', group.id), Form=GroupForm, model=group) %}
 
     <!-- Modal Structure -->
     <!--

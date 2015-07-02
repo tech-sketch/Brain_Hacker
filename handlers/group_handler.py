@@ -42,14 +42,15 @@ class GroupEditHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        name = self.get_argument('group_name', '')
-        description = self.get_argument('description', '')
-        group = self.session.query(Group).filter_by(id=group_id).first()
-        group.name = name
-        group.description = description
-        self.session.add(group)
-        self.session.commit()
-        self.redirect(self.reverse_url('group', group_id))
+        form = GroupForm(self.request.arguments)
+        if form.validate():
+            group = self.session.query(Group).filter_by(id=group_id).first()
+            group.update(**form.data)
+            self.session.add(group)
+            self.session.commit()
+            self.redirect(self.reverse_url('group', group_id))
+        else:
+            self.redirect(self.reverse_url('group', group_id))
 
 
 class GroupDeleteHandler(BaseHandler):

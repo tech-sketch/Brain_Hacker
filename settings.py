@@ -18,8 +18,8 @@ settings['cookie_secret'] = os.environ.get('SECRET_TOKEN', '__TODO:_GENERATE_YOU
 settings['xsrf_cookies'] = True
 settings['login_url'] = '/auth/login/'
 
-from modules.modules import SearchBar, DeleteModal, CreateModal
-settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal, 'CreateModal': CreateModal}
+from modules.modules import SearchBar, DeleteModal, CreateModal, EditModal
+settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal, 'CreateModal': CreateModal, 'EditModal': EditModal}
 
 DATABASES = {
     'default': {
