@@ -1,15 +1,6 @@
 {% extends "../base.html" %}
 {% block search_bar %}
-<div class="left">
-    <form method="get" action="{{ reverse_url('users') }}">
-        {% module xsrf_form_html() %}
-        <div class="input-field">
-            <input type="search" id="user_name_search" name="username" class="field" required maxlength="" placeholder="ユーザ名">
-            <label for="user_name_search"><i class="mdi-action-search black-text"></i></label>
-            <i class="mdi-navigation-close close"></i>
-        </div>
-    </form>
-</div>
+    {% module SearchBar(name='user', url=reverse_url('users'), placeholder='ユーザ名') %}
 {% end %}
 {% block content %}
 

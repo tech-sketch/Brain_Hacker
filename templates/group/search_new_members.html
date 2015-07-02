@@ -1,16 +1,8 @@
 {% extends "group.html" %}
 {% block search_bar %}
-<div class="left">
-    <form method="get" action="{{ reverse_url('search_new_members', group.id) }}">
-        {% module xsrf_form_html() %}
-        <div class="input-field">
-            <input type="search" id="newuser_name_search" name="username" class="field" required maxlength="" placeholder="ユーザ名">
-            <label for="newuser_name_search"><i class="mdi-action-search black-text"></i></label>
-            <i class="mdi-navigation-close close"></i>
-        </div>
-    </form>
-</div>
+    {% module SearchBar(name='user', url=reverse_url('search_new_members', group.id), placeholder='ユーザ名') %}
 {% end %}
+
 {% block sub_content %}
 <div class="section">
     <table class="bordered hoverable">

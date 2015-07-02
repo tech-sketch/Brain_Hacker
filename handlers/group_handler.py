@@ -66,7 +66,7 @@ class SearchNewMembersHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
-        username = self.get_argument('username', '')
+        username = self.get_argument('user_name', '')
         users = self.session.query(User).filter(User.name.ilike('%{0}%'.format(username))).order_by(User.name).all()
         users = [user for user in users if not user.belongs_to_group(int(group_id))]
         group = self.session.query(Group).filter_by(id=group_id).first()

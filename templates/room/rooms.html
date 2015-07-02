@@ -1,15 +1,6 @@
 {% extends "../base.html" %}
 {% block search_bar %}
-<div class="left">
-    <form method="get" action="{{ reverse_url('rooms', group.id) }}">
-        {% module xsrf_form_html() %}
-        <div class="input-field">
-            <input type="search" id="room_name_search" name="room_name" class="field" required maxlength="" placeholder="部屋名">
-            <label for="room_name_search"><i class="mdi-action-search black-text"></i></label>
-            <i class="mdi-navigation-close close"></i>
-        </div>
-    </form>
-</div>
+    {% module SearchBar(name='room', url=reverse_url('rooms', group.id), placeholder='部屋名') %}
 {% end %}
 
 
