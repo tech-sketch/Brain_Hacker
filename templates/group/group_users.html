@@ -12,6 +12,7 @@
         {% if i % 3 == 0 %}<div class="row col s12">{% end %}
             <div class="col s12 m4">
                 <div class="card white lighten-2 hoverable">
+                    <div class="custom_divider teal"></div>
                     <div class="card-content black-text">
                         <a href="{{ reverse_url('user', user.id) }}" class="card-title blue-text">{{ user.name }}</a>
                         <p>ユーザの一言</p>

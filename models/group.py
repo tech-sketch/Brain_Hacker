@@ -6,8 +6,8 @@ from models.base_model import DjangoLikeModelMixin, Base
 
 class Group(Base, DjangoLikeModelMixin):
     from .room import Room
-    name = Column(String(30), nullable=False)
-    description = Column(String(100), nullable=False)
+    name = Column(String(30), nullable=False, info={'label': 'グループ名'})
+    description = Column(String(100), nullable=False, info={'label': '一言説明'})
     rooms = relationship("Room", backref='groups', cascade='all, delete-orphan',)
 
     def __init__(self, name, description):

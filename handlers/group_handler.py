@@ -3,27 +3,29 @@ from .base_handler import BaseHandler
 from models.group import Group
 from models.user import User
 from .util import check_group_permission
-
+from forms.forms import GroupForm
 
 class GroupsHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        groupname = self.get_argument('group_name', '')
-        groups = self.session.query(Group).filter(Group.name.ilike('%{0}%'.format(groupname))).order_by(Group.name).all()
+        group_name = self.get_argument('group_name', '')
+        groups = self.session.query(Group).filter(Group.name.ilike('%{0}%'.format(group_name))).order_by(Group.name).all()
         self.render('group/groups.html', groups=groups)
 
     @tornado.web.authenticated
     def post(self):
-        name = self.get_argument('group_name', '')
-        description = self.get_argument('description', '')
-        group = Group(name=name, description=description)
-        user_dict = self.get_current_user()
-        user = self.session.query(User).filter_by(id=user_dict['id']).first()
-        self.session.add(group)
-        user.groups.append(group)
-        self.session.commit()
-        self.redirect(self.reverse_url('groups'))
+        form = GroupForm(self.request.arguments)
+        if form.validate():
+            group = Group(**form.data)
+            user_dict = self.get_current_user()
+            user = self.session.query(User).filter_by(id=user_dict['id']).first()
+            self.session.add(group)
+            user.groups.append(group)
+            self.session.commit()
+            self.redirect(self.reverse_url('group', group.id))
+        else:
+            self.redirect(self.reverse_url('groups'))  # Todo エラーメッセージを渡す
 
 
 class GroupHandler(BaseHandler):

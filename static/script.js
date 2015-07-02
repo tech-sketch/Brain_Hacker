@@ -19,7 +19,8 @@ $(document).ready(function() {
                                   }});
 });
 
-var socket = new WebSocket("ws://localhost:{{ port }}/websocket");
+//var socket = new WebSocket("ws://" + location.host + ":{{ port }}/websocket");
+var socket = new WebSocket("ws://" + location.host + "/websocket");
 
 //an action has happened, send it to the
 //server

@@ -8,9 +8,9 @@ from models.group import Group
 
 
 class User(Base, DjangoLikeModelMixin):
-    name = Column(String(30), nullable=False)
-    email = Column(EmailType, nullable=False)
-    password = Column(PasswordType(schemes=['pbkdf2_sha512']), nullable=False)
+    name = Column(String(30), nullable=False, info={'label': 'ユーザ名'})
+    email = Column(EmailType, nullable=False, info={'label': 'メールアドレス'})
+    password = Column(PasswordType(schemes=['pbkdf2_sha512']), nullable=False, info={'label': 'パスワード'})
     groups = relationship("Group", secondary=association_table, backref='users')
 
     def __init__(self, name, email, password):

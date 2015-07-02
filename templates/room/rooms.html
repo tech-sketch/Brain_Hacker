@@ -57,10 +57,6 @@
             <h3>部屋一覧</h3>
         </div>
         {% for i, room in enumerate(rooms) %}
-        <script>
-        $('#room{{i}}_edit').openModal();
-        $('#room{{i}}_delete').openModal();
-        </script>
         <!-- Modal Structure -->
         <div id="room{{i}}_edit" class="modal">
             <div class="modal-content">
@@ -87,26 +83,12 @@
             </div>
         </div>
 
+        {% module DeleteModal(name='room{0}'.format(i), title='部屋', url=reverse_url('room_delete', group.id, room.id), target=room.name) %}
 
-        <!-- Modal Structure -->
-        <div id="room{{i}}_delete" class="modal">
-            <div class="modal-content">
-                <h4>部屋の削除</h4>
-                <form method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}">
-                    {% module xsrf_form_html() %}
-                    <div class="row">
-                        <p>部屋「{{ room.name }}」を本当に削除しますか？</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
-                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                    </div>
-                </form>
-            </div>
-        </div>
         {% if i % 3 == 0 %}<div class="row col s12">{% end %}
             <div class="col s12 m4">
                 <div class="card white lighten-2 hoverable">
+                    <div class="custom_divider teal"></div>
                     <div class="card-content black-text">
                         <a href="{{ reverse_url('room', group.id, room.id) }}" class="card-title blue-text">{{ room.name }}</a>
                         <p>ブレストのテーマ: {{ room.theme }}</p>

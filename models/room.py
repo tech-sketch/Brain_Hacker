@@ -4,8 +4,8 @@ from models.base_model import DjangoLikeModelMixin, Base
 
 
 class Room(Base, DjangoLikeModelMixin):
-    name = Column(String(30), nullable=False)
-    theme = Column(String(100), nullable=False)
+    name = Column(String(30), nullable=False, info={'label': '部屋名'})
+    theme = Column(String(100), nullable=False, info={'label': 'ブレストのテーマ'})
     group_id = Column(Integer, ForeignKey('group.id'))
 
     def __init__(self, name, theme):

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ja">
     <meta charset="UTF-8">
-    <title></title>
 </head>
 <body>
 <form  action="/" method="post">
@@ -12,9 +11,17 @@
     <input type="submit"/>
 </form>
 
+{% raw user_form.name.label %}
 {% raw user_form.name %}
-{% raw user_form.email %}
-{% raw user_form.password %}
 
+<form action="/" method="post">
+    {% module xsrf_form_html() %}
+    {% for field in user_form %}
+    {% raw field.label %}
+    {% raw field %}
+    {% end %}
+</form>
+{% from forms.forms import GroupForm %}
+{{ GroupForm() }}
 </body>
 </html>

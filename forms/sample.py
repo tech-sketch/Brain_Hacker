@@ -49,7 +49,21 @@ class SumHandler(tornado.web.RequestHandler):
 
     def get(self):
         sumform = SumForm()
-        self.render('test.html', sumform=sumform, user_form=UserForm())
+        #fields = [val for val in UserForm()._fields]
+        #print(fields)
+        #form = UserForm()
+        from forms.forms import GroupForm
+        form = GroupForm(prefix="test")
+        names = [name for name in GroupForm()._fields]
+        #form['name'].name = "hello"
+        for name in names:
+            getattr(form, name).name = name
+        #getattr(form, 'name').name = "hello"
+        #for field_name in fields:
+         #   print(getattr(form, field_name).name)
+            #setattr(form, field_name, 'aiueo')
+            #print(getattr(form, field_name))
+        self.render('test.html', sumform=sumform, user_form=form)
 
     def post(self):
         form = SumForm(self.request.arguments)
@@ -64,5 +78,5 @@ application = tornado.web.Application([
     (r"/", SumHandler),],)
 
 if __name__ == "__main__":
-    application.listen(8888)
+    application.listen(8890)
     tornado.ioloop.IOLoop.instance().start()

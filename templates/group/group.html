@@ -21,10 +21,11 @@
             </div>
         </div>
     </div>
-    <script>
+
+    <!--<script>
       $('#group_edit').openModal();
       $('#group_delete').openModal();
-    </script>
+    </script>-->
 
     <!-- Modal Structure -->
     <div id="group_edit" class="modal">
@@ -54,6 +55,7 @@
 
 
     <!-- Modal Structure -->
+    <!--
     <div id="group_delete" class="modal">
         <div class="modal-content">
             <h4>グループの削除</h4>
@@ -68,7 +70,8 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>-->
+    {% module DeleteModal(name='group', title='グループ', url=reverse_url('group_delete', group.id), target=group.name) %}
     {% block sub_content %}
     {% end %}
 </div>

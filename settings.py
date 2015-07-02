@@ -5,7 +5,7 @@ from tornado.options import define, options
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-define('port', default=8883, help="run on the given port", type=int)
+define('port', default=8811, help="run on the given port", type=int)
 define('debug', default=True, help='debug mode')
 tornado.options.parse_command_line()
 
@@ -18,8 +18,8 @@ settings['cookie_secret'] = os.environ.get('SECRET_TOKEN', '__TODO:_GENERATE_YOU
 settings['xsrf_cookies'] = True
 settings['login_url'] = '/auth/login/'
 
-from modules.modules import SearchBar
-settings['ui_modules'] = {'SearchBar': SearchBar}
+from modules.modules import SearchBar, DeleteModal, CreateModal
+settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal, 'CreateModal': CreateModal}
 
 DATABASES = {
     'default': {

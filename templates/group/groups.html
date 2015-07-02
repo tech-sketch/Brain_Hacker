@@ -1,6 +1,6 @@
 {% extends "../base.html" %}
 {% block search_bar %}
-{% module SearchBar(name='group', url=reverse_url('groups'), placeholder='グループ名') %}
+    {% module SearchBar(name='group', url=reverse_url('groups'), placeholder='グループ名') %}
 {% end %}
 
 {% block content %}
@@ -11,16 +11,18 @@
                 <h3>グループとは？</h3>
                 <p>特定/任意のメンバーで情報共有を行うことができます。</p>
                 <!-- Modal Trigger -->
-                <a class="right waves-effect waves-light btn modal-trigger" href="#modal1">グループの作成</a>
+                <a class="right waves-effect waves-light btn modal-trigger" href="#group_create">グループの作成</a>
             </div>
         </div>
     </div>
-
+    <!--
     <script>
       $('#modal1').openModal();
     </script>
+-->
 
     <!-- Modal Structure -->
+    <!--
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>グループの作成</h4>
@@ -44,7 +46,9 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>-->
+    {% from forms.forms import GroupForm %}
+    {% module CreateModal(id='group_create', name='group', title='グループ', url=reverse_url('groups'), Form=GroupForm) %}
 
     <div class="row grey lighten-3">
         <div class="col s12">
@@ -56,10 +60,10 @@
             {% end %}
             <div class="col s12 m4">
                 <div class="card white lighten-2 hoverable">
+                    <div class="custom_divider teal"></div>
                     <div class="card-content black-text">
                         <a href="{{ reverse_url('group', group.id) }}" class="card-title blue-text">{{ group.name }}</a>
                         <div class="divider"></div>
-                        <!--<span class="card-title">{{ group.name }}</span>-->
                         <p>一言説明：{{ group.description }}</p>
                         <p>　参加者：{{ len(group.users) }}人</p>
                     </div>
