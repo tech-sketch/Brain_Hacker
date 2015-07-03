@@ -30,8 +30,8 @@ class RoomsHandler(BaseHandler):
         form = RoomForm(self.request.arguments)
         if form.validate():
             room = Room(**form.data)
-            group = self.session.query(Group).get(group_id)
             self.session.add(room)
+            group = self.session.query(Group).get(group_id)
             group.rooms.append(room)
             self.session.commit()
         self.redirect(self.reverse_url('rooms', group_id))

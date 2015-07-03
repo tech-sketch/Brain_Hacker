@@ -18,9 +18,9 @@ class GroupsHandler(BaseHandler):
         form = GroupForm(self.request.arguments)
         if form.validate():
             group = Group(**form.data)
+            self.session.add(group)
             user_dict = self.get_current_user()
             user = self.session.query(User).get(user_dict['id'])
-            self.session.add(group)
             user.groups.append(group)
             self.session.commit()
             self.redirect(self.reverse_url('group', group.id))
@@ -84,6 +84,7 @@ class SearchNewMembersHandler(BaseHandler):
         user.groups.append(group)
         self.session.commit()
         self.redirect(self.reverse_url('search_new_members', group_id))
+
 
 class GroupUserHandler(BaseHandler):
 
