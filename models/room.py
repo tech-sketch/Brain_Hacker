@@ -12,6 +12,11 @@ class Room(Base, DjangoLikeModelMixin):
         self.name = name
         self.theme = theme
 
+    def update(self, *args, **kwargs):
+        self.name = kwargs.get('name', self.name)
+        self.theme = kwargs.get('theme', self.theme)
+
+
 if __name__ == '__main__':
     import sqlalchemy
     from settings import url

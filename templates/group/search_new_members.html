@@ -11,17 +11,17 @@
         </thead>
         <tbody>
         {% for user in users %}
-        <tr>
-            <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
-            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-            <td>
-                <form method="post" action="{{ reverse_url('search_new_members', group.id) }}">
-                    {% module xsrf_form_html() %}
-                    <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
-                    <button class="btn btn-primary" type="submit">招待する</button>
-                </form>
-            </td>
-        </tr>
+            <tr>
+                <td><a href="{{ reverse_url('user', user.id) }}">{{ user.name }}</a></td>
+                <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                <td>
+                    <form method="post" action="{{ reverse_url('search_new_members', group.id) }}">
+                        {% module xsrf_form_html() %}
+                        <input type="hidden" name="uid" class="form-control" value="{{ user.id }}">
+                        <button class="btn btn-primary" type="submit">招待する</button>
+                    </form>
+                </td>
+            </tr>
         {% end %}
         </tbody>
     </table>

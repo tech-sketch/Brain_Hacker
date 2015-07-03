@@ -35,9 +35,7 @@ class RoomsHandler(BaseHandler):
             self.session.add(room)
             group.rooms.append(room)
             self.session.commit()
-            self.redirect(self.reverse_url('room', group_id, room.id))
-        else:
-            self.redirect(self.reverse_url('rooms', group_id))
+        self.redirect(self.reverse_url('rooms', group_id))
 
 
 class RoomHandler(BaseHandler):
@@ -56,13 +54,12 @@ class RoomEditHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
-        room_name = self.get_argument('room_name', '')
-        theme = self.get_argument('theme', '')
-        room = self.session.query(Room).filter_by(id=room_id).first()
-        room.name = room_name
-        room.theme = theme
-        self.session.add(room)
-        self.session.commit()
+        form = RoomForm(self.request.arguments)
+        if form.validate():
+            room = self.session.query(Room).filter_by(id=room_id).first()
+            room.update(**form.data)
+            self.session.add(room)
+            self.session.commit()
         self.redirect(self.reverse_url('rooms', group_id))
 
 

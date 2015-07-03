@@ -2,25 +2,19 @@
 {% block content %}
 <div class="container">
     <div class="section">
-    <div class="card white lighten-2 hoverable">
-        <div class="card-content black-text">
-            <p>ユーザ名: <a href="{{ reverse_url('user', user.id) }}" class="card-title black-text">{{ user.name }}</a></p>
-            <p>ユーザの一言</p>
-            <p>メールアドレス: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
-            <p>所属しているグループ一覧</p>
-            <div class="collection">
-                {% for group in user.groups %}
-                <a href="{{ reverse_url('group', group.id) }}" class="collection-item">{{ group.name }}</a>
-                {% end %}
+        <div class="card white lighten-2 hoverable">
+            <div class="card-content black-text">
+                <p>ユーザ名: <a href="{{ reverse_url('user', user.id) }}" class="card-title black-text">{{ user.name }}</a></p>
+                <p>ユーザの一言</p>
+                <p>メールアドレス: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                <p>所属しているグループ一覧</p>
+                <div class="collection">
+                    {% for group in user.groups %}
+                    <a href="{{ reverse_url('group', group.id) }}" class="collection-item">{{ group.name }}</a>
+                    {% end %}
+                </div>
             </div>
         </div>
-        <!--
-        <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
-        </div>
-        -->
-    </div>
     </div>
 </div>
 {% end %}

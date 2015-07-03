@@ -22,59 +22,9 @@
         </div>
     </div>
 
-    <!--<script>
-      $('#group_edit').openModal();
-      $('#group_delete').openModal();
-    </script>-->
-
-    <!-- Modal Structure -->
-    <!--
-    <div id="group_edit" class="modal">
-        <div class="modal-content">
-            <h4>グループの編集</h4>
-            <form method="post" action="{{ reverse_url('group_edit', group.id) }}">
-                {% module xsrf_form_html() %}
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="group_name_edit" type="text" name="group_name" required="" class="validate" value="{{ group.name }}">
-                        <label for="group_name_edit">グループ名</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="description_edit" type="text" name="description" required="" class="validate" value="{{ group.description }}">
-                        <label for="description_edit">一言説明</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="modal-action modal-close waves-effect waves-green btn" type="submit">更新</button>
-                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    -->
-
     {% from forms.forms import GroupForm %}
     {% module EditModal(id='group_edit', name='group', title='グループ', url=reverse_url('group_edit', group.id), Form=GroupForm, model=group) %}
 
-    <!-- Modal Structure -->
-    <!--
-    <div id="group_delete" class="modal">
-        <div class="modal-content">
-            <h4>グループの削除</h4>
-            <form method="post" action="{{ reverse_url('group_delete', group.id) }}">
-                {% module xsrf_form_html() %}
-                <div class="row">
-                    <p>グループ「{{ group.name }}」を本当に削除しますか？</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
-                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                </div>
-            </form>
-        </div>
-    </div>-->
     {% module DeleteModal(name='group', title='グループ', url=reverse_url('group_delete', group.id), target=group.name) %}
     {% block sub_content %}
     {% end %}
