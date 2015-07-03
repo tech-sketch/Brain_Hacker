@@ -1,14 +1,16 @@
 {% extends "../layout.html" %}
 
 {% block body %}
-<h2>ブレストのテーマ： {{ theme }}</h2>
+<h2>ブレストのテーマ： {{ room.theme }}</h2>
 <div class="board-outline">
   <div id="board">
     <div id="board-doodles"></div>
   </div>
 </div>
-<div class="buttons"><i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon"></i><i id="smallify" class="fa fa-expand fa-2x bottom-icon"></i></div>
-
+<div class="buttons">
+    <i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon"></i>
+    <i id="smallify" class="fa fa-expand fa-2x bottom-icon"></i>
+</div>
 
 <div id="chat_div" class="chat"></div>
 

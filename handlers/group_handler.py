@@ -19,7 +19,7 @@ class GroupsHandler(BaseHandler):
         if form.validate():
             group = Group(**form.data)
             user_dict = self.get_current_user()
-            user = self.session.query(User).filter_by(id=user_dict['id']).first()
+            user = self.session.query(User).get(user_dict['id'])
             self.session.add(group)
             user.groups.append(group)
             self.session.commit()
@@ -33,7 +33,7 @@ class GroupHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
-        group = self.session.query(Group).filter_by(id=group_id).first()
+        group = self.session.query(Group).get(group_id)
         self.render('group/group.html', group=group)
 
 
@@ -44,7 +44,7 @@ class GroupEditHandler(BaseHandler):
     def post(self, group_id):
         form = GroupForm(self.request.arguments)
         if form.validate():
-            group = self.session.query(Group).filter_by(id=group_id).first()
+            group = self.session.query(Group).get(group_id)
             group.update(**form.data)
             self.session.add(group)
             self.session.commit()
@@ -58,7 +58,7 @@ class GroupDeleteHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        group = self.session.query(Group).filter_by(id=group_id).first()
+        group = self.session.query(Group).get(group_id)
         self.session.delete(group)
         self.session.commit()
         self.redirect(self.reverse_url('groups'))
@@ -72,15 +72,15 @@ class SearchNewMembersHandler(BaseHandler):
         username = self.get_argument('user_name', '')
         users = self.session.query(User).filter(User.name.ilike('%{0}%'.format(username))).order_by(User.name).all()
         users = [user for user in users if not user.belongs_to_group(int(group_id))]
-        group = self.session.query(Group).filter_by(id=group_id).first()
+        group = self.session.query(Group).get(group_id)
         self.render('group/search_new_members.html', users=users, group=group)
 
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
         user_id = self.get_argument('uid', '')
-        user = self.session.query(User).filter_by(id=user_id).first()
-        group = self.session.query(Group).filter_by(id=group_id).first()
+        user = self.session.query(User).get(user_id)
+        group = self.session.query(Group).get(group_id)
         user.groups.append(group)
         self.session.commit()
         self.redirect(self.reverse_url('search_new_members', group_id))
@@ -90,5 +90,5 @@ class GroupUserHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
-        group = self.session.query(Group).filter_by(id=group_id).first()
+        group = self.session.query(Group).get(group_id)
         self.render('group/group_users.html', group=group)

@@ -1,6 +1,6 @@
 {% extends "../base.html" %}
 {% block search_bar %}
-    {% module SearchBar(name='room', url=reverse_url('rooms', group.id), placeholder='部屋名') %}
+    {% module SearchBar(name='room', url=reverse_url('rooms', group_id), placeholder='部屋名') %}
 {% end %}
 
 {% block content %}
@@ -17,7 +17,7 @@
     </div>
 
     {% from forms.forms import RoomForm %}
-    {% module CreateModal(id='room_create', name='room', title='部屋', url=reverse_url('rooms', group.id), Form=RoomForm) %}
+    {% module CreateModal(id='room_create', name='room', title='部屋', url=reverse_url('rooms', group_id), Form=RoomForm) %}
 
     <div class="row grey lighten-3">
         <div class="col s12">
@@ -27,9 +27,9 @@
 
             {% from forms.forms import RoomForm %}
             {% module EditModal(id='room{0}_edit'.format(i), name='room', title='部屋',
-                                url=reverse_url('room_edit', group.id, room.id), Form=RoomForm, model=room) %}
+                                url=reverse_url('room_edit', group_id, room.id), Form=RoomForm, model=room) %}
 
-            {% module DeleteModal(name='room{0}'.format(i), title='部屋', url=reverse_url('room_delete', group.id, room.id), target=room.name) %}
+            {% module DeleteModal(name='room{0}'.format(i), title='部屋', url=reverse_url('room_delete', group_id, room.id), target=room.name) %}
 
             {% if i % 3 == 0 %}
             <div class="row col s12">
@@ -38,7 +38,7 @@
                     <div class="card white lighten-2 hoverable">
                         <div class="custom_divider teal"></div>
                         <div class="card-content black-text">
-                            <a href="{{ reverse_url('room', group.id, room.id) }}" class="card-title blue-text">{{ room.name }}</a>
+                            <a href="{{ reverse_url('room', group_id, room.id) }}" class="card-title blue-text">{{ room.name }}</a>
                             <p>ブレストのテーマ: {{ room.theme }}</p>
                         </div>
                         <div class="card-action">

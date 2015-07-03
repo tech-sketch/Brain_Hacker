@@ -22,8 +22,7 @@ class RoomsHandler(BaseHandler):
     def get(self, group_id):
         room_name = self.get_argument('room_name', '')
         rooms = self.session.query(Room).filter(Room.name.ilike('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
-        group = self.session.query(Group).filter_by(id=group_id).first()
-        self.render('room/rooms.html', rooms=rooms, group=group)
+        self.render('room/rooms.html', rooms=rooms, group_id=group_id)
 
     @check_group_permission
     @tornado.web.authenticated
@@ -31,7 +30,7 @@ class RoomsHandler(BaseHandler):
         form = RoomForm(self.request.arguments)
         if form.validate():
             room = Room(**form.data)
-            group = self.session.query(Group).filter_by(id=group_id).first()
+            group = self.session.query(Group).get(group_id)
             self.session.add(room)
             group.rooms.append(room)
             self.session.commit()
@@ -43,10 +42,8 @@ class RoomHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id, room_id):
-        from tornado.options import options
-        port = str(options.port)
-        room = self.session.query(Room).filter_by(id=room_id).first()
-        self.render('room/room.html', room_id=room_id, port=port, theme=room.theme)
+        room = self.session.query(Room).get(room_id)
+        self.render('room/room.html', room=room)
 
 
 class RoomEditHandler(BaseHandler):
@@ -56,7 +53,7 @@ class RoomEditHandler(BaseHandler):
     def post(self, group_id, room_id):
         form = RoomForm(self.request.arguments)
         if form.validate():
-            room = self.session.query(Room).filter_by(id=room_id).first()
+            room = self.session.query(Room).get(room_id)
             room.update(**form.data)
             self.session.add(room)
             self.session.commit()
@@ -68,7 +65,7 @@ class RoomDeleteHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
-        room = self.session.query(Room).filter_by(id=room_id).first()
+        room = self.session.query(Room).get(room_id)
         self.session.delete(room)
         self.session.commit()
         self.redirect(self.reverse_url('rooms', group_id))
@@ -203,9 +200,6 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.broadcast_to_room(self, clean_message)
 
     def vote_up(self, message):
-        print("vote-1up")
-        # notify vote_count
-        # update vote_count
         clean_message = {
             'action': 'voteUp',
             'data': {'id': message['data']['id']}
@@ -233,8 +227,6 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)
         for waiter in self.rooms.get_room_clients(room_id):
-            print("waiter")
-            print(waiter)
             if waiter == client:
                 continue
             waiter.write_message(json.dumps(message_out))
