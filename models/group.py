@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from models.base_model import DjangoLikeModelMixin, Base
 
 
-
 class Group(Base, DjangoLikeModelMixin):
     from .room import Room
     name = Column(String(30), nullable=False, info={'label': 'グループ名'})
@@ -17,6 +16,7 @@ class Group(Base, DjangoLikeModelMixin):
     def update(self, *args, **kwargs):
         self.name = kwargs.get('name', self.name)
         self.description = kwargs.get('description', self.description)
+
 
 if __name__ == '__main__':
     import sqlalchemy

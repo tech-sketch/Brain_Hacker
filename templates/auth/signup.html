@@ -10,6 +10,15 @@
             <form class="col s12" method="post" action="{{ reverse_url('signup') }}">
                 {% module xsrf_form_html() %}
                 <h4>Brain Hacker へ登録</h4>
+                {% for field in form %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {% raw field %}
+                        {% raw field.label %}
+                    </div>
+                </div>
+                {% end %}
+                <!--
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="user_name" type="text" name="username" class="validate">
@@ -27,7 +36,7 @@
                         <input id="password" type="password" name="password" class="validate">
                         <label for="password">Password</label>
                     </div>
-                </div>
+                </div>-->
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                     <i class="material-icons">send</i>
                 </button>

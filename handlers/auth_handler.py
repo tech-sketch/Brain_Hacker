@@ -4,6 +4,7 @@ import tornado.web
 import tornado.escape
 from handlers.base_handler import BaseHandler
 from models.user import User
+from forms.forms import UserForm
 
 
 class LoginHandler(BaseHandler):
@@ -41,19 +42,21 @@ class LogoutHandler(BaseHandler):
 class SignupHandler(BaseHandler):
 
     def get(self):
-        self.render('auth/signup.html', error_message='')
+        self.render('auth/signup.html', error_message='', form=UserForm())
 
     def exists_email(self, email):
         return self.session.query(exists().where(User.email == email)).scalar()
 
     def post(self):
-        username = self.get_argument('username', '')
-        password = self.get_argument('password', '')
-        email    = self.get_argument('email', '')
-        if not self.exists_email(email):
-            self.session.add(User(name=username, password=password, email=email))
+        email = self.get_argument('email', '')
+        form = UserForm(self.request.arguments)
+        if not form.validate():
+            error_message = '入力が正しくありません'
+            self.render('auth/signup.html', error_message=error_message, form=form)
+        elif self.exists_email(email):
+            error_message = '既に存在するメールアドレスです。'
+            self.render('auth/signup.html', error_message=error_message, form=form)
+        else:
+            self.session.add(User(**form.data))
             self.session.commit()
             self.redirect(self.reverse_url('login'))
-        else:
-            error_message = '既に存在するメールアドレスです。'
-            self.render('auth/signup.html', error_message=error_message)
