@@ -6,12 +6,12 @@ Brain Hackerは、Web上でブレインストーミングをするためのア�
 ## インストール方法
 `pip install -r requirements.txt`
 
-**必要条件: ** Python3系のインストールは必須です。
+**必要条件:** Python3系のインストールは必須です。
 また、思考支援機能を使うためには、以下の2つのAPIキーが必要になります。
 * [Yahoo キーフレーズ抽出](http://developer.yahoo.co.jp/webapi/jlp/keyphrase/v1/extract.html)
 * [Docomo 固有表現抽出](https://dev.smt.docomo.ne.jp/?p=docs.api.page&api_name=language_analysis&p_name=api_2#tag01)
 
-**プラットフォーム: ** 以下のプラットフォームでの動作は確認しています。
+**プラットフォーム:** 以下のプラットフォームでの動作は確認しています。
 * Linux(Ubuntu?)
 * Windows7
 
