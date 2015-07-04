@@ -4,7 +4,9 @@ Brain Hackerは、Web上でブレインストーミングをするためのア�
 また、褒める機能と思考支援機能を持つAIを搭載することで、楽しく、創造的なブレインストーミングを可能にします。
 
 ## インストール方法
-`pip install -r requirements.txt`
+```shell
+$ pip install -r requirements.txt
+```
 
 **必要条件:** Python3系のインストールは必須です。
 また、思考支援機能を使うためには、以下の2つのAPIキーが必要になります。
@@ -16,8 +18,9 @@ Brain Hackerは、Web上でブレインストーミングをするためのア�
 * Windows7
 
 ## 実行方法
-`python app.py`
-
+```shell
+$ python app.py
+```
 
 ## Readmeに書く内容
 * サービスの概要
