@@ -21,7 +21,8 @@ class RoomsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id):
         room_name = self.get_argument('room_name', '')
-        rooms = self.session.query(Room).filter(Room.name.ilike('%{0}%'.format(room_name))).filter_by(group_id=group_id).order_by(Room.name).all()
+        rooms = Room.search_name(room_name)
+        rooms = [room for room in rooms if room.belongs_to_group(group_id)]
         self.render('room/rooms.html', rooms=rooms, group_id=group_id)
 
     @check_group_permission
@@ -30,10 +31,9 @@ class RoomsHandler(BaseHandler):
         form = RoomForm(self.request.arguments)
         if form.validate():
             room = Room(**form.data)
-            self.session.add(room)
-            group = self.session.query(Group).get(group_id)
+            group = Group.get(group_id)
             group.rooms.append(room)
-            self.session.commit()
+            group.save()
         self.redirect(self.reverse_url('rooms', group_id))
 
 
@@ -42,7 +42,7 @@ class RoomHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id, room_id):
-        room = self.session.query(Room).get(room_id)
+        room = Room.get(room_id)
         self.render('room/room.html', room=room)
 
 
@@ -53,10 +53,9 @@ class RoomEditHandler(BaseHandler):
     def post(self, group_id, room_id):
         form = RoomForm(self.request.arguments)
         if form.validate():
-            room = self.session.query(Room).get(room_id)
+            room = Room.get(room_id)
             room.update(**form.data)
-            self.session.add(room)
-            self.session.commit()
+            room.save()
         self.redirect(self.reverse_url('rooms', group_id))
 
 
@@ -65,9 +64,7 @@ class RoomDeleteHandler(BaseHandler):
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id, room_id):
-        room = self.session.query(Room).get(room_id)
-        self.session.delete(room)
-        self.session.commit()
+        Room.get(room_id).delete()
         self.redirect(self.reverse_url('rooms', group_id))
 
 

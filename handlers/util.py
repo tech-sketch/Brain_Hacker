@@ -11,7 +11,8 @@ def check_group_permission(f):
         if not user:
             args[0].redirect(args[0].reverse_url('login'))
             return
-        user = args[0].session.query(User).filter_by(id=user['id']).first()
+        ##user = args[0].session.query(User).filter_by(id=user['id']).first()
+        user = User.get(user['id'])
         if user.belongs_to_group(int(args[1])):
             pass
         else:
@@ -20,21 +21,3 @@ def check_group_permission(f):
             return
         return f(*args)
     return wrapper
-
-"""
-def pickup(session, model, id):
-    return session.query(model).get(id)
-
-
-def edit(session, model, id, params):
-    record = pickup(session, model, id)
-    record.update(**params)
-    session.add(record)
-    session.commit()
-
-
-def delete(session, model, id):
-    record = pickup(session, model, id)
-    session.delete(record)
-    session.commit()
-"""

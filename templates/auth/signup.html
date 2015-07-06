@@ -1,11 +1,11 @@
 {% extends "../base.html" %}
 
 {% block content %}
-<h1>{{ error_message }}</h1>
-
-
 <div class="container">
     <div class="section">
+        {% if error_message %}
+            <h3 class="red-text">{{ error_message }}</h3>
+        {% end %}
         <div class="row">
             <form class="col s12" method="post" action="{{ reverse_url('signup') }}">
                 {% module xsrf_form_html() %}
@@ -13,6 +13,11 @@
                 {% for field in form %}
                     <div class="row">
                         <div class="input-field col s12">
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="red-text">{% raw error %}</p>
+                                {% end %}
+                            {% end %}
                             {% raw field %}
                             {% raw field.label %}
                         </div>

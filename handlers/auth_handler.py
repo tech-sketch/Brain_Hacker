@@ -1,5 +1,3 @@
-import sqlalchemy.orm.exc
-from sqlalchemy.sql import exists
 import tornado.web
 import tornado.escape
 from handlers.base_handler import BaseHandler
@@ -12,17 +10,10 @@ class LoginHandler(BaseHandler):
     def get(self):
         self.render('auth/login.html', error_message='')
 
-    def authenticate(self, email, password):
-        try:
-            user = self.session.query(User).filter_by(email=email).one()
-            return user if user.verify_password(password=password) else None
-        except sqlalchemy.orm.exc.NoResultFound:
-            return None
-
     def post(self):
         email = self.get_argument('email', '')
         password = self.get_argument('password', '')
-        user = self.authenticate(email=email, password=password)
+        user = User.authenticate(email=email, password=password)
         if user is not None:
             self.set_current_user(user)
             self.redirect(self.reverse_url(name='index'))
@@ -44,19 +35,15 @@ class SignupHandler(BaseHandler):
     def get(self):
         self.render('auth/signup.html', error_message='', form=UserForm())
 
-    def exists_email(self, email):
-        return self.session.query(exists().where(User.email == email)).scalar()
-
     def post(self):
         email = self.get_argument('email', '')
         form = UserForm(self.request.arguments)
         if not form.validate():
-            error_message = '入力が正しくありません'
-            self.render('auth/signup.html', error_message=error_message, form=form)
-        elif self.exists_email(email):
+            self.render('auth/signup.html', error_message='', form=form)
+        elif User.exists_email(email):
             error_message = '既に存在するメールアドレスです。'
             self.render('auth/signup.html', error_message=error_message, form=form)
         else:
-            self.session.add(User(**form.data))
-            self.session.commit()
+            user = User(**form.data)
+            user.save()
             self.redirect(self.reverse_url('login'))

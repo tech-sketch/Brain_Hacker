@@ -16,6 +16,9 @@ class Room(Base, DjangoLikeModelMixin):
         self.name = kwargs.get('name', self.name)
         self.theme = kwargs.get('theme', self.theme)
 
+    def belongs_to_group(self, group_id):
+        return self.group_id == int(group_id)
+
 
 if __name__ == '__main__':
     import sqlalchemy
