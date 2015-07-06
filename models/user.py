@@ -27,7 +27,7 @@ class User(Base, DjangoLikeModelMixin):
 
     def belongs_to_group(self, group_id):
         for group in self.groups:
-            if group_id == group.id:
+            if group.id == int(group_id):
                 return True
         return False
 

@@ -7,7 +7,7 @@ import tornado.websocket
 from tornado import gen
 from tornado.web import asynchronous
 
-from .base_handler import BaseHandler
+from handlers.base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
 from .rooms import Rooms

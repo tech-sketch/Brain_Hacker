@@ -1,6 +1,5 @@
 import tornado.web
 import tornado.escape
-from backend import Backend
 
 
 class BaseHandler(tornado.web.RequestHandler):

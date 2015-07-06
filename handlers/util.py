@@ -11,7 +11,6 @@ def check_group_permission(f):
         if not user:
             args[0].redirect(args[0].reverse_url('login'))
             return
-        ##user = args[0].session.query(User).filter_by(id=user['id']).first()
         user = User.get(user['id'])
         if user.belongs_to_group(int(args[1])):
             pass

@@ -1,6 +1,7 @@
 import tornado.web
-from .base_handler import BaseHandler
+from handlers.base_handler import BaseHandler
 from models.user import User
+
 
 class UsersHandler(BaseHandler):
 
@@ -15,5 +16,5 @@ class UserHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self, user_id):
-        user = User.get(id=user_id)
+        user = User.get(user_id)
         self.render('user/user.html', user=user)

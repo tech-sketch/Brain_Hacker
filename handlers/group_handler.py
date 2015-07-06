@@ -1,9 +1,10 @@
 import tornado.web
-from .base_handler import BaseHandler
+from handlers.base_handler import BaseHandler
 from models.group import Group
 from models.user import User
 from .util import check_group_permission
 from forms.forms import GroupForm
+
 
 class GroupsHandler(BaseHandler):
 
@@ -60,26 +61,26 @@ class GroupDeleteHandler(BaseHandler):
         self.redirect(self.reverse_url('groups'))
 
 
-class SearchNewMembersHandler(BaseHandler):
+class GroupMemberAdditionHandler(BaseHandler):
 
     @check_group_permission
     @tornado.web.authenticated
     def get(self, group_id):
         user_name = self.get_argument('user_name', '')
         users = User.search_name(user_name)
-        users = [user for user in users if not user.belongs_to_group(int(group_id))]
+        users = [user for user in users if not user.belongs_to_group(group_id)]
         group = Group.get(group_id)
-        self.render('group/search_new_members.html', users=users, group=group)
+        self.render('group/member_addition.html', users=users, group=group)
 
     @check_group_permission
     @tornado.web.authenticated
     def post(self, group_id):
-        user_id = self.get_argument('uid', '')
+        user_id = self.get_argument('user_id', '')
         user = User.get(user_id)
         group = Group.get(group_id)
         user.groups.append(group)
         user.save()
-        self.redirect(self.reverse_url('search_new_members', group_id))
+        self.redirect(self.reverse_url('member_addition', group_id))
 
 
 class GroupUserHandler(BaseHandler):
