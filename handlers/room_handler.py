@@ -4,13 +4,14 @@ import uuid
 
 import tornado.web
 import tornado.websocket
+
 from tornado import gen
+
 from tornado.web import asynchronous
 
 from handlers.base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
-from .rooms import Rooms
 from .util import check_group_permission
 from forms.forms import RoomForm
 
@@ -69,9 +70,9 @@ class RoomDeleteHandler(BaseHandler):
 
 
 class RoomSocketHandler(tornado.websocket.WebSocketHandler):
-    from .rooms import Rooms
-    from .cards import Cards
-    from .chat import Chat
+    from handlers.brainstorming.rooms import Rooms
+    from handlers.brainstorming.cards import Cards
+    from handlers.brainstorming.chat import Chat
     rooms = Rooms()
     cards = Cards()
     chat = Chat()
