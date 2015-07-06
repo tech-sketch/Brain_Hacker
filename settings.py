@@ -15,7 +15,7 @@ settings['debug'] = options.debug
 settings['static_path'] = os.path.join(BASE_DIR, 'static')
 settings['template_path'] = os.path.join(BASE_DIR, 'templates')
 settings['cookie_secret'] = os.environ.get('SECRET_TOKEN', '__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__')
-settings['xsrf_cookies'] = True
+settings['xsrf_cookies'] = False
 settings['login_url'] = '/auth/login/'
 
 from modules.modules import SearchBar, DeleteModal, CreateModal, EditModal

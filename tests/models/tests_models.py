@@ -8,7 +8,7 @@ from models.user import User
 from models.group import Group
 from models.room import Room
 
-class TestUser(unittest.TestCase):
+class UserTests(unittest.TestCase):
     def setUp(self):
         self.engine = create_engine('sqlite:///:memory:')
         self.session = sessionmaker(self.engine)()
@@ -26,7 +26,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-class TestGroup(unittest.TestCase):
+class GroupTests(unittest.TestCase):
     def setUp(self):
         self.engine = create_engine('sqlite:///:memory:')
         self.session = sessionmaker(self.engine)()
@@ -44,7 +44,7 @@ class TestGroup(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-class TestRoom(unittest.TestCase):
+class RoomTests(unittest.TestCase):
     def setUp(self):
         self.engine = create_engine('sqlite:///:memory:')
         self.session = sessionmaker(self.engine)()
