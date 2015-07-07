@@ -92,13 +92,13 @@ $ python app.py --port=8000
 
 * ユーザ登録
 
-signupボタンからユーザ登録を行う(ユーザ名，メールアドレス，パスワードの入力が必要)
+SIGN UPボタンからユーザ登録を行う(ユーザ名，メールアドレス，パスワードの入力が必要)
 
 ![SIGNUP](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/02_signup.png)
 
 * ログイン
 
-登録したユーザでログイン(ユーザ登録直後は自動で，その後は右上のLoginからLogin画面に飛べます)
+登録したユーザでログイン(ユーザ登録直後は自動で，その後は右上のLoginからログイン画面に飛べます)
 
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/03_login.png)
 
@@ -109,6 +109,48 @@ signupボタンからユーザ登録を行う(ユーザ名，メールアドレ�
 
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/04_after_login.png)
 
+* Groups画面
 
-* 作成したグループ内で「部屋の作成」
-* 作成した部屋に入るとブレインストーミングを行える
+![GROUPS](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/08group.png)
+
+* グループの作成
+
+グループの作成ボタンからグループを作成する
+
+![GROUPS](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/09_make_group.png)
+
+作成
+
+![MAKE_GROUPS](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/make_group.png)
+
+下のエリアに新しいグループが作成された
+
+* グループページ
+
+グループ名をクリックすることでグループのグループページへ遷移する
+
+![GROUP_INFO](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/10_groupinfo.png)
+
+* メンバーの招待
+
+グループページでメンバーボタンをクリックするとグループに所属するユーザ一覧が表示される
+
+ユーザ一覧内の右上のメンバーを追加するボタンから新しいメンバーを追加できる。
+
+## 作成したグループ内で「部屋の作成」
+
+* 部屋の作成
+
+グループページの部屋ボタンから部屋を作成できるページに遷移できる
+
+部屋の作成ボタンから部屋を作成できる
+
+![ROOM_catalog](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/make_room.png)
+
+作成
+
+![MAKE_ROOM](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/room.png)
+
+
+## 作成した部屋に入るとブレインストーミングを行える
+
