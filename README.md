@@ -4,13 +4,25 @@ Brain Hackerは、Web上でブレインストーミングをするためのア�
 また、褒める機能と思考支援機能を持つAIを搭載することで、楽しく、創造的なブレインストーミングを可能にします。
 
 ## インストール方法
+
+### 動作環境
+**プラットフォーム:** 以下のプラットフォームでの動作は確認しています。
+* Linux(Ubuntu 14.04)
+* Windows 7
+
+**データベース:** データベースは、標準ではPostgreSQLを想定しています。以下のバージョンでの動作は確認しています。
+* PostgreSQL 9.4
+また、Brain_Hacker/settings.pyで使用するデータベースの設定を行うことで、MySQLなどにも対応することができます。
+
+
+### モジュールのインストール
 Brain Hackerを動作させるために必要なモジュールは以下のコマンドでインストールできます。
 ```shell
 $ pip install -r requirements.txt
 ```
 
-**必要条件:** Python3系のインストールは必須です。
-また、思考支援機能を使うためには、以下の2つのAPIキーが必要になります。
+### 外部APIキーの設定
+思考支援機能を使うためには、以下の2つのAPIキーが必要になります。
 * [Yahoo キーフレーズ抽出](http://developer.yahoo.co.jp/webapi/jlp/keyphrase/v1/extract.html)
 * [Docomo 固有表現抽出](https://dev.smt.docomo.ne.jp/?p=docs.api.page&api_name=language_analysis&p_name=api_2#tag01)
 
@@ -19,11 +31,9 @@ APIキーはそれぞれ、
 * handlers/agent/named_entity_extraction.py
 の中の、keyidに記述してください。
 
-**プラットフォーム:** 以下のプラットフォームでの動作は確認しています。
-* Linux(Ubuntu 14.04)
-* Windows 7
 
 ## 実行方法
+実行方法では、データベースの設定、ポートの設定、アプリケーションの実行方法について説明します。
 ### データベースの設定
 Brain_Hacker/settings.pyで、データベースの設定を行います。以下はPostgreSQLにおける設定例です。
 ```python
@@ -64,3 +74,4 @@ $ python app.py
 ```shell
 $ python app.py --port=8000
 ```
+アプリケーションをポート番号8888番で起動後、ブラウザでhttp://127.0.0.1:8888/にアクセスしてトップページが表示されることを確認します。
