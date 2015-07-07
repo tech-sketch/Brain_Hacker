@@ -26,7 +26,7 @@ DATABASES = {
         'ENGINE': 'postgresql+psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '17suraimuAAA',
+        'PASSWORD': 'psobbst5',
         'HOST': 'localhost',
         'PORT': '5432',
     }

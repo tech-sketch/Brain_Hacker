@@ -17,6 +17,12 @@ class Group(Base, DjangoLikeModelMixin):
         self.name = kwargs.get('name', self.name)
         self.description = kwargs.get('description', self.description)
 
+    def has_user_of(self, user_id):
+        for user in self.users:
+            if user.id == int(user_id):
+                return True
+        return False
+
 
 if __name__ == '__main__':
     import sqlalchemy
