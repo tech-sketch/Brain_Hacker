@@ -17,7 +17,6 @@ class GroupsHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         form = GroupForm(self.request.arguments)
-
         if form.validate():
             group = Group(**form.data)
             user_id = self.get_current_user_id()
@@ -26,7 +25,6 @@ class GroupsHandler(BaseHandler):
             group.save()
             self.redirect(self.reverse_url('group', group.id))
         else:
-            print("error")
             self.redirect(self.reverse_url('groups'))  # Todo エラーメッセージを渡す
 
 
