@@ -90,8 +90,25 @@ $ python app.py --port=8000
 * トップページ
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/01_BrainHacker_TopPage.GIF)
 
+* ユーザ登録
+
+signupボタンからユーザ登録を行う(ユーザ名，メールアドレス，パスワードの入力が必要)
+
+![SIGNUP](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/02_signup.png)
+
+* ログイン
+
+登録したユーザでログイン(ユーザ登録直後は自動で，その後は右上のLoginからLogin画面に飛べます)
+
+![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/03_login.png)
+
+### 「Groups」から「グループの作成」
+* ログイン後のトップページ
+
+右上がログインユーザ名に
+
+![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/04_after_login.png)
 
 
-* 「Groups」から「グループの作成」
 * 作成したグループ内で「部屋の作成」
 * 作成した部屋に入るとブレインストーミングを行える
