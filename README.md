@@ -4,10 +4,10 @@ Brain Hackerは、Web上でブレインストーミングをするためのア�
 また、褒める機能と思考支援機能を持つAIを搭載することで、楽しく、創造的なブレインストーミングを可能にします。
 
 # 目次
-* [動作環境](## 動作環境)
-* [インストール方法](## インストール方法)
-* [実行方法](## 実行方法)
-* [使い方](## 使い方)
+- [動作環境](##動作環境)
+- [インストール方法](##インストール方法)
+- [実行方法](##実行方法)
+- [使い方](##使い方)
 
 ##動作環境
 動作環境は以下の通りです。
@@ -88,11 +88,12 @@ $ python app.py --port=8000
 ## 使い方
 ### ユーザ登録 & ログイン
 * トップページ
+
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/01_BrainHacker_TopPage.GIF)
 
 * ユーザ登録
 
-SIGN UPボタンからユーザ登録を行う(ユーザ名，メールアドレス，パスワードの入力が必要)
+SIGN UPボタンからユーザ登録を行うことができます(ユーザ名，メールアドレス，パスワードの入力が必要)
 
 ![SIGNUP](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/02_signup.png)
 
@@ -103,9 +104,10 @@ SIGN UPボタンからユーザ登録を行う(ユーザ名，メールアドレ
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/03_login.png)
 
 ### 「Groups」から「グループの作成」
+
 * ログイン後のトップページ
 
-右上がログインユーザ名に
+右上がログインユーザ名になります
 
 ![LOGIN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/04_after_login.png)
 
@@ -115,42 +117,93 @@ SIGN UPボタンからユーザ登録を行う(ユーザ名，メールアドレ
 
 * グループの作成
 
-グループの作成ボタンからグループを作成する
+グループの作成ボタンからグループを作成できます
 
 ![GROUPS](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/09_make_group.png)
 
-作成
+グループ作成
 
 ![MAKE_GROUPS](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/make_group.png)
 
-下のエリアに新しいグループが作成された
+下のエリアに新しいグループが作成されます
 
 * グループページ
 
-グループ名をクリックすることでグループのグループページへ遷移する
+グループ名をクリックすることでグループのグループページへ遷移します
 
 ![GROUP_INFO](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/10_groupinfo.png)
 
 * メンバーの招待
 
-グループページでメンバーボタンをクリックするとグループに所属するユーザ一覧が表示される
+グループページでメンバーボタンをクリックするとグループに所属するユーザ一覧が表示されます
 
-ユーザ一覧内の右上のメンバーを追加するボタンから新しいメンバーを追加できる。
+ユーザ一覧内の右上のメンバーを追加するボタンから新しいメンバーを追加できます
 
-## 作成したグループ内で「部屋の作成」
+![ADD_MEMBER](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/add_nemmember.png)
+
+### 作成したグループ内で「部屋の作成」
 
 * 部屋の作成
 
-グループページの部屋ボタンから部屋を作成できるページに遷移できる
+グループページの部屋ボタンから部屋を作成できるページに遷移できます
 
-部屋の作成ボタンから部屋を作成できる
+部屋の作成ボタンから部屋を作成できます
 
 ![ROOM_catalog](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/make_room.png)
 
-作成
+部屋作成
 
 ![MAKE_ROOM](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/room.png)
 
 
-## 作成した部屋に入るとブレインストーミングを行える
+### 作成した部屋でLet'sブレインストーミング
 
+* 部屋に入る
+
+部屋作成ページ内で作成した部屋の名前をクリックすることでブレインストーミングを行う部屋に入ることができます
+
+![IN_ROOM](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/in_room.png)
+
+* 付箋の追加・編集・削除
+
+左下の＋をクリックすることでアイデアを書くための付箋を出すことができます
+
+![ADD_STICKY](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/add_sticky.png)
+
+付箋はダブルクリックで編集することができます
+
+付箋にマウスオーバすると出てくる付箋右上の×ボタンで付箋を削除できます
+
+付箋はドラッグ・ドロップで動かすことができます
+
+これら付箋に対するアクションはすべてリアルタイムで同じ部屋にいる人たちに反映されます
+
+* 匿名のチャット
+
+右下のチャットボックスでテキストチャットを匿名で行うことができます
+
+![CHAT](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/chat.png)
+
+### 思考支援機能
+
+* アイデアを褒める
+
+付箋を編集したら左下に何か出てきました
+
+![TAMA_HOMERU](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/tama1.png)
+
+彼は我々のブレインストーミングを手助けしてくれる「たまにゃん」です
+
+たまにゃんはアイデアを出すと褒めてくれます
+
+また、自分からほかの人のアイデアを褒めることもできます
+
+褒める方法は付箋にマウスオーバすると出てくるサムズアップをクリックです
+
+![I_HOMERU](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/HOMERU.png)
+
+* 発想の転換
+
+たまにゃんは褒めること以外にも発想の転換を促してくれます
+
+![TAMA_TENKAN](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/tama2.png)
