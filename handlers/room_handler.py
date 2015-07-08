@@ -1,11 +1,10 @@
-import json
 import uuid
 
 import tornado.web
 import tornado.websocket
 from tornado import gen
 from tornado.web import asynchronous
-from tornado.escape import json_encode
+from tornado.escape import json_encode, json_decode, xhtml_unescape, xhtml_escape
 
 from handlers.base_handler import BaseHandler
 from models.room import Room
@@ -80,7 +79,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         pass
 
     def on_message(self, message):
-        message = json.loads(message)
+        message = json_decode(message)
         if message['action'] == 'initializeMe':
             self.initClient()
         elif message['action'] == 'joinRoom':
@@ -94,7 +93,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         elif message['action'] == 'deleteCard':
             self.delete_card(message)
         elif message['action'] == 'changeTheme':
-            self.change_theme(message)
+            pass
         elif message['action'] == 'voteUp':
             self.vote_up(message)
         elif message['action'] == 'chat':
@@ -122,38 +121,35 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.send_message(self.generate_message('chatMessages', {'cache': self.chat.cache[room_id], 'name': nickname}))
 
     def move_card(self, message):
-        message_out = message
-        self.broadcast_to_room(self, message_out)
+        self.broadcast_to_room(self, message)
         room_id = self.rooms.get_room_id(self)
         self.cards.update_xy(room_id, card_id=message['data']['id'], x=message['data']['position']['left'], y=message['data']['position']['top'])
 
     def create_card(self, message):
-        data = message['data']
-        clean_data = {'text': data['text'], 'id': data['id'], 'x': data['x'], 'y': data['y'],
-                      'rot': data['rot'], 'colour': data['colour'], 'sticker': None, 'vote_count': 0}
-        message_out = self.generate_message('createCard', clean_data)
+        message_out = self.generate_message('createCard', message['data'])
         self.broadcast_to_room(self, message_out)
         room_id = self.rooms.get_room_id(self)
-        self.cards.add(room_id, clean_data)
+        self.cards.add(room_id, message['data'])
 
     @asynchronous
     @gen.engine
     def edit_card(self, message):
         id = message['data']['id']
-        text = message['data']['value']
+        text = xhtml_unescape(message['data']['value'].strip())
         clean_data = {'value': text, 'id': id}
 
         message_out = self.generate_message('editCard', clean_data)
-        self.broadcast_to_room(self, message_out)
+        self.broadcast_to_all_room_user(self, message_out)
         room_id = self.rooms.get_room_id(self)
-        self.cards.update_text(room_id, card_id=id, text=text)
-
+        self.cards.update_text(room_id, card_id=id, text=xhtml_escape(text))
+        """
         sentence_generator = SentenceGenerator()
         res = sentence_generator.generate_sentence(text)
         for sent in res:
             message_out = self.generate_message('advice', {'sent': sent})
             self.send_message(message_out)
             yield gen.sleep(2.5)
+        """
 
     def delete_card(self, message):
         self.broadcast_to_room(self, message)
@@ -161,8 +157,7 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.cards.delete(room_id, card_id=message['data']['id'])
 
     def change_theme(self, message):
-        message_out = self.generate_message('changeTheme', message['data'])
-        self.broadcast_to_room(self, message_out)
+        pass  #self.broadcast_to_room(self, message)
 
     def vote_up(self, message):
         message_out = self.generate_message('voteUp', {'id': message['data']['id']})
@@ -188,9 +183,13 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
                 continue
             waiter.send_message(message_out)
 
+    def broadcast_to_all_room_user(self, client, message_out):
+        room_id = self.rooms.get_room_id(client)
+        for waiter in self.rooms.get_room_clients(room_id):
+            waiter.send_message(message_out)
+
     def send_message(self, message):
         self.write_message(json_encode(message))
-        #self.write_message(json.dumps(message))
 
     def generate_message(self, action, data):
         return {'action': action, 'data': data}

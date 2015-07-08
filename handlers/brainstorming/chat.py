@@ -9,9 +9,6 @@ class Chat(object):
     random.shuffle(user_num)
 
     def __init__(self):
-        """
-
-        """
         self.cache = defaultdict(list)
         self.nickname_dic = defaultdict(dict)
 
@@ -25,7 +22,6 @@ class Chat(object):
         self.cache[room_id].append(chat)
         if len(self.cache[room_id]) > self.cache_size:
             self.cache[room_id] = self.cache[-self.cache_size:]
-        print(self.cache[room_id])
 
     def __get_random_name(self):
         return self.user_num.pop()

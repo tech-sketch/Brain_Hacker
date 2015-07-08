@@ -18,10 +18,8 @@ class SentenceGenerator(object):
         keyphrase_dic = self.keyphrase_extractor.search(text)
         if not keyphrase_dic or 'Error' in keyphrase_dic:
             return []
-        #print(keyphrase_dic)
         named_entity_list = self.named_entity_extractor.search(text)
-        #print(named_entity_list)
-        if named_entity_list == []:
+        if not named_entity_list:
             word = self.select_word_with_max_score(keyphrase_dic)
             return [self.generate_praise(word)]
         word = self.select_word_with_max_score(keyphrase_dic)
