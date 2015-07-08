@@ -18,10 +18,12 @@ class DocomoNamedEntityExtraction(object):
         }
         data = urlencode(params).encode('utf-8')
         with urlopen(self.__url, data) as page:
-            byte_json_data = page.read()
+            try:
+                byte_json_data = page.read()
+            except:
+                return []
         json_data = byte_json_data.decode('utf-8')
-        result = json.loads(json_data)
-        return result['ne_list']
+        return json.loads(json_data)['ne_list']
 
 if __name__ == '__main__':
     text = u"東京ミッドタウンから国立新美術館まで歩いて5分で着きます。"

@@ -51,7 +51,6 @@ socket.onclose = function() {
 };
 
 socket.onmessage = function(data) {
-
     getMessage(data);
 };
 
@@ -125,7 +124,6 @@ function getMessage(m) {
             break;
 
         case 'createCard':
-            //console.log(data);
             drawNewCard(data.id, data.text, data.x, data.y, data.rot, data.colour, null, data.vote_count);
             break;
 
@@ -210,7 +208,7 @@ $(document).bind('keyup', function(event) {
 
 function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
     var h = '<div id="' + id + '" class="card ' + colour +
-        ' draggable" style="-webkit-transform:rotate(' + rot +
+        ' draggable" style="transform:rotate(' + rot +
         'deg);\
 	">\
 	<img src="{{ static_url('images/icons/token/')}}Xion.png" class="card-icon delete-card-icon" />\
@@ -383,7 +381,8 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
 
     card.children('.content').editable(function(value, settings) {
         onCardChange(id, value);
-        return (value);
+        return ("");
+        //return (value);
     }, {
         type: 'textarea',
         submit: 'OK',
@@ -403,7 +402,6 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
 function newMessage(msg, name) {
     var data = {body: msg, name: name}
     sendAction('chat', data);
-    console.log("sent chatbox");
 }
 
 function onCardChange(id, text) {
@@ -430,16 +428,16 @@ function addSticker(cardId, stickerId) {
     }
 
 
-    if (Array.isArray(stickerId)) {
-        for (var i in stickerId) {
-            stickerContainer.prepend('<img src="static/images/stickers/' + stickerId[i] +
-                '.png">');
-        }
-    } else {
-        if (stickerContainer.html().indexOf(stickerId) < 0)
-            stickerContainer.prepend('<img src="static/images/stickers/' + stickerId +
-                '.png">');
-    }
+    //if (Array.isArray(stickerId)) {
+    //    for (var i in stickerId) {
+    //        stickerContainer.prepend('<img src="static/images/stickers/' + stickerId[i] +
+    //            '.png">');
+    //    }
+    //} else {
+    //    if (stickerContainer.html().indexOf(stickerId) < 0)
+    //        stickerContainer.prepend('<img src="static/images/stickers/' + stickerId +
+    //            '.png">');
+    //}
 
 }
 

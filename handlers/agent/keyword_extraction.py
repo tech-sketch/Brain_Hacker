@@ -20,10 +20,12 @@ class YahooKeyphraseExtraction(object):
         }
         full_url = self.__url + '?{0}'.format(urlencode(params))
         with urlopen(full_url) as page:
-            byte_json_data = page.read()
+            try:
+                byte_json_data = page.read()
+            except:
+                return {}
         json_data = byte_json_data.decode('utf-8')
-        result = json.loads(json_data)
-        return result
+        return json.loads(json_data)
 
 if __name__ == '__main__':
     text = u"東京ミッドタウンから国立新美術館まで歩いて5分で着きます。"
