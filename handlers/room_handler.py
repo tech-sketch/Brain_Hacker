@@ -69,8 +69,11 @@ class RoomDeleteHandler(BaseHandler):
         Room.get(room_id).delete()
         self.redirect(self.reverse_url('rooms', group_id))
 
+from handlers.base_handler import BaseHandler
+class BaseSocketHandler(BaseHandler, tornado.websocket.WebSocketHandler):
+    pass
 
-class RoomSocketHandler(tornado.websocket.WebSocketHandler):
+class RoomSocketHandler(BaseSocketHandler):
     rooms = Rooms()
     cards = Cards()
     chat = Chat()
@@ -109,7 +112,6 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
-        """
         user = BaseHandler.get_current_user(self)
 
         if not self.rooms.checks_user_already_in_room_of(room_id, user["name"]):
@@ -117,11 +119,6 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
             self.chat.set_nickname(room_id, user["name"])
 
         nickname = self.chat.get_nickname(room_id, user["name"])
-        """
-        if not self.rooms.checks_user_already_in_room_of(room_id, self):
-            self.rooms.add_user(room_id, self)
-            self.chat.set_nickname(room_id, self)
-        nickname = self.chat.get_nickname(room_id, self)
 
         self.send_message(self.generate_message('initCards', self.cards.get_all(room_id)))
         self.send_message(self.generate_message('changeTheme', 'bigcards'))
