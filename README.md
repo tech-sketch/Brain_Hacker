@@ -156,7 +156,7 @@ SIGN UPボタンからユーザ登録を行うことができます(ユーザ名
 ![MAKE_ROOM](https://raw.github.com/wiki/Hironsan/Brain_Hacker/images/room.png)
 
 
-### 作成した部屋でLet'sブレインストーミング
+### 作成した部屋でブレインストーミング
 
 * 部屋に入る
 
