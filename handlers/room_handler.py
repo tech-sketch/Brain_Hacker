@@ -142,14 +142,13 @@ class RoomSocketHandler(tornado.websocket.WebSocketHandler):
         self.broadcast_to_all_room_user(self, message_out)
         room_id = self.rooms.get_room_id(self)
         self.cards.update_text(room_id, card_id=id, text=xhtml_escape(text))
-        """
+
         sentence_generator = SentenceGenerator()
         res = sentence_generator.generate_sentence(text)
         for sent in res:
             message_out = self.generate_message('advice', {'sent': sent})
             self.send_message(message_out)
             yield gen.sleep(2.5)
-        """
 
     def delete_card(self, message):
         self.broadcast_to_room(self, message)

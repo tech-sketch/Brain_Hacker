@@ -19,11 +19,12 @@ class YahooKeyphraseExtraction(object):
             'output': 'json',
         }
         full_url = self.__url + '?{0}'.format(urlencode(params))
-        with urlopen(full_url) as page:
-            try:
+        try:
+            with urlopen(full_url) as page:
                 byte_json_data = page.read()
-            except:
-                return {}
+        except:
+            print("Keyword Extraction Error")
+            return {}
         json_data = byte_json_data.decode('utf-8')
         return json.loads(json_data)
 

@@ -17,11 +17,12 @@ class DocomoNamedEntityExtraction(object):
             'sentence': text,
         }
         data = urlencode(params).encode('utf-8')
-        with urlopen(self.__url, data) as page:
-            try:
+        try:
+            with urlopen(self.__url, data) as page:
                 byte_json_data = page.read()
-            except:
-                return []
+        except:
+            print('Named Entity Extraction Error')
+            return []
         json_data = byte_json_data.decode('utf-8')
         return json.loads(json_data)['ne_list']
 
