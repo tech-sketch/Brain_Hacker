@@ -192,6 +192,10 @@ function getMessage(m) {
             );
             //Materialize.toast(data['sent'], 4000);
             break;
+            
+        case 'countUser':
+        	$(".count-user").text('現在の参加人数は'+data+'人です');
+            break;
 
         default:
             //unknown message
