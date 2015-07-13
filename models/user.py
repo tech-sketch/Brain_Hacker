@@ -1,33 +1,49 @@
-import bcrypt
-from sqlalchemy import Column, Integer, String, Binary
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy_utils import EmailType, PasswordType
+from sqlalchemy.sql import exists
+import sys
+sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
 from models.relations import association_table
 from models.group import Group
 
 
 class User(Base, DjangoLikeModelMixin):
-    name = Column(String)
-    email = Column(String)
-    hashed_password = Column(Binary)
+    name = Column(String(30), nullable=False, info={'label': 'ユーザ名'})
+    email = Column(EmailType, nullable=False, info={'label': 'メールアドレス'})
+    password = Column(PasswordType(schemes=['pbkdf2_sha512']), nullable=False, info={'label': 'パスワード'})
     groups = relationship("Group", secondary=association_table, backref='users')
 
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
-        self.hashed_password = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+        self.password = password
 
     def json(self):
         return {'name': self.name, 'email': self.email, 'id': self.id}
 
-    def matches_password(self, password):
-        return bcrypt.hashpw(password=password.encode('utf-8'), salt=self.hashed_password) == self.hashed_password
+    def verify_password(self, password):
+        return self.password == password
 
     def belongs_to_group(self, group_id):
         for group in self.groups:
-            if group_id == group.id:
+            if group.id == int(group_id):
                 return True
         return False
+
+    @classmethod
+    def exists_email(cls, email):
+        return cls.session().query(exists().where(User.email == email)).scalar()
+
+    @classmethod
+    def authenticate(cls, email, password):
+        try:
+            user = cls.session().query(cls).filter_by(email=email).one()
+            return user if user.verify_password(password=password) else None
+        except NoResultFound:
+            return None
 
 
 if __name__ == '__main__':
@@ -38,7 +54,6 @@ if __name__ == '__main__':
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
-    import bcrypt
-    user = User(name="name", email="neko", password="neko")
+    user = User(name="admin", email="admin@tis.co.jp", password="admin")
     session.add(user)
     session.commit()

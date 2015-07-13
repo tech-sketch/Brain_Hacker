@@ -19,7 +19,8 @@ $(document).ready(function() {
                                   }});
 });
 
-var socket = new WebSocket("ws://localhost:{{ port }}/websocket");
+
+var socket = new WebSocket("ws://" + location.host + "/websocket");
 
 //an action has happened, send it to the
 //server
@@ -50,7 +51,6 @@ socket.onclose = function() {
 };
 
 socket.onmessage = function(data) {
-
     getMessage(data);
 };
 
@@ -124,7 +124,6 @@ function getMessage(m) {
             break;
 
         case 'createCard':
-            //console.log(data);
             drawNewCard(data.id, data.text, data.x, data.y, data.rot, data.colour, null, data.vote_count);
             break;
 
@@ -181,6 +180,23 @@ function getMessage(m) {
             $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) + 1));
             break;
 
+        case 'advice':
+        Lobibox.notify('info', {
+               msg: data['sent'],
+               title: 'ちょっと一言',
+               img: "{{ static_url('images/avatar.png') }}",
+               position: 'bottom left',
+               delay: 5000,
+               sound: false
+               }
+            );
+            //Materialize.toast(data['sent'], 4000);
+            break;
+            
+        case 'countUser':
+        	$(".count-user").text('現在の参加人数は'+data+'人です');
+            break;
+
         default:
             //unknown message
             alert('unknown action: ' + JSON.stringify(message));
@@ -195,10 +211,8 @@ $(document).bind('keyup', function(event) {
 });
 
 function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
-    //cards[id] = {id: id, text: text, x: x, y: y, rot: rot, colour: colour};
-console.log("draw"+vote_count);
     var h = '<div id="' + id + '" class="card ' + colour +
-        ' draggable" style="-webkit-transform:rotate(' + rot +
+        ' draggable" style="transform:rotate(' + rot +
         'deg);\
 	">\
 	<img src="{{ static_url('images/icons/token/')}}Xion.png" class="card-icon delete-card-icon" />\
@@ -291,15 +305,19 @@ console.log("draw"+vote_count);
         left: x + "px",
         top: y + "px"
     }, speed);
-
+   var zindex;
     card.hover(
         function() {
             $(this).addClass('hover');
             $(this).children('.card-icon').fadeIn(10);
+            zindex = $(this).css('z-index');
+            $(this).css('z-index', 10000);
+
         },
         function() {
             $(this).removeClass('hover');
             $(this).children('.card-icon').fadeOut(150);
+            $(this).css('z-index', zindex);
         }
     );
 
@@ -367,7 +385,8 @@ console.log("draw"+vote_count);
 
     card.children('.content').editable(function(value, settings) {
         onCardChange(id, value);
-        return (value);
+        return ("");
+        //return (value);
     }, {
         type: 'textarea',
         submit: 'OK',
@@ -387,7 +406,6 @@ console.log("draw"+vote_count);
 function newMessage(msg, name) {
     var data = {body: msg, name: name}
     sendAction('chat', data);
-    console.log("sent chatbox");
 }
 
 function onCardChange(id, text) {
@@ -414,16 +432,16 @@ function addSticker(cardId, stickerId) {
     }
 
 
-    if (Array.isArray(stickerId)) {
-        for (var i in stickerId) {
-            stickerContainer.prepend('<img src="static/images/stickers/' + stickerId[i] +
-                '.png">');
-        }
-    } else {
-        if (stickerContainer.html().indexOf(stickerId) < 0)
-            stickerContainer.prepend('<img src="static/images/stickers/' + stickerId +
-                '.png">');
-    }
+    //if (Array.isArray(stickerId)) {
+    //    for (var i in stickerId) {
+    //        stickerContainer.prepend('<img src="static/images/stickers/' + stickerId[i] +
+    //            '.png">');
+    //    }
+    //} else {
+    //    if (stickerContainer.html().indexOf(stickerId) < 0)
+    //        stickerContainer.prepend('<img src="static/images/stickers/' + stickerId +
+    //            '.png">');
+    //}
 
 }
 
@@ -432,7 +450,7 @@ function addSticker(cardId, stickerId) {
 // cards
 //----------------------------------
 function createCard(id, text, x, y, rot, colour, vote_count) {
-console.log("create"+vote_count);
+
     drawNewCard(id, text, x, y, rot, colour, null, vote_count);
 
     var action = "createCard";

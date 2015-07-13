@@ -1,75 +1,30 @@
 {% extends "../layout.html" %}
 
 {% block body %}
-
-<!--div.config-->
-<!--	i.fa.fa-cog.fa-lg.faded-icon-->
-
-<!--
-<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="{{ static_url('js/lobibox.min.js') }}"></script>
-<script src="{{ static_url('js/demo.js') }}"></script>
-<button id="basicInfo" class="btn btn-info">カードを引く</button>
--->
-
+<h2>ブレストのテーマ： {{ room.theme }}</h2>
+<div class="count-user"></div>
 <div class="board-outline">
   <div id="board">
     <div id="board-doodles"></div>
-    <!--<image id="marker" src="{{ static_url('images/marker.png') }}"></image>-->
-    <!--<image id="eraser" src="{{ static_url('images/eraser.png') }}"></image>-->
-    <table id="board-table" class="board-table">
-      <tr>
-        <td id="icon-col" width="1%">
-          <image id="add-col" width="20" height="20" src="{{ static_url('images/icons/iconic/raster/black/plus_alt_32x32.png') }}" class="col-icon"></image>
-          <image id="delete-col" width="20" height="20" src="{{ static_url('images/icons/iconic/raster/black/minus_alt_32x32.png') }}" class="col-icon"></image>
-        </td>
-      </tr>
-    </table>
   </div>
 </div>
-<div class="buttons"><i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon"></i><i id="smallify" class="fa fa-expand fa-2x bottom-icon"></i></div>
-<div class="stickers">
-  <div id="sticker-red" class="sticker"></div>
-  <div id="sticker-blue" class="sticker"></div>
-  <div id="sticker-yellow" class="sticker"></div>
-  <div id="sticker-green" class="sticker"></div><br/>
-  <div id="sticker-pink" class="sticker"></div>
-  <div id="sticker-lightblue" class="sticker"></div>
-  <div id="sticker-orange" class="sticker"></div>
-  <div id="sticker-purple" class="sticker"></div>
-  <!--div.sticker#sticker-silverstar-->
-  <!--div#addsticker--><br/>
-  <div id="nosticker" class="sticker"></div>
-  <!--br-->
-  <!--div.sticker#sticker-gold-->
-  <!--	image(src="/images/stickers/sticker-gold.png")-->
-  <!--div.sticker#sticker-bluestar-->
-  <!--	image(src="/images/stickers/sticker-bluestar.png")-->
-  <!--div.sticker#sticker-silverstar-->
-  <!--	image(src="/images/stickers/sticker-silverstar.png")-->
-  <!--div.sticker#sticker-redstar-->
-  <!--	image(src="/images/stickers/sticker-redstar.png")-->
+<li><a href="{{ reverse_url('groups') }}">Groups</a></li>
+<div class="buttons">
+    <i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon"></i>
+    <i id="smallify" class="fa fa-expand fa-2x bottom-icon"></i>
+</div>
+<br>
+<div id="movable_div" style="position: absolute">
+	<div id="chat_div" class="chat"></div>
 </div>
 
-
-<!--<div class="names">-->
-  <!--<p>connected:</p>-->
-  <!--image#user-icon(src="/images/icons/cc/black/png/user_icon&16.png")-->
-  <!--<input id="yourname-input"/><span class="you-text">(you)</span>-->
-  <!--<ul id="names-ul"></ul>-->
-<!--</div>-->
-
-<div id="chat_div" class="chat"><!--Here add chat box--></div>
-
+<!--
 <p><a href="#" class="btn" id="A">chatを隠せるボタン</p>
 <script>
         $(".btn").on("click", function() {
            $("#chat_div").chatbox("toggleContent");
         });
 </script>
+-->
 
-<!--div.trash-->
-<!--	i.fa.fa-trash-o.fa-lg.faded-icon-->
-<!--<div style="width: 980px; height: 450px; border: solid 2px; opacity:.1; margin-top: 100px"> this will be the backlog that only appears on drag or perhaps not at all</div>-->
-<script type="text/javascript">	  var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-2069672-4']);  _gaq.push(['_trackPageview']);   (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })(); </script>
 {% end %}

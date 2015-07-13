@@ -1,0 +1,15 @@
+<div id="{{ name }}_delete" class="modal">
+    <div class="modal-content">
+        <h4>{{ title }}の削除</h4>
+        <form method="post" action="{{ url }}">
+            {% module xsrf_form_html() %}
+            <div class="row">
+                <p>{{ title }}「{{ target }}」を本当に削除しますか？</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
+                <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
+            </div>
+        </form>
+    </div>
+</div>

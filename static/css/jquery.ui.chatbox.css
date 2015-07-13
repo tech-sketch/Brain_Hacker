@@ -1,6 +1,6 @@
 /* style sheets */
 .ui-chatbox {
-    position: fixed;
+    position: absolute;
     bottom:0;
     padding: 2px;
     background:  #CCCCCC;

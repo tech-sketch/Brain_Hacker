@@ -1,94 +1,100 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Brain Hacker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>Brain Hacker</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="{{ static_url('css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="{{ static_url('css/material_style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ static_url('css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{ static_url('css/material_style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+
 <body>
-  {% if current_user %}
-  <!-- Dropdown Structure -->
-  <ul id="dropdown1" class="dropdown-content">
+{% if current_user %}
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
     <li><a href="{{ reverse_url('user', current_user['id']) }}">Profile</a></li>
     {% comment <li><a href="#!">two</a></li> %}
     <li class="divider"></li>
     <li><a href="{{ reverse_url('logout') }}">Logout</a></li>
-  </ul>
-  {% end %}
+</ul>
+{% end %}
 
-  <nav class="white" role="navigation">
+<nav class="white" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="{{ reverse_url('index') }}" class="brand-logo">Brain Hacker</a>
+        <a id="logo-container" href="{{ reverse_url('index') }}" class="brand-logo">Brain Hacker</a>
 
 
 
-      <ul class="right hide-on-med-and-down">
-        {% if current_user %}
-        {% block search_bar %}{% end %}
-        <li><a href="{{ reverse_url('groups') }}">Groups</a></li>
-        <li><a href="{{ reverse_url('users') }}">Users</a></li>
-        <!-- Dropdown Trigger -->
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ current_user['name'] }}<i class="material-icons right">arrow_drop_down</i></a></li>
-        {% else %}
-        <li><a href="{{ reverse_url('login') }}">Login</a></li>
-        {% end %}
-      </ul>
+        <ul class="right hide-on-med-and-down">
+            {% if current_user %}
+            {% block search_bar %}{% end %}
+            <li><a href="{{ reverse_url('groups') }}">Groups</a></li>
+            <li><a href="{{ reverse_url('users') }}">Users</a></li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ current_user['name'] }}<i class="material-icons right">arrow_drop_down</i></a></li>
+            {% else %}
+            <li><a href="{{ reverse_url('login') }}">Login</a></li>
+            {% end %}
+        </ul>
+        <ul id="nav-mobile" class="side-nav">
+            {% if current_user %}
+            <li><a href="{{ reverse_url('groups') }}">Groups</a></li>
+            <li><a href="{{ reverse_url('users') }}">Users</a></li>
+            {% else %}
+            <li><a href="{{ reverse_url('login') }}">Login</a></li>
+            {% end %}
+        </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Login</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-  </nav>
+</nav>
 
-  {% block content %}{% end %}
+{% block content %}{% end %}
 
-  <footer class="page-footer teal">
+<footer class="page-footer teal">
     <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Company Bio</h5>
+                <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
 
 
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Settings</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
     <div class="footer-copyright">
-      <div class="container">
-      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-      </div>
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
     </div>
-  </footer>
+</footer>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{{ static_url('js/materialize.js') }}"></script>
-  <script src="{{ static_url('js/init.js') }}"></script>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{{ static_url('js/materialize.js') }}"></script>
+<script src="{{ static_url('js/init.js') }}"></script>
 
-  </body>
+</body>
 </html>

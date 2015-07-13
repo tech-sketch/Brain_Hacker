@@ -1,6 +1,5 @@
 import tornado.web
 import tornado.escape
-from backend import Backend
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -20,6 +19,5 @@ class BaseHandler(tornado.web.RequestHandler):
     def clear_current_user(self):
         self.clear_cookie('user')
 
-    @property
-    def session(self):
-        return Backend.instance().get_session()
+    def get_current_user_id(self):
+        return self.get_current_user()['id']
