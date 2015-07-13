@@ -5,7 +5,7 @@ from tornado.options import define, options
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-define('port', default=8817, help="run on the given port", type=int)
+define('port', default=8888, help="run on the given port", type=int)
 define('debug', default=True, help='debug mode')
 tornado.options.parse_command_line()
 
