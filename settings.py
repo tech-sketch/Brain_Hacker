@@ -24,9 +24,9 @@ settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal, 'C
 DATABASES = {
     'default': {
         'ENGINE': 'postgresql+psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'BH',
         'USER': 'postgres',
-        'PASSWORD': 'psobbst5',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',
     }

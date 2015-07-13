@@ -5,7 +5,7 @@ body {
 	font-family: 'Helvetica Neue Light', arial, serif;
 	font-size: 13px;
 	color: #333;
-	background-color: #ddd;
+	background-color: #ffffff;
 	xbackground-image: -webkit-gradient(radial, 265 118, 456, 147 0, 29, from(#DDDDDD), to(#f3f3f3));
 
 	padding-left: 10px;
@@ -27,12 +27,11 @@ body {
 
 #board {
 	position: relative;
-	background-color: #dcd5d1;
-
+	background-color: #b2dfdb;
 	height: 100%;
 	xwidth: 980px;
 	xborder: solid silver 8px;
-
+/*
 	background-image: -webkit-gradient(
 	    linear,
 	    left top,
@@ -41,14 +40,15 @@ body {
 	    color-stop(0.84, rgb(196,191,182))
 	);
 
-	xbackground: -moz-linear-gradient(top,  rgb(214,210,206),  #000);
+	xbackground: -moz-linear-gradient(top,  rgleb(214,210,206),  #000);
 
 	-moz-box-shadow:inset 1px 1px 3px #999;
 	box-shadow:inset 1px 1px 3px #999;
+	*/
 }
 
 .board-outline {
-	border: solid #ccc 8px;
+	border: solid #b2dfdb 8px;
 	display: block;
 	width: 996px;
 	height: 466px;
