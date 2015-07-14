@@ -9,16 +9,19 @@ var nickname = {name : "default"}
 //var socket = io.connect();
 $(document).ready(function() {
     // chat box sets
-    $("#chat_div").chatbox({id : "chat_div",
+    		$("#chat_div").chatbox({id : "chat_div",
                                   title : "chat",
                                   user : nickname,
                                   offset: 0,
                                   messageSent: function(id, user, msg){
                                        newMessage(msg, nickname.name);
-                                       this.boxManager.addMsg(nickname.name, msg);
-                                  }});
+                                       this.boxManager.addMsg(nickname.name, msg);}});
+            $(".ui-chatbox").draggable().css({
+							      left: 'auto',
+							      right: 'auto',
+							      top: 'auto',
+							      bottom: 'auto'});
 });
-
 
 var socket = new WebSocket("ws://" + location.host + "/websocket");
 
@@ -194,7 +197,7 @@ function getMessage(m) {
             break;
             
         case 'countUser':
-        	$(".count-user").text('現在の参加人数は'+data+'人です');
+        	$("#board").prepend('<div style="color:#009688; font-weight:bold;"><br>　現在の参加人数は'+data+'人です</div>');
             break;
 
         default:
@@ -242,7 +245,8 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
     card.draggable({
         snap: false,
         snapTolerance: 5,
-        containment: [0, 0, 2000, 2000],
+        containment: 'parent',
+        scroll: false,
         stack: ".card",
         start: function(event, ui) {
             keyTrap = null;

@@ -1,29 +1,40 @@
 {% extends "../layout.html" %}
 
 {% block body %}
-<h2>ブレストのテーマ： {{ room.theme }}</h2>
-<div class="count-user"></div>
+<div class = "theme">
+	<h2>ブレストのテーマ： {{ room.theme }}</h2>
+</div>
+<script>
+	jQuery(function() {
+		jQuery('#ui-draggable').draggable({
+			containment : 'parent',
+			scroll : false,
+		});
+	}); 
+</script>
 <div class="board-outline">
-  <div id="board">
-    <div id="board-doodles"></div>
-  </div>
+	<div id="board">
+		<div id="board-doodles"></div>
+	</div>
 </div>
-<li><a href="{{ reverse_url('groups') }}">Groups</a></li>
-<div class="buttons">
-    <i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon"></i>
-    <i id="smallify" class="fa fa-expand fa-2x bottom-icon"></i>
-</div>
+<div id="chat_div" class="chat"></div>
 <br>
-<div id="movable_div" style="position: absolute">
-	<div id="chat_div" class="chat"></div>
+<br>
+
+<div class="buttons">
+	<div style="max-width:30%; min-width:150px; margin: 0 auto;">
+	<i id="create-card" class="fa fa-plus-circle fa-2x bottom-icon" style="color: #ffffff"></i>
+	<i id="smallify" class="fa fa-expand fa-2x bottom-icon" style="color: #ffffff"></i>
+	<a href="{{ reverse_url('groups') }}"><i class="fa fa-power-off fa-2x bottom-icon" style="color: #ffffff; float: right;"></i></a>
+	</div>
 </div>
 
 <!--
 <p><a href="#" class="btn" id="A">chatを隠せるボタン</p>
 <script>
-        $(".btn").on("click", function() {
-           $("#chat_div").chatbox("toggleContent");
-        });
+$(".btn").on("click", function() {
+$("#chat_div").chatbox("toggleContent");
+});
 </script>
 -->
 

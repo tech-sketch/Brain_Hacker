@@ -5,14 +5,16 @@ body {
 	font-family: 'Helvetica Neue Light', arial, serif;
 	font-size: 13px;
 	color: #333;
-	background-color: #ffffff;
+	/*
+	background-color: #009688;
+
 	xbackground-image: -webkit-gradient(radial, 265 118, 456, 147 0, 29, from(#DDDDDD), to(#f3f3f3));
 
 	padding-left: 10px;
 
 	xheight: 1400px;
 	xwidth: 2000px;
-
+	*/
 
 
 	user-select: none;
@@ -25,11 +27,18 @@ body {
 
 }
 
+.theme {
+	background-color: #ffffff;
+	width: 100%
+	margin: 0 auto;
+}
+
 #board {
 	position: relative;
 	background-color: #b2dfdb;
 	height: 100%;
-	xwidth: 980px;
+	min-height:490px;
+	xwidth: 100%;
 	xborder: solid silver 8px;
 /*
 	background-image: -webkit-gradient(
@@ -50,8 +59,8 @@ body {
 .board-outline {
 	border: solid #009688 8px;
 	display: block;
-	width: 996px;
-	height: 466px;
+	min-height:490px;
+	height: 100%;
 
 	xmargin-left: auto;
 	xmargin-right: auto;
@@ -186,7 +195,7 @@ h2 {
 
 .bottom-icon {
 	padding: 5px;
-	opacity: .4;
+
 }
 
 .bottom-icon:hover {
@@ -233,6 +242,9 @@ h2 {
 }
 
 .buttons {
+	background-color:#009688;
+	width:100%;
+	height;400px;
 	float: left;
 }
 

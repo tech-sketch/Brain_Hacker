@@ -3,7 +3,9 @@
     position: absolute;
     bottom:0;
     padding: 2px;
-    background:  #CCCCCC;
+    background:  #009688;
+    color: #ffffff;
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }
 
 .ui-chatbox-titlebar {
@@ -24,6 +26,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     background: #FFFFFF;
+    color: #000000;
 }
 
 .ui-chatbox-input {
