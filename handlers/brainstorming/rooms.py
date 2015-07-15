@@ -29,6 +29,10 @@ class Rooms(object):
     def get_room_clients(self, room_id):
         return self.rooms[room_id]
 
+    def get_room_clients_name(self, room_id):
+        clients = self.rooms[room_id]
+        return [client.get_current_user()['name'] for client in clients]
+
     def get_room_id(self, client):
         return self.clients[client]
 

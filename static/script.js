@@ -193,6 +193,10 @@ function getMessage(m) {
             //Materialize.toast(data['sent'], 4000);
             break;
 
+        case 'getMember':
+            $('#member_div').html("参加者： "+data);
+            break;
+
         default:
             //unknown message
             alert('unknown action: ' + JSON.stringify(message));

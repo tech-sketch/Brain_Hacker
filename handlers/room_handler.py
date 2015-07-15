@@ -103,12 +103,24 @@ class RoomSocketHandler(BaseSocketHandler):
             self.update_chat(message)
 
     def on_close(self):
+        room_id = self.rooms.get_room_id(self)
+
         self.rooms.remove_client(self)
+
+        clients_name = self.rooms.get_room_clients_name(room_id)
+        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        for waiter in self.rooms.get_room_clients(room_id):
+            waiter.send_message(message_out)
 
     def joinRoom(self, message):
         self.rooms.add_to_room(self, message['data'])
         message_out = self.generate_message(action='roomAccept', data='')
         self.send_message(message_out)
+
+        room_id = self.rooms.get_room_id(self)
+        clients_name = self.rooms.get_room_clients_name(room_id)
+        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        self.broadcast_to_all_room_user(self, message_out)
 
     def initClient(self):
         room_id = self.rooms.get_room_id(self)
