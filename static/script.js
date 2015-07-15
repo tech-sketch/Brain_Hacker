@@ -197,7 +197,12 @@ function getMessage(m) {
             break;
             
         case 'countUser':
-        	$("#board").prepend('<div style="color:#009688; font-weight:bold;"><br>　現在の参加人数は'+data+'人です</div>');
+        	if($(".count_user").length){
+        		$(".count_user").html("<br>　現在の参加人数は"+ data +"人です");
+        	}else{
+        		console.log("not" );
+        		$("#board").prepend('<div class="count_user" style="color:#009688; font-weight:bold;"><br>　現在の参加人数は'+data+'人です</div>');
+        	}
             break;
 
         default:
@@ -245,7 +250,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
     card.draggable({
         snap: false,
         snapTolerance: 5,
-        containment: 'parent',
+        containment: 'body',
         scroll: false,
         stack: ".card",
         start: function(event, ui) {
@@ -300,7 +305,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
     var speed = Math.floor(Math.random() * 1000);
     if (typeof(animationspeed) != 'undefined') speed = animationspeed;
 
-    var startPosition = $("#create-card").position();
+    var startPosition = $("#create-card-white").position();
 
     card.css('top', startPosition.top - card.height() * 0.5);
     card.css('left', startPosition.left - card.width() * 0.5);
@@ -805,7 +810,7 @@ $(function() {
     //setTimeout($.unblockUI, 2000);
 
 
-    $("#create-card")
+    $("#create-card-white")
         .click(function() {
             var rotation = Math.random() * 10 - 5; //add a bit of random rotation (+/- 10deg)
             uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
@@ -815,10 +820,48 @@ $(function() {
                 '',
                 58, $('div.board-outline').height(), // hack - not a great way to get the new card coordinates, but most consistant ATM
                 rotation,
-                randomCardColour(),
+               'white',
                 0);
         });
-
+	$("#create-card-yellow")
+        .click(function() {
+            var rotation = Math.random() * 10 - 5; //add a bit of random rotation (+/- 10deg)
+            uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
+            //alert(uniqueID);
+            createCard(
+                'card' + uniqueID,
+                '',
+                58, $('div.board-outline').height(), // hack - not a great way to get the new card coordinates, but most consistant ATM
+                rotation,
+               'yellow',
+                0);
+        });
+     $("#create-card-blue")
+        .click(function() {
+            var rotation = Math.random() * 10 - 5; //add a bit of random rotation (+/- 10deg)
+            uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
+            //alert(uniqueID);
+            createCard(
+                'card' + uniqueID,
+                '',
+                58, $('div.board-outline').height(), // hack - not a great way to get the new card coordinates, but most consistant ATM
+                rotation,
+               'blue',
+                0);
+        });
+     $("#create-card-green")
+        .click(function() {
+            var rotation = Math.random() * 10 - 5; //add a bit of random rotation (+/- 10deg)
+            uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
+            //alert(uniqueID);
+            createCard(
+                'card' + uniqueID,
+                '',
+                58, $('div.board-outline').height(), // hack - not a great way to get the new card coordinates, but most consistant ATM
+                rotation,
+               'green',
+                0);
+        });
 
 
     // Style changer
@@ -923,10 +966,10 @@ $(function() {
 
     $(".board-outline").resizable({
         ghost: false,
-        minWidth: 700,
+        minWidth: 400,
         minHeight: 400,
         maxWidth: 3200,
-        maxHeight: 1800,
+        maxHeight: 1800, 
     });
 
     //A new scope for precalculating
@@ -949,13 +992,47 @@ $(function() {
 
     $('#marker').draggable({
         axis: 'x',
-        containment: 'parent'
+        containment: 'parent',
+        
     });
 
     $('#eraser').draggable({
         axis: 'x',
         containment: 'parent'
     });
-
+    
+    $('#tool-box').draggable({
+    });
+    
+    $("#board-screen-shot").click(function() {
+		console.log("aaaaaaaaaaaaaaaaaa");
+		screenshot('.target_screen');
+	});
 
 });
+
+
+
+function screenshot( selector) {
+    var element = $(selector)[0];
+    html2canvas(element, { onrendered: function(canvas) {
+        var imgData = canvas.toDataURL();
+        date = new Date( jQuery . now() ) . toLocaleString();
+        var a = document.createElement('a');
+        a.href = imgData;
+        a.download = "Brain_Hacker_"+ date +".png";
+        a.click();
+        //$('#screen_image')[0].src = imgData;
+        //$('#download')[0].href = imgData;
+        //$('#download')[0].download = "ss.png";
+        //$('#download')[0].click();
+        
+        //$('#download')[0].innerHTML = "Download";
+    }});
+}
+
+function erase_screenshot() {
+    //$('#screen_image')[0].src = "";
+    //$('#download')[0].href = "#";
+    //$('#download')[0].innerHTML = "";
+}
