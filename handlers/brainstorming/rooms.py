@@ -23,12 +23,15 @@ class Rooms(object):
         self.users_in_rooms[room_id].add(client_name)
 
     def add_to_room(self, client, room_id):
-        print("add_")
         self.rooms[room_id].add(client)
         self.clients[client] = room_id
 
     def get_room_clients(self, room_id):
         return self.rooms[room_id]
+
+    def get_room_clients_name(self, room_id):
+        clients = self.rooms[room_id]
+        return [client.get_current_user()['name'] for client in clients]
 
     def get_room_id(self, client):
         return self.clients[client]

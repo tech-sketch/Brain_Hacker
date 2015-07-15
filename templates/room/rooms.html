@@ -1,18 +1,7 @@
 {% extends "../base.html" %}
 {% block search_bar %}
-<div class="left">
-    <form method="get" action="{{ reverse_url('rooms', group.id) }}">
-        {% module xsrf_form_html() %}
-        <div class="input-field">
-            <input type="search" id="room_name_search" name="room_name" class="field" required maxlength="" placeholder="部屋名">
-            <label for="room_name_search"><i class="mdi-action-search black-text"></i></label>
-            <i class="mdi-navigation-close close"></i>
-        </div>
-    </form>
-</div>
+    {% module SearchBar(name='room', url=reverse_url('rooms', group_id), placeholder='部屋名') %}
 {% end %}
-
-
 
 {% block content %}
 <div class="container">
@@ -22,107 +11,45 @@
                 <h3>部屋とは？</h3>
                 <p>特定のメンバーでブレストを行うことができます。</p>
                 <!-- Modal Trigger -->
-                <a class="right waves-effect waves-light btn modal-trigger" href="#room_modal">部屋の作成</a>
+                <a class="right waves-effect waves-light btn modal-trigger" href="#room_create">部屋の作成</a>
             </div>
         </div>
     </div>
 
-    <script>
-      $('#room_modal').openModal();
-      $('#room_edit').openModal();
-      $('#room_delete').openModal();
-    </script>
-
-    <!-- Modal Structure -->
-    <div id="room_modal" class="modal">
-        <div class="modal-content">
-            <h4>部屋の作成</h4>
-            <form method="post" action="{{ reverse_url('rooms', group.id) }}">
-                {% module xsrf_form_html() %}
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="room_name" type="text" name="name" required="" class="validate">
-                        <label for="room_name">部屋名</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="room_description" type="text" name="description" required="" class="validate">
-                        <label for="room_description">一言説明</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="modal-action modal-close waves-effect waves-green btn" type="submit">作成</button>
-                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
+    {% from forms.forms import RoomForm %}
+    {% module CreateModal(id='room_create', name='room', title='部屋', url=reverse_url('rooms', group_id), Form=RoomForm) %}
 
     <div class="row grey lighten-3">
         <div class="col s12">
             <h3>部屋一覧</h3>
         </div>
         {% for i, room in enumerate(rooms) %}
-        <!-- Modal Structure -->
-        <div id="room_edit" class="modal">
-            <div class="modal-content">
-                <h4>部屋の編集</h4>
-                <form method="post" action="{{ reverse_url('room_edit', group.id, room.id) }}">
-                    {% module xsrf_form_html() %}
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="room_name_edit" type="text" name="name" required="" class="validate" value="{{ room.name }}">
-                            <label for="room_name_edit">部屋名</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="room_edit_description" type="text" name="description" required="" class="validate" value="一言説明">
-                            <label for="room_edit_description">一言説明</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="modal-action modal-close waves-effect waves-green btn" type="submit">更新</button>
-                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
+            {% from forms.forms import RoomForm %}
+            {% module EditModal(id='room{0}_edit'.format(i), name='room', title='部屋',
+                                url=reverse_url('room_edit', group_id, room.id), Form=RoomForm, model=room) %}
 
-        <!-- Modal Structure -->
-        <div id="room_delete" class="modal">
-            <div class="modal-content">
-                <h4>部屋の削除</h4>
-                <form method="post" action="{{ reverse_url('room_delete', group.id, room.id) }}">
-                    {% module xsrf_form_html() %}
-                    <div class="row">
-                        <p>部屋「{{ room.name }}」を本当に削除しますか？</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="modal-action modal-close waves-effect waves-green btn red darken-4" type="submit">削除</button>
-                        <button class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">キャンセル</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        {% if i % 3 == 0 %}<div class="row col s12">{% end %}
-            <div class="col s12 m4">
-                <div class="card white lighten-2 hoverable">
-                    <div class="card-content black-text">
-                        <a href="{{ reverse_url('room', group.id, room.id) }}" class="card-title black-text">{{ room.name }}</a>
-                        <p>部屋の一言説明</p>
-                    </div>
-                    <div class="card-action">
-                        <a class="waves-effect waves-light btn modal-trigger white-text" href="#room_edit">編集</a>
-                        <a class="waves-effect waves-light btn modal-trigger white-text red darken-4" href="#room_delete">削除</a>
+            {% module DeleteModal(name='room{0}'.format(i), title='部屋', url=reverse_url('room_delete', group_id, room.id), target=room.name) %}
+
+            {% if i % 3 == 0 %}
+            <div class="row col s12">
+            {% end %}
+                <div class="col s12 m4">
+                    <div class="card white lighten-2 hoverable">
+                        <div class="custom_divider teal"></div>
+                        <div class="card-content black-text">
+                            <a href="{{ reverse_url('room', group_id, room.id) }}" class="card-title blue-text">{{ room.name }}</a>
+                            <p>ブレストのテーマ: {{ room.theme }}</p>
+                        </div>
+                        <div class="card-action">
+                            <a class="waves-effect waves-light btn modal-trigger white-text" href="#room{{i}}_edit">編集</a>
+                            <a class="waves-effect waves-light btn modal-trigger white-text red darken-4" href="#room{{i}}_delete">削除</a>
+                        </div>
                     </div>
                 </div>
+            {% if i % 3 == 2 or i == len(rooms) - 1 %}
             </div>
-        {% if i % 3 == 2 or i == len(rooms) - 1 %}</div>{% end %}
+            {% end %}
         {% end %}
     </div>
 </div>

@@ -1,0 +1,10 @@
+<div class="left">
+    <form method="get" action="{{ url }}">
+        {% module xsrf_form_html() %}
+        <div class="input-field">
+            <input type="search" id="{{ name }}_search" name="{{ name }}_name" class="field" required maxlength="" placeholder="{{ placeholder }}">
+            <label for="{{ name }}_search"><i class="mdi-action-search black-text"></i></label>
+            <i class="mdi-navigation-close close"></i>
+        </div>
+    </form>
+</div>
