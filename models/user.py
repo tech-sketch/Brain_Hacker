@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy_utils import EmailType, PasswordType
 from sqlalchemy.sql import exists
+import sys
+sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
 from models.relations import association_table
 from models.group import Group
