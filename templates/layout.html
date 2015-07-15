@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <!-- STYLES -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ static_url('css/style.css') }}" />
-    <link rel="stylesheet" title="cardsize" href="{{ static_url('css/bigcards.css') }}" type="text/css" media="all" id="cardsizes" />
-    <link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.ui.chatbox.css') }}" />
-    <link rel="stylesheet" href="{{ static_url('css/lobibox.min.css') }}">
-    <!-- FONTS -->
-    <link href='//fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
-    <!-- SCRIPTS -->
-    <!-- jQuery -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-    <!-- External Scripts -->
-    <script src="{{ static_url('lib/jquery.ui.touch-punch.min.js') }}"></script>
-    <script src="{{ static_url('lib/jquery.jeditable.js') }}"></script>
-    <script src="{{ static_url('lib/jquery.blockUI.js') }}"></script>
-    <script src="{{ static_url('lib/jquery.ui.chatbox.js') }}"></script>
-    <script src="{{ static_url('js/lobibox.min.js') }}"></script>
-    <!-- Socket.IO -->
-    <!--<script src="/socket.io/socket.io.js"></script>-->
-    <!-- ** My Script ** -->
-    <!--<script src="{{ static_url('script.js') }}"></script>-->
-    <script>
-      {% include '../static/script.js' %}
-    </script>
+	<head>
+		<!-- STYLES -->
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{ static_url('css/style.css') }}" />
+		<link rel="stylesheet" title="cardsize" href="{{ static_url('css/bigcards.css') }}" type="text/css" media="all" id="cardsizes" />
+		<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.ui.chatbox.css') }}" />
+		<link rel="stylesheet" href="{{ static_url('css/lobibox.min.css') }}">
+		<!-- FONTS -->
+		<link href='//fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+		<!-- SCRIPTS -->
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<!-- html2canvas -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+		<!-- External Scripts -->
+		<script src="{{ static_url('lib/jquery.ui.touch-punch.min.js') }}"></script>
+		<script src="{{ static_url('lib/jquery.jeditable.js') }}"></script>
+		<script src="{{ static_url('lib/jquery.blockUI.js') }}"></script>
+		<script src="{{ static_url('lib/jquery.ui.chatbox.js') }}"></script>
+		<script src="{{ static_url('js/lobibox.min.js') }}"></script>
+		<!-- Socket.IO -->
+		<!--<script src="/socket.io/socket.io.js"></script>-->
+		<!-- ** My Script ** -->
+		<!--<script src="{{ static_url('script.js') }}"></script>-->
+		<script>
+			{% include '../static/script.js' %}
+		</script>
 
-</head>
-<body>
-{% block body %}{% end %}
-</body>
+	</head>
+	<body>
+		{% block body %}{% end %}
+	</body>
 </html>
