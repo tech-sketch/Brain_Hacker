@@ -565,6 +565,32 @@ img {
 	background-position: -64px -224px;
 }
 
+.color-white{
+	color: white;
+}
+
+.color-blue{
+	color: blue;
+}
+
+.color-yellow{
+	color: yellow;
+}
+
+.color-green{
+	color: green;
+}
+
+.float-right{
+	float: right;
+}
+
+.buttons-area{
+	max-width:30%; 
+	min-width:150px; 
+	margin: 0 auto;
+}
+
 #tool-box{
 	width: 200px;
 	text-align :center;
