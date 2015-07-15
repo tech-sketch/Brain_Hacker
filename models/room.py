@@ -1,4 +1,6 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
+import sys
+sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
 #from group import Group
 
