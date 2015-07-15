@@ -1014,6 +1014,7 @@ $(function() {
 
 
 function screenshot( selector) {
+	console.log('fire');
     var element = $(selector)[0];
     html2canvas(element, { onrendered: function(canvas) {
         var imgData = canvas.toDataURL();
@@ -1021,7 +1022,10 @@ function screenshot( selector) {
         var a = document.createElement('a');
         a.href = imgData;
         a.download = "Brain_Hacker_"+ date +".png";
-        a.click();
+        var evt = document.createEvent('MouseEvent');
+		evt.initEvent("click", true, false);
+		a.dispatchEvent( evt );
+        //a.click();
         //$('#screen_image')[0].src = imgData;
         //$('#download')[0].href = imgData;
         //$('#download')[0].download = "ss.png";
