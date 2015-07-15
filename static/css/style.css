@@ -5,60 +5,72 @@ body {
 	font-family: 'Helvetica Neue Light', arial, serif;
 	font-size: 13px;
 	color: #333;
-	background-color: #ffffff;
-	xbackground-image: -webkit-gradient(radial, 265 118, 456, 147 0, 29, from(#DDDDDD), to(#f3f3f3));
+	background-color: #eeeeee;
+	/*
+	 background-color: #009688;
 
-	padding-left: 10px;
+	 xbackground-image: -webkit-gradient(radial, 265 118, 456, 147 0, 29, from(#DDDDDD), to(#f3f3f3));
 
-	xheight: 1400px;
-	xwidth: 2000px;
+	 padding-left: 10px;
 
-
+	 xheight: 1400px;
+	 xwidth: 2000px;
+	 */
 
 	user-select: none;
-	-o-user-select:none;
+	-o-user-select: none;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	-webkit-user-select: none;
+	background-image: {{ static_url('css/bg/concrete_wall_2_2.png')
+}};
 
-	background-image: {{ static_url('css/bg/concrete_wall_2_2.png') }};
+}
 
+.theme {
+	width: 100% margin : 0 auto;
 }
 
 #board {
 	position: relative;
 	background-color: #b2dfdb;
-	height: 100%;
-	xwidth: 980px;
+	/* Firefox */
+	height: -moz-calc(100% - 70px);
+	/* WebKit */
+	height: -webkit-calc(100% - 70px);
+	/* Opera */
+	height: -o-calc(100% - 70px);
+	/* Standard */
+	height: calc(100% - 70px);
+	min-height: 420px;
+	xwidth: 100%;
 	xborder: solid silver 8px;
-/*
-	background-image: -webkit-gradient(
-	    linear,
-	    left top,
-	    right bottom,
-	    color-stop(0.49, rgb(214,210,206)),
-	    color-stop(0.84, rgb(196,191,182))
-	);
+	/*
+	 background-image: -webkit-gradient(
+	 linear,
+	 left top,
+	 right bottom,
+	 color-stop(0.49, rgb(214,210,206)),
+	 color-stop(0.84, rgb(196,191,182))
+	 );
 
-	xbackground: -moz-linear-gradient(top,  rgleb(214,210,206),  #000);
+	 xbackground: -moz-linear-gradient(top,  rgleb(214,210,206),  #000);
 
-	-moz-box-shadow:inset 1px 1px 3px #999;
-	box-shadow:inset 1px 1px 3px #999;
-	*/
+	 -moz-box-shadow:inset 1px 1px 3px #999;
+	 box-shadow:inset 1px 1px 3px #999;
+	 */
 }
 
 .board-outline {
 	border: solid #009688 8px;
+	background-color: #009688;
 	display: block;
-	width: 996px;
-	height: 466px;
-
+	min-height: 490px;
+	height: 100%;
 	xmargin-left: auto;
 	xmargin-right: auto;
-
 	box-shadow: 1px 3px 2px #aaa;
-
-	x-webkit-transform:rotate(0.3deg); /*"is that a little off-level? i feel like it is off-level"*/
+	x-webkit-transform: rotate(0.3deg); /*"is that a little off-level? i feel like it is off-level"*/
 }
 
 #board-doodles {
@@ -70,19 +82,18 @@ body {
 	/*background-image: url('scribbles2.png');*/
 }
 
-
-
 .hover .content {
 	xborder: solid rgba(92, 157, 181,0.5) 3px;
 }
 
-
 .card-icon {
-display:none;
-position: absolute;
-top: 3%; left: 82%;
-opacity: .3;
-width: 16px; height: 16px;
+	display: none;
+	position: absolute;
+	top: 3%;
+	left: 82%;
+	opacity: .3;
+	width: 16px;
+	height: 16px;
 }
 
 .card-icon-hover {
@@ -90,11 +101,13 @@ width: 16px; height: 16px;
 }
 
 .vote-icon {
-display:none;
-position: absolute;
-top: 60%; left: 15%;
-opacity: .3;
-width: 20px; height: 20px;
+	display: none;
+	position: absolute;
+	top: 60%;
+	left: 15%;
+	opacity: .3;
+	width: 20px;
+	height: 20px;
 }
 
 .vote-icon-hover {
@@ -102,37 +115,35 @@ width: 20px; height: 20px;
 }
 
 .vote-count {
-    position: absolute;
-    top:60%; left:30%;
-    font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	position: absolute;
+	top: 60%;
+	left: 30%;
+	font-family: 'Covered By Your Grace', "Arial Rounded MT Bold", arial, serif;
 	font-size: 18px;
 }
 
 .vote-count-hover {
-    opacity: 1.0;
+	opacity: 1.0;
 }
 
 .card-edit-form, .card-edit-form input, .card-edit-form textarea {
 	border: none;
-	font-size:inherit;
-	font-weight:inherit;
-	background-color:inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	background-color: inherit;
 	xvertical-align: inherit;
 	font-family: inherit;
 	text-align: center;
 	xcolor: #444;
 	padding: 0;
 	margin: 0;
-	outline-width:0;
+	outline-width: 0;
 	overflow: hidden;
 	resize: none;
 	width: 100%;
 	color: #330066;
 	color: #666;
-
 }
-
-
 
 .board-table {
 	xz-index: 1;
@@ -144,7 +155,7 @@ width: 20px; height: 20px;
 	width: 100%;
 }
 
-.board-table .col{
+.board-table .col {
 	xborder-left: dashed #19ba98 5px;
 	text-align: center;
 	vertical-align: top;
@@ -155,13 +166,12 @@ width: 20px; height: 20px;
 	background-position: left top;
 }
 
-.board-table .first{
+.board-table .first {
 	border-left: none;
 	text-align: center;
 	vertical-align: top;
 	height: 100%;
 	background-image: none;
-
 }
 
 h1, h1 a {
@@ -174,7 +184,7 @@ h1, h1 a {
 	font-size: 15px;
 	padding-top: 14px;
 	letter-spacing: +1px;
-	font-family:  "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
 	text-decoration: none;
 }
 
@@ -182,11 +192,10 @@ h2 {
 	font-family: 'Rock Salt', "Arial Rounded MT Bold", arial, serif;
 	color: #5c9db4;
 	font-size: 18px;
-	}
+}
 
 .bottom-icon {
 	padding: 5px;
-	opacity: .4;
 }
 
 .bottom-icon:hover {
@@ -203,14 +212,22 @@ h2 {
 }
 
 #add-col {
-	position: absolute; right: 3px; top: 200px; display: none; opacity: .15;
+	position: absolute;
+	right: 3px;
+	top: 200px;
+	display: none;
+	opacity: .15;
 }
 #add-col:hover {
 	opacity: .5;
 }
 
 #delete-col {
-	position: absolute; right: 3px; top: 224px; display: none; opacity: .15;
+	position: absolute;
+	right: 3px;
+	top: 224px;
+	display: none;
+	opacity: .15;
 }
 #delete-col:hover {
 	opacity: .5;
@@ -233,6 +250,8 @@ h2 {
 }
 
 .buttons {
+	background-color: #009688;
+	width: 100%;height: 70px;
 	float: left;
 }
 
@@ -242,13 +261,12 @@ h2 {
 	text-align: right;
 	color: #bbb;
 	letter-spacing: 4px;
-	font-family:  "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
 	font-size: 13px;
-
 }
 
 .names p {
-	padding: 0; margin 0;
+	padding: 0;margin 0;
 }
 
 .names ul {
@@ -262,43 +280,40 @@ h2 {
 }
 
 .names input {
-   padding: 0; //2px 8px 2px 2px;
-    border: none;
-    outline: 0;
-    width: 100px;
-    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
-    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
-
+	padding: 0;//2px 8px 2px 2px;
+	border: none;
+	outline: 0;
+	width: 100px;
+	background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
 	background: none;
 	border-radius: 10px;
 	color: #666;
 	text-align: right;
-	font-family:  "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
 	font-size: 13px;
 	letter-spacing: 4px;
-	margin:0;
-
+	margin: 0;
 	position: relative;
 }
 
 .names input:hover {
-    xpadding: 2px 2px 2px 2px;
-    xborder: solid 1px #E5E5E5;
-    outline: 0;
-    width: 100px;
-    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
-    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
-xopacity: .5;
+	xpadding: 2px 2px 2px 2px;
+	xborder: solid 1px #E5E5E5;
+	outline: 0;
+	width: 100px;
+	background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+	xopacity: .5;
 	background: none;
-    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+	box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 	border-radius: 10px;
 	color: #aaa;
 	text-align: right;
-	font-family:  "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", 'Helvetica Neue', arial, serif;
 	font-size: 13px;
 	letter-spacing: 4px;
-	margin:0;
-
+	margin: 0;
 }
 
 .names .focused {
@@ -309,22 +324,16 @@ xopacity: .5;
 	letter-spacing: 2px;
 }
 
-
 #user-icon {
 	vertical-align: text-top;
 	position: relative;
 	left: 0px;
 }
 
-
-
-
-
-
 /* Stuff for landing page */
 h1.home {
 	font-size: 100px;
-	font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	font-family: 'Covered By Your Grace', "Arial Rounded MT Bold", arial, serif;
 	color: #19ba98;
 	opacity: .8;
 	padding: 0;
@@ -335,7 +344,7 @@ h1.home {
 
 .home {
 	font-size: 30px;
-	font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	font-family: 'Covered By Your Grace', "Arial Rounded MT Bold", arial, serif;
 	color: #19ba98;
 	color: #222;
 	opacity: 1;
@@ -347,7 +356,6 @@ h1.home {
 
 p.home a {
 	color: #5c9db4;
-
 	text-decoration: none;
 }
 
@@ -362,36 +370,32 @@ p.small {
 }
 
 input.text {
-    width: 230px;
-    background: none;
-    padding: 6px;
-    margin-bottom: 10px;
-    border: none;
+	width: 230px;
+	background: none;
+	padding: 6px;
+	margin-bottom: 10px;
+	border: none;
 	font-size: 30px;
-	font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	font-family: 'Covered By Your Grace', "Arial Rounded MT Bold", arial, serif;
 	color: #5c9db4;
 	text-align: center;
 	border-bottom: dashed 3px #19ba98;
 }
 
 input:hover {
-    x-webkit-box-shadow: 0px 0px 4px #000;
-    xbackground: none;
+	x-webkit-box-shadow: 0px 0px 4px #000;
+	xbackground: none;
 }
 
 #go {
-	 background: none;
-    margin-bottom: 10px;
-    border: none;
+	background: none;
+	margin-bottom: 10px;
+	border: none;
 	font-size: 40px;
-	font-family: 'Covered By Your Grace',"Arial Rounded MT Bold", arial, serif;
+	font-family: 'Covered By Your Grace', "Arial Rounded MT Bold", arial, serif;
 	color: #19ba98;
 	color: black;
-
 	xborder: solid 1px;
-
-
-
 }
 
 .notice-bar {
@@ -408,28 +412,33 @@ input:hover {
 }
 
 #marker {
-	position: absolute; bottom: 0; right: 200px;
+	position: absolute;
+	bottom: 0;
+	right: 200px;
 	z-index: 1;
 }
 
 #eraser {
-	position: absolute; bottom: 0; right: 70px;
+	position: absolute;
+	bottom: 0;
+	right: 70px;
 	z-index: 1;
 }
 
-
 .card-hover-draggable {
 	xborder: 1px dashed blue;
-	box-shadow:inset 0 0 40px rgba(128, 128, 256,0.2);
+	box-shadow: inset 0 0 40px rgba(128, 128, 256,0.2);
 	background-color: rgba(128, 128, 256,0.1)
 }
 
 /*img ~ .card-hover-draggable {
-	-webkit-filter: hue-rotate(180deg);
-}*/
+ -webkit-filter: hue-rotate(180deg);
+ }*/
 
 img {
-	user-drag: none; -moz-user-select: none; -webkit-user-drag: none;
+	user-drag: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
 }
 
 .config {
@@ -443,11 +452,6 @@ img {
 	right: 18px;
 	bottom: 4px;
 }
-
-
-
-
-
 
 .filler {
 	xwidth: 100%;
@@ -464,26 +468,140 @@ img {
 }
 
 /* states and images */
-.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-widget-header .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-state-default .ui-icon { background-image: url(images/ui-icons_888888_256x240.png); }
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_454545_256x240.png); }
-.ui-state-active .ui-icon {background-image: url(images/ui-icons_454545_256x240.png); }
-.ui-state-highlight .ui-icon {background-image: url(images/ui-icons_2e83ff_256x240.png); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_cd0a0a_256x240.png); }
+.ui-icon {
+	width: 16px;
+	height: 16px;
+	background-image: url(images/ui-icons_222222_256x240.png);
+}
+.ui-widget-content .ui-icon {
+	background-image: url(images/ui-icons_222222_256x240.png);
+}
+.ui-widget-header .ui-icon {
+	background-image: url(images/ui-icons_222222_256x240.png);
+}
+.ui-state-default .ui-icon {
+	background-image: url(images/ui-icons_888888_256x240.png);
+}
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {
+	background-image: url(images/ui-icons_454545_256x240.png);
+}
+.ui-state-active .ui-icon {
+	background-image: url(images/ui-icons_454545_256x240.png);
+}
+.ui-state-highlight .ui-icon {
+	background-image: url(images/ui-icons_2e83ff_256x240.png);
+}
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {
+	background-image: url(images/ui-icons_cd0a0a_256x240.png);
+}
 
+.ui-resizable {
+	position: relative;
+}
+.ui-resizable-handle {
+	position: absolute;
+	font-size: 0.1px;
+	z-index: 99999;
+	display: block;
+}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle {
+	display: none;
+}
+.ui-resizable-n {
+	cursor: n-resize;
+	height: 7px;
+	width: 100%;
+	top: -5px;
+	left: 0;
+}
+.ui-resizable-s {
+	cursor: s-resize;
+	height: 7px;
+	width: 100%;
+	bottom: -5px;
+	left: 0;
+}
+.ui-resizable-e {
+	cursor: e-resize;
+	width: 7px;
+	right: -5px;
+	top: 0;
+	height: 100%;
+}
+.ui-resizable-w {
+	cursor: w-resize;
+	width: 7px;
+	left: -5px;
+	top: 0;
+	height: 100%;
+}
+.ui-resizable-se {
+	cursor: se-resize;
+	width: 12px;
+	height: 12px;
+	right: 1px;
+	bottom: 1px;
+}
+.ui-resizable-sw {
+	cursor: sw-resize;
+	width: 9px;
+	height: 9px;
+	left: -5px;
+	bottom: -5px;
+}
+.ui-resizable-nw {
+	cursor: nw-resize;
+	width: 9px;
+	height: 9px;
+	left: -5px;
+	top: -5px;
+}
+.ui-resizable-ne {
+	cursor: ne-resize;
+	width: 9px;
+	height: 9px;
+	right: -5px;
+	top: -5px;
+}
 
-.ui-resizable { position: relative;}
-.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
-.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
-.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
-.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
-.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
-.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
-.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
-.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
-.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
-.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+.ui-icon-gripsmall-diagonal-se {
+	background-position: -64px -224px;
+}
 
-.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
+.color-white{
+	color: white;
+}
+
+.color-blue{
+	color: blue;
+}
+
+.color-yellow{
+	color: yellow;
+}
+
+.color-green{
+	color: green;
+}
+
+.float-right{
+	float: right;
+}
+
+.buttons-area{
+	max-width:30%; 
+	min-width:150px; 
+	margin: 0 auto;
+}
+
+#tool-box{
+	width: 200px;
+	text-align :center;
+	border: solid #009688 8px;
+	background-color: #b2dfdb;
+	box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.4);
+	position: absolute;
+	top: 100px;
+	left: 300px;
+}
+

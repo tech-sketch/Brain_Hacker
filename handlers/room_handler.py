@@ -104,7 +104,7 @@ class RoomSocketHandler(BaseSocketHandler):
 
     def on_close(self):
         room_id = self.rooms.get_room_id(self)
-
+        self.broadcast_to_room(self, self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id) - 1))
         self.rooms.remove_client(self)
 
         clients_name = self.rooms.get_room_clients_name(room_id)
@@ -118,6 +118,9 @@ class RoomSocketHandler(BaseSocketHandler):
         self.send_message(message_out)
 
         room_id = self.rooms.get_room_id(self)
+        user = BaseHandler.get_current_user(self)
+        self.broadcast_to_all_room_user(self, self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id)))
+
         clients_name = self.rooms.get_room_clients_name(room_id)
         message_out = self.generate_message('getMember', ", ".join(clients_name))
         self.broadcast_to_all_room_user(self, message_out)
