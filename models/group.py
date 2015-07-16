@@ -1,10 +1,13 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import os
+import sys
+sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
 
 
 class Group(Base, DjangoLikeModelMixin):
-    from .room import Room
+    from models.room import Room
     name = Column(String(30), nullable=False, info={'label': 'グループ名'})
     description = Column(String(100), nullable=False, info={'label': '一言説明'})
     rooms = relationship("Room", backref='groups', cascade='all, delete-orphan',)
