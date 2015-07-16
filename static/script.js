@@ -1016,21 +1016,33 @@ function screenshot( selector) {
 	console.log('fire');
     var element = $(selector)[0];
     html2canvas(element, { onrendered: function(canvas) {
-        var imgData = canvas.toDataURL();
-        date = new Date( jQuery . now() ) . toLocaleString();
+        date = new Date(jQuery.now()).toLocaleString();
+        if (canvas.msToBlob) { //for IE
+                var blob = canvas.msToBlob();
+                window.navigator.msSaveBlob(blob, "Brain_Hacker"+date+".png");
+        }else{
+        	var imgData = canvas.toDataURL();
+	        var a = document.createElement('a');
+	        a.href = imgData;
+	        a.download = "Brain_Hacker"+date+".png";
+	        document.body.appendChild(a);
+	        a.click();
+	        a.remove();
+        	
+        }     
+        /*
         var a = document.createElement('a');
+        document.getElementsByTagName("body")[0].appendChild(a)
+        console.log('fire2');
         a.href = imgData;
-        a.download = "Brain_Hacker_"+ date +".png";
+        a.download = "Brain_Hacker"+date+".png";
         var evt = document.createEvent('MouseEvent');
 		evt.initEvent("click", true, false);
+		console.log('fire3');
 		a.dispatchEvent( evt );
-        //a.click();
-        //$('#screen_image')[0].src = imgData;
-        //$('#download')[0].href = imgData;
-        //$('#download')[0].download = "ss.png";
-        //$('#download')[0].click();
-        
-        //$('#download')[0].innerHTML = "Download";
+		console.log('fire4');
+		*/
+
     }});
 }
 
