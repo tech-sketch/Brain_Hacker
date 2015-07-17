@@ -9,3 +9,7 @@ association_table = Table('association', Base.metadata,
 )
 
 
+user_idea_association_table = Table('user_idea_association', Base.metadata,
+    Column('user_id', Integer, ForeignKey('user.id')),
+    Column('idea_id', Integer, ForeignKey('idea.id'))
+)
