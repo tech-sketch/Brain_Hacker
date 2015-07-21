@@ -21,7 +21,7 @@ if __name__ == '__main__':
     from sqlalchemy.orm import sessionmaker
 
     engine = sqlalchemy.create_engine(url, echo=True)
-    #Base.metadata.drop_all(engine)
+    # Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
     idea = Idea(card_id='card99999999')

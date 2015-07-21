@@ -190,20 +190,20 @@ class RoomSocketHandler(BaseSocketHandler):
         pass  # self.broadcast_to_room(self, message)
 
     def vote_up(self, message):
-        id = message['data']['id']
+        message_id = message['data']['id']
         user = User.get(BaseHandler.get_current_user_id(self))
-        idea = Idea.get_from_cardID(card_id=id)
+        idea = Idea.get_from_cardID(card_id=message_id)
 
         if idea not in user.ideas:
             user.ideas.append(idea)
             user.save()
 
-            message_out = self.generate_message('voteUp', {'id': id})
+            message_out = self.generate_message('voteUp', {'id': message_id})
             self.broadcast_to_room(self, message_out)
             room_id = self.rooms.get_room_id(self)
-            self.cards.update_vote_count(room_id, card_id=id)
+            self.cards.update_vote_count(room_id, card_id=message_id)
         else:
-            message_out = self.generate_message('voteDown', {'id': id})
+            message_out = self.generate_message('voteDown', {'id': message_id})
             self.send_message(message_out)
 
     def update_chat(self, message):
@@ -211,7 +211,7 @@ class RoomSocketHandler(BaseSocketHandler):
         chat_data = {'id': str(uuid.uuid4()),
                      'body': message['data']["body"],
                      'name': message['data']['name']
-        }
+                     }
         self.chat.update_cache(chat_data, room_id)
 
         message_out = self.generate_message('chat', chat_data)

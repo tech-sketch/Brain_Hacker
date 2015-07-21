@@ -6,11 +6,10 @@ import json
 # import io
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='cp932')
 
-
 class DocomoNamedEntityExtraction(object):
 
     def __init__(self):
-        self.__keyid = '5564337862374b3137724b4d5a65365754517233734c4f315538684e6e43785756567656416d414b4d3935'
+        self.__keyid = ''
         self.__url = 'https://api.apigw.smt.docomo.ne.jp/gooLanguageAnalysis/v1/entity?APIKEY=' + self.__keyid
 
     def search(self, text):
