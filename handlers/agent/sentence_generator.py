@@ -53,7 +53,7 @@ class SentenceGenerator(object):
 if __name__ == '__main__':
     # 文を与えると、褒める文と発想の転換を促す文を生成する
     text = u"東京ミッドタウンから国立新美術館まで歩いて5分で着きます。"
-    #text = '誰でもアイディアを簡単に出せるホワイトボード'
+    # text = '誰でもアイディアを簡単に出せるホワイトボード'
     print('入力：')
     print(' ' + text)
     sentence_generator = SentenceGenerator()

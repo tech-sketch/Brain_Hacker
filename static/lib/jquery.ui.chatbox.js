@@ -52,8 +52,17 @@
                     }
 
                     var msgElement = document.createElement(
-                        systemMessage ? "i" : "span");
+                        systemMessage ? "i" : "a");
+
+                    replace_pattern = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%=-]*>))/g;
+
+                    if (msg.match(replace_pattern)) {
+                       var list=msg.match(replace_pattern);
+                       msgElement.href = list[0]
+                       msgElement.target = "_blank"
+                    }
                     $(msgElement).text(msg);
+
                     e.appendChild(msgElement);
                     $(e).addClass("ui-chatbox-msg");
                     $(e).css("maxWidth", $(box).width());

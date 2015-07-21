@@ -6,6 +6,7 @@ import json
 # import io
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='cp932')
 
+
 class DocomoNamedEntityExtraction(object):
 
     def __init__(self):
