@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey
 import sys
 sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
-#from group import Group
+# from group import Group
 
 
 class Room(Base, DjangoLikeModelMixin):
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     from settings import url
     from sqlalchemy.orm import sessionmaker
     engine = sqlalchemy.create_engine(url, echo=True)
-    #Base.metadata.drop_all(engine)
+    # Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)()
     room = Room(name="Test Room", theme="brainstorming")

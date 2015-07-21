@@ -6,10 +6,11 @@ import json
 # import io
 # sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='cp932')
 
+
 class YahooKeyphraseExtraction(object):
 
     def __init__(self):
-        self.__keyid = ''
+        self.__keyid = 'dj0zaiZpPWtLOThUbTE1ak5kYyZzPWNvbnN1bWVyc2VjcmV0Jng9YWM-'
         self.__url = 'http://jlp.yahooapis.jp/KeyphraseService/V1/extract'
 
     def search(self, text):

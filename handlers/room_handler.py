@@ -72,8 +72,11 @@ class RoomDeleteHandler(BaseHandler):
         self.redirect(self.reverse_url('rooms', group_id))
 
 from handlers.base_handler import BaseHandler
+
+
 class BaseSocketHandler(BaseHandler, tornado.websocket.WebSocketHandler):
     pass
+
 
 class RoomSocketHandler(BaseSocketHandler):
     rooms = Rooms()
@@ -106,7 +109,8 @@ class RoomSocketHandler(BaseSocketHandler):
 
     def on_close(self):
         room_id = self.rooms.get_room_id(self)
-        self.broadcast_to_room(self, self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id) - 1))
+        self.broadcast_to_room(self, self.generate_message('countUser',
+                                                           self.rooms.count_user_already_in_room_of(room_id) - 1))
         self.rooms.remove_client(self)
 
         clients_name = self.rooms.get_room_clients_name(room_id)
@@ -121,7 +125,8 @@ class RoomSocketHandler(BaseSocketHandler):
 
         room_id = self.rooms.get_room_id(self)
         user = BaseHandler.get_current_user(self)
-        self.broadcast_to_all_room_user(self, self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id)))
+        self.broadcast_to_all_room_user(self, self.generate_message('countUser',
+                                                                    self.rooms.count_user_already_in_room_of(room_id)))
 
         clients_name = self.rooms.get_room_clients_name(room_id)
         message_out = self.generate_message('getMember', ", ".join(clients_name))
@@ -144,7 +149,8 @@ class RoomSocketHandler(BaseSocketHandler):
     def move_card(self, message):
         self.broadcast_to_room(self, message)
         room_id = self.rooms.get_room_id(self)
-        self.cards.update_xy(room_id, card_id=message['data']['id'], x=message['data']['position']['left'], y=message['data']['position']['top'])
+        self.cards.update_xy(room_id, card_id=message['data']['id'],
+                             x=message['data']['position']['left'], y=message['data']['position']['top'])
 
     def create_card(self, message):
         message_out = self.generate_message('createCard', message['data'])
@@ -181,7 +187,7 @@ class RoomSocketHandler(BaseSocketHandler):
         self.cards.delete(room_id, card_id=message['data']['id'])
 
     def change_theme(self, message):
-        pass  #self.broadcast_to_room(self, message)
+        pass  # self.broadcast_to_room(self, message)
 
     def vote_up(self, message):
         id = message['data']['id']
@@ -192,12 +198,12 @@ class RoomSocketHandler(BaseSocketHandler):
             user.ideas.append(idea)
             user.save()
 
-            message_out = self.generate_message('voteUp', {'id':id})
+            message_out = self.generate_message('voteUp', {'id': id})
             self.broadcast_to_room(self, message_out)
             room_id = self.rooms.get_room_id(self)
             self.cards.update_vote_count(room_id, card_id=id)
         else:
-            message_out = self.generate_message('voteDown', {'id':id})
+            message_out = self.generate_message('voteDown', {'id': id})
             self.send_message(message_out)
 
     def update_chat(self, message):

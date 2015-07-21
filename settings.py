@@ -5,7 +5,7 @@ from tornado.options import define, options
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-define('port', default=8888, help="run on the given port", type=int)
+define('port', default=8889, help="run on the given port", type=int)
 define('debug', default=True, help='debug mode')
 tornado.options.parse_command_line()
 
@@ -19,14 +19,15 @@ settings['xsrf_cookies'] = True
 settings['login_url'] = '/auth/login/'
 
 from modules.modules import SearchBar, DeleteModal, CreateModal, EditModal
-settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal, 'CreateModal': CreateModal, 'EditModal': EditModal}
+settings['ui_modules'] = {'SearchBar': SearchBar, 'DeleteModal': DeleteModal,
+                          'CreateModal': CreateModal, 'EditModal': EditModal}
 
 DATABASES = {
     'default': {
         'ENGINE': 'postgresql+psycopg2',
-        'NAME': 'BH',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': '17suraimuAAA',
         'HOST': 'localhost',
         'PORT': '5432',
     }
