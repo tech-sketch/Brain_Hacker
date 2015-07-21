@@ -9,6 +9,8 @@ from tornado.escape import json_encode, json_decode, xhtml_unescape, xhtml_escap
 from handlers.base_handler import BaseHandler
 from models.room import Room
 from models.group import Group
+from models.user import User
+from models.idea import Idea
 from .util import check_group_permission
 from forms.forms import RoomForm
 from handlers.brainstorming.rooms import Rooms
@@ -150,6 +152,10 @@ class RoomSocketHandler(BaseSocketHandler):
         room_id = self.rooms.get_room_id(self)
         self.cards.add(room_id, message['data'])
 
+        # --
+        idea = Idea(card_id=message['data']['id'])
+        idea.save()
+
     @asynchronous
     @gen.engine
     def edit_card(self, message):
@@ -178,10 +184,21 @@ class RoomSocketHandler(BaseSocketHandler):
         pass  #self.broadcast_to_room(self, message)
 
     def vote_up(self, message):
-        message_out = self.generate_message('voteUp', {'id': message['data']['id']})
-        self.broadcast_to_room(self, message_out)
-        room_id = self.rooms.get_room_id(self)
-        self.cards.update_vote_count(room_id, card_id=message['data']['id'])
+        id = message['data']['id']
+        user = User.get(BaseHandler.get_current_user_id(self))
+        idea = Idea.get_from_cardID(card_id=id)
+
+        if idea not in user.ideas:
+            user.ideas.append(idea)
+            user.save()
+
+            message_out = self.generate_message('voteUp', {'id':id})
+            self.broadcast_to_room(self, message_out)
+            room_id = self.rooms.get_room_id(self)
+            self.cards.update_vote_count(room_id, card_id=id)
+        else:
+            message_out = self.generate_message('voteDown', {'id':id})
+            self.send_message(message_out)
 
     def update_chat(self, message):
         room_id = self.rooms.get_room_id(self)

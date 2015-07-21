@@ -183,6 +183,11 @@ function getMessage(m) {
             $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) + 1));
             break;
 
+        case 'voteDown':
+            //$('#' + data.id + ' .vote-count').html(data['vote_count']);
+            $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) - 1));
+            break;
+
         case 'advice':
         Lobibox.notify('info', {
                msg: data['sent'],
@@ -195,7 +200,7 @@ function getMessage(m) {
             );
             //Materialize.toast(data['sent'], 4000);
             break;
-            
+
         case 'countUser':
         	$(".count-user").text('現在の参加人数は'+data+'人です');
             break;
@@ -968,7 +973,7 @@ $(function() {
         minWidth: 400,
         minHeight: 400,
         maxWidth: 3200,
-        maxHeight: 1800, 
+        maxHeight: 1800,
     });
 
     //A new scope for precalculating
@@ -992,17 +997,17 @@ $(function() {
     $('#marker').draggable({
         axis: 'x',
         containment: 'parent',
-        
+
     });
 
     $('#eraser').draggable({
         axis: 'x',
         containment: 'parent'
     });
-    
+
     $('#tool-box').draggable({
     });
-    
+
     $("#board-screen-shot").click(function() {
 		console.log("aaaaaaaaaaaaaaaaaa");
 		screenshot('.target_screen');
@@ -1028,8 +1033,8 @@ function screenshot( selector) {
 	        document.body.appendChild(a);
 	        a.click();
 	        a.remove();
-        	
-        }     
+
+        }
         /*
         var a = document.createElement('a');
         document.getElementsByTagName("body")[0].appendChild(a)

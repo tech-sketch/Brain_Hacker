@@ -6,8 +6,9 @@ from sqlalchemy.sql import exists
 import sys
 sys.path.append('../')
 from models.base_model import DjangoLikeModelMixin, Base
-from models.relations import association_table
+from models.relations import association_table, user_idea_association_table
 from models.group import Group
+from models.idea import Idea
 
 
 class User(Base, DjangoLikeModelMixin):
@@ -15,6 +16,7 @@ class User(Base, DjangoLikeModelMixin):
     email = Column(EmailType, nullable=False, info={'label': 'メールアドレス'})
     password = Column(PasswordType(schemes=['pbkdf2_sha512']), nullable=False, info={'label': 'パスワード'})
     groups = relationship("Group", secondary=association_table, backref='users')
+    ideas = relationship("Idea", secondary=user_idea_association_table, backref='users')
 
     def __init__(self, name, email, password):
         self.name = name
