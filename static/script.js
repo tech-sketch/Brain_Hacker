@@ -217,7 +217,6 @@ function getMessage(m) {
             break;
     }
 
-
 }
 
 $(document).bind('keyup', function(event) {
@@ -311,7 +310,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
     var speed = Math.floor(Math.random() * 1000);
     if (typeof(animationspeed) != 'undefined') speed = animationspeed;
 
-    var startPosition = $("#create-card-white").position();
+    var startPosition = $("#tool-box").position();
 
     card.css('top', startPosition.top - card.height() * 0.5);
     card.css('left', startPosition.left - card.width() * 0.5);
@@ -893,7 +892,6 @@ $(function() {
     });
 
 
-
     $('#icon-col').hover(
         function() {
             $('.col-icon').fadeIn(10);
@@ -963,7 +961,6 @@ $(function() {
     });
 
 
-
     $(".sticker").draggable({
         revert: true,
         zIndex: 1000
@@ -993,8 +990,6 @@ $(function() {
             adjustCard(offsets, true);
         });
     })();
-
-
 
     $('#marker').draggable({
         axis: 'x',
@@ -1029,10 +1024,12 @@ function screenshot( selector) {
                 window.navigator.msSaveBlob(blob, "Brain_Hacker"+date+".png");
         }else{
         	var imgData = canvas.toDataURL();
+
 	        var a = document.createElement('a');
 	        a.href = imgData;
 	        a.download = "Brain_Hacker"+date+".png";
 	        document.body.appendChild(a);
+
 	        a.click();
 	        a.remove();
 

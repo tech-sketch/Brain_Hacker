@@ -53,9 +53,7 @@
                     }
 
                     var msgElement = $("<a>");
-
                     replace_pattern = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%=-]*>))/g;
-
                     if (msg.match(replace_pattern)) {
                        var list=msg.match(replace_pattern);
                        msgElement.attr({
