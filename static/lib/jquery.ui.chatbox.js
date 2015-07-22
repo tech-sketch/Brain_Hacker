@@ -62,7 +62,6 @@
                             'href': list[0],
                             'target': "_blank",
                        })
-                       msgElement.addClass("livepreview")
                     }
                     $(msgElement).text(msg);
 
