@@ -13,6 +13,7 @@
 
 
 // TODO: implement destroy()
+
 (function($) {
     $.widget("ui.chatbox", {
         options: {
@@ -37,34 +38,35 @@
                 addMsg: function(peer, msg) {
                     var self = this;
                     var box = self.elem.uiChatboxLog;
-                    var e = document.createElement('div');
+                    var e = $("<div>");;
                     box.append(e);
                     $(e).hide();
 
                     var systemMessage = false;
 
                     if (peer) {
-                        var peerName = document.createElement("b");
+                        var peerName = $("<b>");;
                         $(peerName).text(peer + ": ");
-                        e.appendChild(peerName);
+                        e.append(peerName);
                     } else {
                         systemMessage = true;
                     }
 
-                    var msgElement = document.createElement(
-                        systemMessage ? "i" : "a");
+                    var msgElement = $("<a>");
 
                     replace_pattern = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%=-]*>))/g;
 
                     if (msg.match(replace_pattern)) {
                        var list=msg.match(replace_pattern);
-                       msgElement.href = list[0]
-                       msgElement.target = "_blank"
+                       msgElement.attr({
+                            'href': list[0],
+                            'target': "_blank",
+                       })
+                       msgElement.addClass("livepreview")
                     }
                     $(msgElement).text(msg);
 
-                    e.appendChild(msgElement);
-                    $(e).addClass("ui-chatbox-msg");
+                    e.append(msgElement);
                     $(e).css("maxWidth", $(box).width());
                     $(e).fadeIn();
                     self._scrollToBottom();
@@ -131,6 +133,7 @@
                 .click(function(event) {
                     self.toggleContent(event);
                 })
+
                 .appendTo(uiChatbox),
             uiChatboxTitle = (self.uiChatboxTitle = $('<span></span>'))
                 .html(title)

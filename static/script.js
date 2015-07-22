@@ -21,6 +21,7 @@ $(document).ready(function() {
 							      right: 'auto',
 							      top: 'auto',
 							      bottom: 'auto'});
+
 });
 
 var socket = new WebSocket("ws://" + location.host + "/websocket");
@@ -139,7 +140,8 @@ function getMessage(m) {
             break;
 
         case 'editCard':
-            $("#" + data.id).children('.content:first').text(data.value);
+            test =  $("#" + data.id).children('.content:first');
+            test.text(data.value);
             break;
 
         case 'initColumns':
@@ -229,13 +231,13 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
 	">\
 	<img src="{{ static_url('images/icons/token/')}}Xion.png" class="card-icon delete-card-icon" />\
 	<img class="card-image" src="{{static_url('images/')}}' + colour + '-card.png">\
-
 	<div id="content:' + id +
         '" class="content stickertarget droppable">' +
         text + '</div><span class="filler"></span>\
     <img src="{{ static_url('images/icons/token/')}}vote-up.png" class="vote-icon vote-up" />\
     <div class="vote-count">' + vote_count + '</div>\
 	</div>';
+
 
     var card = $(h);
     card.appendTo('#board');
@@ -1035,19 +1037,6 @@ function screenshot( selector) {
 	        a.remove();
 
         }
-        /*
-        var a = document.createElement('a');
-        document.getElementsByTagName("body")[0].appendChild(a)
-        console.log('fire2');
-        a.href = imgData;
-        a.download = "Brain_Hacker"+date+".png";
-        var evt = document.createEvent('MouseEvent');
-		evt.initEvent("click", true, false);
-		console.log('fire3');
-		a.dispatchEvent( evt );
-		console.log('fire4');
-		*/
-
     }});
 }
 
