@@ -11,4 +11,4 @@ class IndexHandler(BaseHandler):
 class TestHandler(BaseHandler):
 
     def get(self):
-        self.render('test.html')
+        self.render('brainstorming.html')
