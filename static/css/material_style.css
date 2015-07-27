@@ -55,3 +55,7 @@ p {
 footer.page-footer {
   margin: 0;
 }
+
+.colour-selected {
+  background: #ffffff;
+}

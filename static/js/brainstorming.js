@@ -4,8 +4,8 @@ var nickname = {name : "default"}
 var create_colour = 'blue';
 
 $(document).ready( function(){
-    $(".colour").click(function() {
-        create_colour = $(this).text();
+    $(".sticky-colour").click(function() {
+        create_colour = $(this).attr('colour');
     });
 
     $("#board-screen-shot").click(function() {
