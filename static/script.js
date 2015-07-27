@@ -224,6 +224,9 @@ $(document).bind('keyup', function(event) {
 });
 
 function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
+
+
+
     var h = '<div id="' + id + '" class="card ' + colour +
         ' draggable" style="transform:rotate(' + rot +
         'deg);\

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>Brain Hacker</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ static_url('css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{ static_url('css/material_style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="{{ static_url('css/component.css') }}" />
+    <style type="text/css">
+        <!--
+        main {
+        display: block;
+        }
+
+        header, main, footer {
+        padding-left: 240px;
+        }
+
+        .parallax-demo header, .parallax-demo main, .parallax-demo footer {
+        padding-left: 0;
+        }
+
+
+        @media only screen and (max-width : 992px) {
+        header, main, footer {
+        padding-left: 0;
+        }
+        }
+
+        .grey-border {
+        border:10px;
+        border-color:black;
+        }
+        -->
+    </style>
+
+    <!-- Scripts -->
+    <script src="{{ static_url('js/modernizr.custom.js') }}"></script>
+    <script src="{{ static_url('js/classie.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+    <script src="{{ static_url('js/materialize.js') }}"></script>
+    <script src="{{ static_url('js/init.js') }}"></script>
+    <script src="{{ static_url('js/brainstorming.js') }}"></script>
+    <script src="{{ static_url('lib/jquery.jeditable.js') }}"></script>
+    <!--<script>
+    $(function() {
+        // .cardをdrag可能に
+        $(".card").draggable({containment: ".boundary" });
+    });
+    </script>-->
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+</head>
+
+<body>
+
+{% include 'brainstorming_widget/header.html' %}
+
+<main class="grey lighten-4 target_screen">
+    <h3 style="margin-left:10px;">ブレインストーミングのテーマ</h3>
+    <div class="boundary-wrapper grey darken-2" style="padding:1px;margin:10px;">
+        <div class="boundary white" style="height:450px;margin:5px;">
+        </div>
+    </div>
+    {% include 'brainstorming_widget/chat_bar.html' %}
+</main>
+
+</body>
+</html>

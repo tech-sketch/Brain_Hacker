@@ -2,7 +2,7 @@ from handlers.auth_handler import LoginHandler, LogoutHandler, SignupHandler
 from handlers.index_handler import IndexHandler, TestHandler
 from handlers.user_handler import UsersHandler, UserHandler
 from handlers.group_handler import GroupsHandler, GroupHandler, GroupUserHandler, GroupEditHandler, GroupMemberAdditionHandler, GroupDeleteHandler
-from handlers.room_handler import RoomsHandler, RoomHandler, RoomEditHandler, RoomDeleteHandler, RoomSocketHandler
+from handlers.room_handler import RoomsHandler, RoomHandler, RoomEditHandler, RoomDeleteHandler, RoomSocketHandler, BrainstormingHandler
 
 from tornado.web import url
 
@@ -28,5 +28,6 @@ url_patterns = (
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/', RoomHandler, name='room'),
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/edit', RoomEditHandler, name='room_edit'),
     url(r'/groups/([0-9]+)/rooms/([0-9]+)/delete', RoomDeleteHandler, name='room_delete'),
-    url(r'/websocket', RoomSocketHandler, name='room_socket'),
+    #url(r'/websocket', RoomSocketHandler, name='room_socket'),
+    url(r'/websocket', BrainstormingHandler, name='room_socket'),
 )

@@ -1,0 +1,58 @@
+{% if current_user %}
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="{{ reverse_url('user', current_user['id']) }}">Profile</a></li>
+    <li class="divider"></li>
+    <li><a href="{{ reverse_url('logout') }}">Logout</a></li>
+</ul>
+{% end %}
+
+<header>
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper">
+
+            <ul class="right">
+                {% if current_user %}
+                <li><a id="showRight">Chat<i class="material-icons right">chat</i></a></li>
+                <li><a href="{{ reverse_url('groups') }}">Groups</a></li>
+                <li><a href="{{ reverse_url('users') }}">Users</a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ current_user['name'] }}<i class="material-icons right">arrow_drop_down</i></a></li>
+
+                {% else %}
+                <li><a href="{{ reverse_url('login') }}">Login</a></li>
+                {% end %}
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <ul id="nav-mobile" class="side-nav fixed blue-grey darken-3">
+        <ul class="row">
+            <li class="center col s12 m4 white-text"><i class="material-icons">input</i><br/><span>付箋</span></li>
+            <li class="center col s12 m4 white-text"><i class="material-icons">android</i><br/><span>AI</span></li>
+            <li id="board-screen-shot" class="center col s12 m4 white-text"><i class="material-icons">visibility</i><br/><span>Capture</span></li>
+        </ul>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="idea-input" class="materialize-textarea white" placeholder="ここにアイディアを入力する"></textarea>
+                        <input id="idea-submit-btn" type="button" value="Submit" onclick="kakunin()">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <li class="bold red-text"><i class="material-icons left">label</i><span class="colour">red</span></li><br/>
+        <li class="bold grey-text"><i class="material-icons left">label</i><span class="colour">grey</span></li><br/>
+        <li class="bold yellow-text"><i class="material-icons left">label</i><span class="colour">yellow</span></li><br/>
+        <li class="bold blue-text"><i class="material-icons left">label</i><span class="colour">blue</span></li><br/>
+        <li class="bold green-text"><i class="material-icons left">label</i><span class="colour">green</span></li><br/>
+        <li class="bold white-text">参加者数： 5人</a></li>
+        <ul>
+            <li class="bold white-text"><i class="material-icons">perm_identity</i>nakayama</li>
+            <li class="bold white-text"><i class="material-icons">perm_identity</i>ishikawa</li>
+            <li class="bold white-text"><i class="material-icons">perm_identity</i>yatsushiro</li>
+        </ul>
+    </ul>
+</header>

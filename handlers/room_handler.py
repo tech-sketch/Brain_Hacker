@@ -47,7 +47,8 @@ class RoomHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, group_id, room_id):
         room = Room.get(room_id)
-        self.render('room/room.html', room=room)
+        self.render('room/brainstorming.html', room=room)
+        #self.render('room/room.html', room=room)
 
 
 class RoomEditHandler(BaseHandler):
@@ -84,6 +85,7 @@ class RoomSocketHandler(BaseSocketHandler):
     chat = Chat()
 
     def open(self, *args, **kwargs):
+        print('neko')
         pass
 
     def on_message(self, message):
@@ -228,6 +230,192 @@ class RoomSocketHandler(BaseSocketHandler):
         room_id = self.rooms.get_room_id(client)
         for waiter in self.rooms.get_room_clients(room_id):
             waiter.send_message(message_out)
+
+    def send_message(self, message):
+        self.write_message(json_encode(message))
+
+    def generate_message(self, action, data):
+        return {'action': action, 'data': data}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BrainstormingHandler(BaseSocketHandler):
+    rooms = Rooms()
+    cards = Cards()
+    chat = Chat()
+
+    def open(self, *args, **kwargs):
+        pass
+
+    def on_message(self, message):
+        message = json_decode(message)
+        print(message)
+        if message['action'] == 'initializeMe':
+            self.initClient()
+        elif message['action'] == 'joinRoom':
+            self.joinRoom(message)
+        elif message['action'] == 'moveCard':
+            self.move_card(message)
+        elif message['action'] == 'createCard':
+            self.create_card(message)
+        elif message['action'] == 'editCard':
+            self.edit_card(message)
+        elif message['action'] == 'deleteCard':
+            self.delete_card(message)
+        elif message['action'] == 'voteUp':
+            self.vote_up(message)
+        elif message['action'] == 'chat':
+            self.update_chat(message)
+
+    def on_close(self):
+        room_id = self.rooms.get_room_id(self)
+        self.broadcast_to_room(self, self.generate_message('countUser',
+                                                           self.rooms.count_user_already_in_room_of(room_id) - 1))
+        self.rooms.remove_client(self)
+
+        clients_name = self.rooms.get_room_clients_name(room_id)
+        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        for waiter in self.rooms.get_room_clients(room_id):
+            waiter.send_message(message_out)
+
+    def joinRoom(self, message):
+        self.rooms.add_to_room(self, message['data'])
+        message_out = self.generate_message(action='roomAccept', data='')
+        self.send_message(message_out)
+
+        room_id = self.rooms.get_room_id(self)
+        user = BaseHandler.get_current_user(self)
+        self.broadcast(self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id)))
+
+        clients_name = self.rooms.get_room_clients_name(room_id)
+        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        self.broadcast(message_out)
+
+    def initClient(self):
+        room_id = self.rooms.get_room_id(self)
+        user = BaseHandler.get_current_user(self)
+
+        if not self.rooms.checks_user_already_in_room_of(room_id, user["name"]):
+            self.rooms.add_user(room_id, user["name"])
+            self.chat.set_nickname(room_id, user["name"])
+
+        nickname = self.chat.get_nickname(room_id, user["name"])
+
+        self.send_message(self.generate_message('initCards', self.cards.get_all(room_id)))
+        self.send_message(self.generate_message('chatMessages', {'cache': self.chat.cache[room_id], 'name': nickname}))
+
+    def move_card(self, message):
+        self.broadcast_to_room(self, message)
+        room_id = self.rooms.get_room_id(self)
+        self.cards.update_xy(room_id, card_id=message['data']['id'],
+                             x=message['data']['position']['left'], y=message['data']['position']['top'])
+
+    def create_card(self, message):
+        message_out = self.generate_message('createCard', message['data'])
+        self.broadcast(message_out)
+        room_id = self.rooms.get_room_id(self)
+        self.cards.add(room_id, message['data'])
+
+        idea = Idea(card_id=message['data']['id'])
+        idea.save()
+
+    @asynchronous
+    @gen.engine
+    def edit_card(self, message):
+        id = message['data']['id']
+        text = xhtml_unescape(message['data']['value'].strip())
+        clean_data = {'value': text, 'id': id}
+
+        message_out = self.generate_message('editCard', clean_data)
+        self.broadcast(message_out)
+        room_id = self.rooms.get_room_id(self)
+        self.cards.update_text(room_id, card_id=id, text=xhtml_escape(text))
+
+        sentence_generator = SentenceGenerator()
+        res = sentence_generator.generate_sentence(text)
+        for sent in res:
+            message_out = self.generate_message('advice', {'sent': sent})
+            self.send_message(message_out)
+            yield gen.sleep(2.5)
+
+    def delete_card(self, message):
+        self.broadcast_to_room(self, message)
+        room_id = self.rooms.get_room_id(self)
+        self.cards.delete(room_id, card_id=message['data']['id'])
+
+    def vote_up(self, message):
+        message_id = message['data']['id']
+        user = User.get(BaseHandler.get_current_user_id(self))
+        idea = Idea.get_from_cardID(card_id=message_id)
+
+        if idea not in user.ideas:
+            user.ideas.append(idea)
+            user.save()
+
+            message_out = self.generate_message('voteUp', {'id': message_id})
+            self.broadcast_to_room(self, message_out)
+            room_id = self.rooms.get_room_id(self)
+            self.cards.update_vote_count(room_id, card_id=message_id)
+        else:
+            message_out = self.generate_message('voteDown', {'id': message_id})
+            self.send_message(message_out)
+
+    def update_chat(self, message):
+        room_id = self.rooms.get_room_id(self)
+        chat_data = {'id': str(uuid.uuid4()),
+                     'body': message['data']["body"],
+                     'name': message['data']['name']
+                     }
+        self.chat.update_cache(chat_data, room_id)
+
+        message_out = self.generate_message('chat', chat_data)
+        self.broadcast_to_room(self, message_out)
+
+    def broadcast_to_room(self, client, message_out):
+        room_id = self.rooms.get_room_id(client)
+        for waiter in self.rooms.get_room_clients(room_id):
+            if waiter == client:
+                continue
+            waiter.send_message(message_out)
+
+    def broadcast_to_all_room_user(self, client, message_out):
+        room_id = self.rooms.get_room_id(client)
+        for waiter in self.rooms.get_room_clients(room_id):
+            waiter.send_message(message_out)
+
+    def broadcast(self, message):
+        room_id = self.rooms.get_room_id(self)
+        for waiter in self.rooms.get_room_clients(room_id):
+            waiter.send_message(message)
 
     def send_message(self, message):
         self.write_message(json_encode(message))
