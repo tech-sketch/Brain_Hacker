@@ -26,8 +26,6 @@
     <div class="nav-wrapper container">
         <a id="logo-container" href="{{ reverse_url('index') }}" class="brand-logo">Brain Hacker</a>
 
-
-
         <ul class="right hide-on-med-and-down">
             {% if current_user %}
             {% block search_bar %}{% end %}
@@ -58,34 +56,29 @@
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
-                <h5 class="white-text">Company Bio</h5>
-                <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
+                <h5 class="white-text">Our Team</h5>
+                <p class="grey-text text-lighten-4">We are a team of STC new comers.</p>
             </div>
             <div class="col l3 s12">
-                <h5 class="white-text">Settings</h5>
+                <h5 class="white-text">Categories</h5>
                 <ul>
-                    <li><a class="white-text" href="#!">Link 1</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
+                    <li><a class="white-text" href="{{ reverse_url('index') }}">Top</a></li>
+                    <li><a class="white-text" href="{{ reverse_url('groups') }}">Groups</a></li>
+                    <li><a class="white-text" href="{{ reverse_url('users') }}">Users</a></li>
                 </ul>
             </div>
             <div class="col l3 s12">
-                <h5 class="white-text">Connect</h5>
+                <h5 class="white-text">Link</h5>
                 <ul>
-                    <li><a class="white-text" href="#!">Link 1</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
+                    <li><a class="white-text" href="#!">.Chain()</a></li>
+                    <li><a class="white-text" href="#!">Zone</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="footer-copyright">
         <div class="container">
-            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+            <!--Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>-->
         </div>
     </div>
 </footer>

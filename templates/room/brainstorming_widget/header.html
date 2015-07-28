@@ -10,7 +10,7 @@
 <header>
     <nav class="white" role="navigation">
         <div class="nav-wrapper">
-
+            <a id="logo-container" href="{{ reverse_url('index') }}" class="brand-logo">Brain Hacker</a>
             <ul class="right">
                 {% if current_user %}
                 <li><a id="showRight">Chat<i class="material-icons right">chat</i></a></li>
@@ -38,7 +38,7 @@
             <form class="col s12">
                 <!--<div class="row">
                     <div class="input-field col s12">-->
-                        <textarea id="idea-input" class="materialize-textarea white-text" placeholder="ここにアイディアを入力する"></textarea>
+                        <textarea id="idea-input" class="materialize-textarea black-text" placeholder="ここにアイディアを入力する"></textarea>
                     <!--</div>
                 </div>-->
             </form>
