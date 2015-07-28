@@ -13,7 +13,7 @@ $(document).ready( function(){
         }
         $(this).addClass('selected');
         create_colour = $(this).attr('colour');
-        $('#idea-input').css({'background-color': create_colour});
+        $('#idea-input').css({'background-color': $(this).attr('code')});
     });
 
     $("#board-screen-shot").click(function() {
