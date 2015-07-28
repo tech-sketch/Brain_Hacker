@@ -11,6 +11,16 @@ $(document).ready( function(){
     $("#board-screen-shot").click(function() {
 		screenshot('.target_screen');
 	});
+
+	$('#chat-message').keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            var message = $(this).val();
+            var data = {body: message, name: nickname.name}
+
+            sendAction('chat', data);
+            $(this).val('');
+        }
+    });
 });
 
 
@@ -76,13 +86,21 @@ function getMessage(m) {
 
     switch (action) {
         case 'chat':
-            $("#chat_div").chatbox("option", "boxManager").addMsg(data.name, data['body']);
+            var template = '<a href="#"><b>{name}</b>： {text}</a>';
+            template = template.replace('{name}', data['name']);
+            template = template.replace('{text}', data['body']);
+            var message = $(template);
+            message.appendTo('#chat-box');
             break;
 
         case 'chatMessages':
             nickname.name = data.name;
-            for (var i = 0; i < data.cache.length; i++){
-                $("#chat_div").chatbox("option", "boxManager").addMsg(data.cache[i].name, data.cache[i].body);
+            var template = '<a href="#"><b>{name}</b>： {text}</a>';
+            for (var i = 0; i < data.cache.length; i++) {
+                template = template.replace('{name}', data.cache[i]['name']);
+                template = template.replace('{text}', data.cache[i]['body']);
+                var message = $(template);
+                message.appendTo('#chat-box');
             }
             break;
 
@@ -123,7 +141,8 @@ function getMessage(m) {
         Lobibox.notify('info', {
                msg: data['sent'],
                title: 'ちょっと一言',
-               img: "{{ static_url('images/avatar.png') }}",
+               //img: "../images/avatar.png",
+               img: "https://avatars1.githubusercontent.com/u/6737785?v=3&s=460",
                position: 'bottom left',
                delay: 5000,
                sound: false

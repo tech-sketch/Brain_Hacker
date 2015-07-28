@@ -317,7 +317,6 @@ class BrainstormingHandler(BaseSocketHandler):
         self.broadcast(self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id)))
 
         clients_name = self.rooms.get_room_clients_name(room_id)
-        print(clients_name)
         message_out = self.generate_message('getMember', clients_name)
         self.broadcast(message_out)
 
@@ -351,12 +350,12 @@ class BrainstormingHandler(BaseSocketHandler):
         idea = Idea(card_id=message['data']['id'])
         idea.save()
 
-        sentence_generator = SentenceGenerator()
-        res = sentence_generator.generate_sentence(message['data']['text'])
-        for sent in res:
-            message_out = self.generate_message('advice', {'sent': sent})
-            self.send_message(message_out)
-            yield gen.sleep(2.5)
+        # sentence_generator = SentenceGenerator()
+        # res = sentence_generator.generate_sentence(message['data']['text'])
+        # for sent in res:
+        #     message_out = self.generate_message('advice', {'sent': sent})
+        #     self.send_message(message_out)
+        #     yield gen.sleep(2.5)
 
     def edit_card(self, message):
         id = message['data']['id']
@@ -396,7 +395,7 @@ class BrainstormingHandler(BaseSocketHandler):
         self.chat.update_cache(chat_data, room_id)
 
         message_out = self.generate_message('chat', chat_data)
-        self.broadcast_to_room(self, message_out)
+        self.broadcast(message_out)
 
     def broadcast_to_room(self, client, message_out):
         room_id = self.rooms.get_room_id(client)

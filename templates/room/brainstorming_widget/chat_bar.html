@@ -1,20 +1,21 @@
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-        <h3 class="teal white-text">Chat</h3>
+    <h3 class="teal white-text">Chat</h3>
+    <div id="chat-box">
         <a href="#"><b>赤りんご</b>： 天井から水が垂れてくる件について</a>
         <a href="#">Celery seakale</a>
-        <a href="#">Dulse daikon</a>
-        <a href="#">Zucchini garlic</a>
-        <a href="#">Catsear azuki bean</a>
-    </nav>
+    </div>
+    <input id="chat-message" class="grey white-text" type="text" placeholder="Type your message here">
+</nav>
 
-    <script>
-        var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
-            showRight = document.getElementById( 'showRight' ),
-            body = document.body;
+<script>
+    var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+        showRight = document.getElementById( 'showRight' ),
+        body = document.body;
 
-        showRight.onclick = function() {
-            classie.toggle( this, 'active' );
-            classie.toggle( menuRight, 'cbp-spmenu-open' );
-            disableOther( 'showRight' );
-        };
-    </script>
+    showRight.onclick = function() {
+        classie.toggle( this, 'active' );
+        classie.toggle( menuRight, 'cbp-spmenu-open' );
+        disableOther( 'showRight' );
+    };
+</script>
+
