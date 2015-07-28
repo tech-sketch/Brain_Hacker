@@ -303,7 +303,7 @@ class BrainstormingHandler(BaseSocketHandler):
         self.rooms.remove_client(self)
 
         clients_name = self.rooms.get_room_clients_name(room_id)
-        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        message_out = self.generate_message('getMember', clients_name)
         for waiter in self.rooms.get_room_clients(room_id):
             waiter.send_message(message_out)
 
@@ -317,7 +317,8 @@ class BrainstormingHandler(BaseSocketHandler):
         self.broadcast(self.generate_message('countUser', self.rooms.count_user_already_in_room_of(room_id)))
 
         clients_name = self.rooms.get_room_clients_name(room_id)
-        message_out = self.generate_message('getMember', ", ".join(clients_name))
+        print(clients_name)
+        message_out = self.generate_message('getMember', clients_name)
         self.broadcast(message_out)
 
     def initClient(self):
@@ -339,6 +340,8 @@ class BrainstormingHandler(BaseSocketHandler):
         self.cards.update_xy(room_id, card_id=message['data']['id'],
                              x=message['data']['position']['left'], y=message['data']['position']['top'])
 
+    @asynchronous
+    @gen.engine
     def create_card(self, message):
         message_out = self.generate_message('createCard', message['data'])
         self.broadcast(message_out)
@@ -348,8 +351,13 @@ class BrainstormingHandler(BaseSocketHandler):
         idea = Idea(card_id=message['data']['id'])
         idea.save()
 
-    @asynchronous
-    @gen.engine
+        sentence_generator = SentenceGenerator()
+        res = sentence_generator.generate_sentence(message['data']['text'])
+        for sent in res:
+            message_out = self.generate_message('advice', {'sent': sent})
+            self.send_message(message_out)
+            yield gen.sleep(2.5)
+
     def edit_card(self, message):
         id = message['data']['id']
         text = xhtml_unescape(message['data']['value'].strip())
@@ -360,13 +368,6 @@ class BrainstormingHandler(BaseSocketHandler):
         room_id = self.rooms.get_room_id(self)
         self.cards.update_text(room_id, card_id=id, text=xhtml_escape(text))
 
-        sentence_generator = SentenceGenerator()
-        res = sentence_generator.generate_sentence(text)
-        for sent in res:
-            message_out = self.generate_message('advice', {'sent': sent})
-            self.send_message(message_out)
-            yield gen.sleep(2.5)
-
     def delete_card(self, message):
         self.broadcast_to_room(self, message)
         room_id = self.rooms.get_room_id(self)
@@ -374,20 +375,17 @@ class BrainstormingHandler(BaseSocketHandler):
 
     def vote_up(self, message):
         message_id = message['data']['id']
+        thumb_up_count = message['data']['thumb-up-count']
         user = User.get(BaseHandler.get_current_user_id(self))
         idea = Idea.get_from_cardID(card_id=message_id)
-
         if idea not in user.ideas:
             user.ideas.append(idea)
             user.save()
 
-            message_out = self.generate_message('voteUp', {'id': message_id})
-            self.broadcast_to_room(self, message_out)
+            message_out = self.generate_message('voteUp', {'id': message_id, 'thumb-up-count': thumb_up_count + 1})
+            self.broadcast(message_out)
             room_id = self.rooms.get_room_id(self)
             self.cards.update_vote_count(room_id, card_id=message_id)
-        else:
-            message_out = self.generate_message('voteDown', {'id': message_id})
-            self.send_message(message_out)
 
     def update_chat(self, message):
         room_id = self.rooms.get_room_id(self)

@@ -116,11 +116,7 @@ function getMessage(m) {
             break;
 
         case 'voteUp':
-            $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) + 1));
-            break;
-
-        case 'voteDown':
-            $('#' + data.id + ' .vote-count').html('+' + (parseInt($('#' + data.id + ' .vote-count').html()) - 1));
+            $('#' + data.id + ' .thumb-up-count').html('+' + data['thumb-up-count']);
             break;
 
         case 'advice':
@@ -136,11 +132,17 @@ function getMessage(m) {
             break;
 
         case 'countUser':
-        	$(".count-user").text('現在の参加人数は'+data+'人です');
+        	$(".count-user").text('参加者数： ' + data + '人');
             break;
 
         case 'getMember':
-            $('#member_div').html("参加者： "+data);
+            var embed_html = '';
+            template = '<li class="valign-wrapper white-text"><i class="material-icons">perm_identity</i><span class="valign">{name}</span></li>';
+            for (var i=0; i<data.length; i++) {
+                embed_html += template.replace('{name}', data[i]);
+            }
+
+            $('#member_div').html(embed_html);
             break;
 
         default:
@@ -159,6 +161,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
                        '</div>' +
                        '<div class="card-action">' +
                            '<a href="#" class="thumb-up"><i class="material-icons">thumb_up</i></a>' +
+                           '<div class="thumb-up-count">{thumb-up-count}</div>' +
                            '<a href="#" class="delete-card">DEL</a>' +
                        '</div>' +
                    '</div>';
@@ -166,6 +169,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
     template = template.replace('{id}', id);
     template = template.replace('{colour}', colour);
     template = template.replace('{text}', text);
+    template = template.replace('{thumb-up-count}', vote_count);
     h = template;
 
     var card = $(h);
@@ -243,10 +247,8 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
 
     card.children('.card-action').children('.thumb-up').click(
         function() {
-            console.log(parseInt($('#' + id + ' .vote-count').html()));
-            sendAction('voteUp', {
-                'id': id
-            });
+            var thumb_up_count = parseInt($('#' + id + ' .thumb-up-count').html());
+            sendAction('voteUp', {'id': id, 'thumb-up-count': thumb_up_count});
         }
     );
 
