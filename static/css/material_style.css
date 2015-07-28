@@ -59,3 +59,47 @@ footer.page-footer {
 .colour-selected {
   background: #ffffff;
 }
+
+#chat-box {
+overflow-y: scroll;
+overflow-x: hidden;
+height:75%;
+}
+
+#chat-message {
+  width: 85%;
+  border:2px solid teal;
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+
+.card-edit-form, .card-edit-form input, .card-edit-form textarea {
+	border: none;
+	font-size: inherit;
+	font-weight: inherit;
+	background-color: inherit;
+	xvertical-align: inherit;
+	font-family: inherit;
+	text-align: center;
+	xcolor: #444;
+	padding: 0;
+	margin: 0;
+	outline-width: 0;
+	overflow: hidden;
+	resize: none;
+	width: 100%;
+}
+
+.selected {
+   background-color:rgba(0, 0, 0, 0.5);
+}
+
+#idea-input {
+  background-color: grey;
+  border:1px solid #777;
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+}

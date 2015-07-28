@@ -1,11 +1,19 @@
 var cards = {};
 var boardInitialized = false;
 var nickname = {name : "default"}
-var create_colour = 'blue';
+var create_colour = 'grey';
 
 $(document).ready( function(){
     $(".sticky-colour").click(function() {
+        var colours = $(".sticky-colour");
+        for (var i=0; i< colours.length; i++) {
+            if ($(colours[i]).hasClass('selected')) {
+                $(colours[i]).removeClass('selected');
+            }
+        }
+        $(this).addClass('selected');
         create_colour = $(this).attr('colour');
+        $('#idea-input').css({'background-color': create_colour});
     });
 
     $("#board-screen-shot").click(function() {
@@ -18,6 +26,22 @@ $(document).ready( function(){
             var data = {body: message, name: nickname.name}
 
             sendAction('chat', data);
+            $(this).val('');
+            $(this).text('');
+        }
+    });
+
+    $('#idea-input').keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            var message = $(this).val();
+            var uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
+
+            createCard('card' + uniqueID,
+                       $(this).val(), // text
+                       300, 200,
+                       0, // rotation,
+                       create_colour,
+                       0); //vote count
             $(this).val('');
         }
     });
@@ -151,7 +175,7 @@ function getMessage(m) {
             break;
 
         case 'countUser':
-        	$(".count-user").text('参加者数： ' + data + '人');
+        	$(".count-user").text('参加者： ' + data + '人');
             break;
 
         case 'getMember':
@@ -178,10 +202,10 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
                        '<div class="card-content white-text">' +
                           '<p class="content black-text">{text}</p>' +
                        '</div>' +
-                       '<div class="card-action">' +
+                       '<div class="card-action valign-wrapper">' +
                            '<a href="#" class="thumb-up"><i class="material-icons">thumb_up</i></a>' +
-                           '<div class="thumb-up-count">{thumb-up-count}</div>' +
-                           '<a href="#" class="delete-card">DEL</a>' +
+                           '<a class="thumb-up-count valign">{thumb-up-count}</a>' +
+                           '<a href="#" class="delete-card valign">DEL</a>' +
                        '</div>' +
                    '</div>';
     var h = '';
@@ -277,7 +301,7 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
         //return (value);
     }, {
         type: 'textarea',
-        submit: 'OK',
+        //submit: 'OK',
         style: 'inherit',
         cssclass: 'card-edit-form',
         placeholder: 'Double Click to Edit.',
@@ -352,7 +376,7 @@ function initCards(cardArray) {
     unblockUI();
 }
 
-
+/*
 function kakunin() {
     var uniqueID = Math.round(Math.random() * 99999999); //is this big enough to assure uniqueness?
 
@@ -363,7 +387,7 @@ function kakunin() {
                create_colour,
                0); //vote count
 };
-
+*/
 
 
 $(function() {

@@ -33,21 +33,23 @@
             <li class="center col s12 m4 white-text"><i class="material-icons">android</i><br/><span>AI</span></li>
             <li id="board-screen-shot" class="center col s12 m4 white-text"><i class="material-icons">visibility</i><br/><span>Capture</span></li>
         </ul>
+
         <div class="row">
             <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <textarea id="idea-input" class="materialize-textarea white" placeholder="ここにアイディアを入力する"></textarea>
-                        <input id="idea-submit-btn" type="button" value="Submit" onclick="kakunin()">
-                    </div>
-                </div>
+                <!--<div class="row">
+                    <div class="input-field col s12">-->
+                        <textarea id="idea-input" class="materialize-textarea white-text" placeholder="ここにアイディアを入力する"></textarea>
+                    <!--</div>
+                </div>-->
             </form>
         </div>
 
+        <div class="divider"></div>
+        <h5 class="white-text">色の選択</h5>
         <li class="valign-wrapper sticky-colour" colour="red">
             <i class="material-icons red-text">label</i><span class="valign colour white-text">Red</span>
         </li>
-        <li class="valign-wrapper sticky-colour" colour="grey">
+        <li class="valign-wrapper sticky-colour selected" colour="grey">
             <i class="material-icons grey-text">label</i><span class="valign colour white-text">Grey</span>
         </li>
         <li class="valign-wrapper sticky-colour" colour="yellow">
@@ -60,10 +62,9 @@
             <i class="material-icons green-text">label</i><span class="valign colour white-text">Green</span>
         </li><br/>
 
-
-
+        <div class="divider"></div>
         <li class="count-user white-text"></li>
-        <li class="white-text">参加者：</li>
+        <!--<li class="white-text">参加者：</li>-->
         <ul id="member_div" class="member"></ul>
     </ul>
 </header>
