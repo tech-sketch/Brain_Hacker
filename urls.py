@@ -1,5 +1,5 @@
 from handlers.auth_handler import LoginHandler, LogoutHandler, SignupHandler
-from handlers.index_handler import IndexHandler, TestHandler
+from handlers.index_handler import IndexHandler
 from handlers.user_handler import UsersHandler, UserHandler
 from handlers.group_handler import GroupsHandler, GroupHandler, GroupUserHandler, GroupEditHandler, GroupMemberAdditionHandler, GroupDeleteHandler
 from handlers.room_handler import RoomsHandler, RoomHandler, RoomEditHandler, RoomDeleteHandler, RoomSocketHandler, BrainstormingHandler
@@ -8,7 +8,6 @@ from tornado.web import url
 
 url_patterns = (
     url(r'/', IndexHandler, name='index'),
-    url(r'/test/', TestHandler, name='test'),
 
     url(r'/auth/login/', LoginHandler, name='login'),
     url(r'/auth/logout/', LogoutHandler, name='logout'),

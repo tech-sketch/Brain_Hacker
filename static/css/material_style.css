@@ -103,3 +103,16 @@ height:75%;
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
 }
+
+/*
+#main-screen {
+transform: scale(1.0, 1.0);
+-moz-transform: scale(1.0,1.0);
+-webkit-transform: scale(1.0,1.0);
+-o-transform: scale(1.0,1.0);
+-ms-transform: scale(1.0,1.0);
+}*/
+
+.boundary {
+/*border: 15px solid teal;*/
+}
