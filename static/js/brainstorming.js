@@ -16,6 +16,18 @@ $(document).ready( function(){
         $('#idea-input').css({'background-color': $(this).attr('code')});
     });
 
+    $(".ai-switch").click(function() {
+        var ai_switch = $(".ai-switch");
+        if (ai_switch.hasClass('selected')) {
+            ai_switch.removeClass('selected');
+            $('.ai-state').text('AI OFF');
+        }else {
+            ai_switch.addClass('selected');
+            $('.ai-state').text('AI ON');
+        }
+    });
+
+
     $("#board-screen-shot").click(function() {
 		screenshot('.target_screen');
 	});
@@ -104,6 +116,16 @@ function blockUI(message) {
         fadeOut: 0,
         fadeIn: 10
     });
+}
+
+
+function getAISwitchStatus() {
+    var ai_switch = $(".ai-switch");
+    if (ai_switch.hasClass('selected')) {
+        return true;
+    }else {
+        return false;
+    }
 }
 
 //respond to an action event
@@ -351,7 +373,8 @@ function createCard(id, text, x, y, rot, colour, vote_count) {
         y: y,
         rot: rot,
         colour: colour,
-        vote_count: vote_count
+        vote_count: vote_count,
+        ai_switch: getAISwitchStatus()
     };
 
     sendAction(action, data);
@@ -428,3 +451,4 @@ function showVal(newVal){
   //document.getElementById("valBox").innerHTML=newVal;
   $("#main-screen").css("zoom", (newVal * 100) + "%");
 }
+

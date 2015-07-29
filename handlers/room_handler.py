@@ -353,13 +353,14 @@ class BrainstormingHandler(BaseSocketHandler):
         idea = Idea(card_id=message['data']['id'])
         idea.save()
 
-        #sentence_generator = SentenceGenerator()
-        #res = yield from sentence_generator.generate_sentence(message['data']['text'])
-        #for sent in res:
-         #   message_out = self.generate_message('advice', {'sent': sent})
-          #  self.send_message(message_out)
-            #yield from asyncio.sleep(2.5)
-            #yield gen.sleep(2.5)
+        if message['data']['ai_switch']:
+            sentence_generator = SentenceGenerator()
+            res = yield from sentence_generator.generate_sentence(message['data']['text'])
+            for sent in res:
+                message_out = self.generate_message('advice', {'sent': sent})
+                self.send_message(message_out)
+                yield from asyncio.sleep(2.5)
+                yield gen.sleep(2.5)
 
     def edit_card(self, message):
         id = message['data']['id']
