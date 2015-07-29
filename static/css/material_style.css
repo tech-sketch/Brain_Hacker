@@ -121,6 +121,7 @@ margin: 10px;
 width: 2500px;
 height: 1800px;
 position: absolute;
+opacity: 0.75;
 }
 
 #main-container {
@@ -128,7 +129,9 @@ position: absolute;
 overflow:scroll;
 height:90%;
 width:100%;
-background-color: #eeeeee;
+/*background-color: #eeeeee;*/
+background-image: url("./images/bg015_09.gif");
+background-repeat:repeat;
 }
 @media only screen and (max-width : 992px) {
   #main-container {
