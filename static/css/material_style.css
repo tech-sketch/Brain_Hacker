@@ -67,7 +67,9 @@ height:75%;
 }
 
 #chat-message {
-  width: 85%;
+  width: 100%;
+  position: absolute;
+  bottom: 1%;
   border:2px solid teal;
   border-radius: 5px 5px 5px 5px;
   -moz-border-radius: 5px 5px 5px 5px;
@@ -114,5 +116,28 @@ transform: scale(1.0, 1.0);
 }*/
 
 .boundary {
-/*border: 15px solid teal;*/
+border: 5px solid #424242;
+margin: 10px;
+width: 2500px;
+height: 1800px;
+position: absolute;
 }
+
+#main-container {
+position: absolute;
+overflow:scroll;
+height:90%;
+width:100%;
+background-color: #eeeeee;
+}
+@media only screen and (max-width : 992px) {
+  #main-container {
+    padding-left: 0;
+  }
+}
+
+#neko {
+
+}
+
+

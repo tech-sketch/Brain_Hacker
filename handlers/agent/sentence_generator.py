@@ -6,14 +6,14 @@ import random
 from .keyword_extraction import YahooKeyphraseExtraction
 from .named_entity_extraction import DocomoNamedEntityExtraction
 from .praise import praises, proposals, available_answer
-
+import asyncio
 
 class SentenceGenerator(object):
 
     def __init__(self):
         self.keyphrase_extractor = YahooKeyphraseExtraction()
         self.named_entity_extractor = DocomoNamedEntityExtraction()
-
+    @asyncio.coroutine
     def generate_sentence(self, text):
         keyphrase_dic = self.keyphrase_extractor.search(text)
         if not keyphrase_dic or 'Error' in keyphrase_dic:

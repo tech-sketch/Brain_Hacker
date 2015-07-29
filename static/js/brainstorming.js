@@ -46,6 +46,12 @@ $(document).ready( function(){
         }
     });
 
+     $('#testa').click(function() {
+        $("#main-screen").css("zoom","40%");
+        //$("#main-screen").css("transform","scale(0.5, 0.5)");
+        //$("#main-container").css("padding-left","480px");
+    });
+
 });
 
 
@@ -223,9 +229,9 @@ function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animation
         snap: false,
         snapTolerance: 5,
         containment: '.boundary',
-        scroll: false,
+        scroll: true,
         stack: ".card",
-		handle: "div.card-content",
+		handle: "div.card-content, div.card-action",
     });
 
     //After a drag:
@@ -416,4 +422,9 @@ function screenshot( selector) {
 	        a.remove();
         }
     }});
+}
+
+function showVal(newVal){
+  //document.getElementById("valBox").innerHTML=newVal;
+  $("#main-screen").css("zoom", (newVal * 100) + "%");
 }

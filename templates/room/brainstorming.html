@@ -31,11 +31,6 @@
         padding-left: 0;
         }
         }
-
-        .grey-border {
-        border:10px;
-        border-color:black;
-        }
         -->
     </style>
 
@@ -52,18 +47,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 </head>
 
-<body>
-
-{% include 'brainstorming_widget/header.html' %}
-
-<main class="grey lighten-4 target_screen">
-    <h3 style="margin-left:10px;">ブレストのテーマ： {{ room.theme }}</h3>
-    <div id="main-screen" class="boundary-wrapper grey darken-2" style="padding:1px;margin:10px;">
-        <div class="boundary white" style="height:450px;margin:5px;">
+<body id="neko">
+    {% include 'brainstorming_widget/header.html' %}
+    <main id="main-container" class="target_screen">
+        <!--<button id="testa">50%</button>
+        <span id="valBox"></span>-->
+        <input type="range" min="0.3" max="1.5" step="0.11" oninput="showVal(this.value)" onchange="showVal(this.value)" style="width:100px;margin-left:10px;">
+        <h3 style="margin-left:10px;">ブレストのテーマ： {{ room.theme }}</h3>
+        <div id="main-screen" class="boundary-wrapper">
+            <div class="boundary white">
+            </div>
         </div>
-    </div>
-    {% include 'brainstorming_widget/chat_bar.html' %}
-</main>
+        {% include 'brainstorming_widget/chat_bar.html' %}
+    </main>
 
 </body>
 </html>

@@ -267,7 +267,7 @@ class RoomSocketHandler(BaseSocketHandler):
 
 
 
-
+import asyncio
 class BrainstormingHandler(BaseSocketHandler):
     rooms = Rooms()
     cards = Cards()
@@ -286,7 +286,9 @@ class BrainstormingHandler(BaseSocketHandler):
         elif message['action'] == 'moveCard':
             self.move_card(message)
         elif message['action'] == 'createCard':
-            self.create_card(message)
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(self.create_card(message))
+            #self.create_card(message)
         elif message['action'] == 'editCard':
             self.edit_card(message)
         elif message['action'] == 'deleteCard':
@@ -339,8 +341,9 @@ class BrainstormingHandler(BaseSocketHandler):
         self.cards.update_xy(room_id, card_id=message['data']['id'],
                              x=message['data']['position']['left'], y=message['data']['position']['top'])
 
-    @asynchronous
-    @gen.engine
+    #@asynchronous
+    #@gen.engine
+    @asyncio.coroutine
     def create_card(self, message):
         message_out = self.generate_message('createCard', message['data'])
         self.broadcast(message_out)
@@ -350,12 +353,13 @@ class BrainstormingHandler(BaseSocketHandler):
         idea = Idea(card_id=message['data']['id'])
         idea.save()
 
-        # sentence_generator = SentenceGenerator()
-        # res = sentence_generator.generate_sentence(message['data']['text'])
-        # for sent in res:
-        #     message_out = self.generate_message('advice', {'sent': sent})
-        #     self.send_message(message_out)
-        #     yield gen.sleep(2.5)
+        #sentence_generator = SentenceGenerator()
+        #res = yield from sentence_generator.generate_sentence(message['data']['text'])
+        #for sent in res:
+         #   message_out = self.generate_message('advice', {'sent': sent})
+          #  self.send_message(message_out)
+            #yield from asyncio.sleep(2.5)
+            #yield gen.sleep(2.5)
 
     def edit_card(self, message):
         id = message['data']['id']
