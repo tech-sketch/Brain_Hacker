@@ -261,16 +261,16 @@ function getMessage(m) {
 
 }
 
-function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, user_id, animationspeed) {
+function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
 
     var template = '<div id={id} class="card {colour}" style="width:250px;position:absolute;">' +
                        '<div class="card-content white-text">' +
                           '<p class="content black-text">{text}</p>' +
                        '</div>' +
                        '<div class="card-action valign-wrapper">' +
-                           '<a href="#" class="thumb-up"><i class="material-icons">thumb_up</i></a>' +
-                           '<a class="thumb-up-count valign">{thumb-up-count}</a>' +
-                           '<a href="#" class="delete-card valign">DEL</a>' +
+                           '<a href="#" class="thumb-up black-text"><i class="material-icons">thumb_up</i></a>' +
+                           '<a class="thumb-up-count valign black-text">{thumb-up-count}</a>' +
+                           '<a href="#" class="delete-card valign black-text">DEL</a>' +
                        '</div>' +
                    '</div>';
     var h = '';
