@@ -345,6 +345,8 @@ class BrainstormingHandler(BaseSocketHandler):
     #@gen.engine
     @asyncio.coroutine
     def create_card(self, message):
+        user_id = self.get_current_user_id()
+        message['data']['user_id'] = user_id
         message_out = self.generate_message('createCard', message['data'])
         self.broadcast(message_out)
         room_id = self.rooms.get_room_id(self)

@@ -27,6 +27,17 @@ $(document).ready( function(){
         }
     });
 
+    $(".my-idea-switch").click(function() {
+        var idea_switch = $(".my-idea-switch");
+        if (idea_switch.hasClass('selected')) {
+            idea_switch.removeClass('selected');
+            showAllCards();
+        }else {
+            idea_switch.addClass('selected');
+            hideAllCards();
+        }
+    });
+
 
     $("#board-screen-shot").click(function() {
 		screenshot('.target_screen');
@@ -128,6 +139,31 @@ function getAISwitchStatus() {
     }
 }
 
+function getMyID() {
+    return $('[name=myid]').val();
+}
+
+function hideCard(card, id) {
+    //if () {
+        $(card).hide();
+    //}
+}
+
+function hideAllCards() {
+    var cards = $('.card');
+    var id = getMyID();
+    for (var i=0; i<cards.length; i++) {
+        hideCard(cards[i], id);
+    }
+}
+
+function showAllCards() {
+    var cards = $('.card');
+    for (var i=0; i<cards.length; i++) {
+        $(cards[i]).show();
+    }
+}
+
 //respond to an action event
 function getMessage(m) {
     var message = JSON.parse(m.data);
@@ -225,7 +261,7 @@ function getMessage(m) {
 
 }
 
-function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, animationspeed) {
+function drawNewCard(id, text, x, y, rot, colour, sticker, vote_count, user_id, animationspeed) {
 
     var template = '<div id={id} class="card {colour}" style="width:250px;position:absolute;">' +
                        '<div class="card-content white-text">' +
